@@ -1,12 +1,14 @@
 package com.tix.principal;
 
 import java.awt.EventQueue;
+import java.awt.Panel;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.tix.vista.Registro;
+import com.tix.vista.RegistroPanel;
 
 public class Principal {
 	/**
@@ -23,13 +25,11 @@ public class Principal {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Registro frame = new Registro();
-					frame.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
 	}
 }
