@@ -90,6 +90,7 @@ public class RegistroPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public RegistroPanel() {
+		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(1060, 700));
 		
@@ -434,7 +435,7 @@ public class RegistroPanel extends JPanel {
 		cmbArea = new JComboBox<String>();
 		cmbArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cmbArea.setFocusable(false);
-		cmbArea.setBorder(null);
+		cmbArea.setBorder(new EmptyBorder(0, 0, 0, 0));
 		cmbArea.setBackground(Color.WHITE);
 		cmbArea.setBounds(540, 367, 150, 20);
 		add(cmbArea);

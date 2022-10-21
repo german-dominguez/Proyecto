@@ -9,6 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.tix.vista.Registro;
 import com.tix.vista.RegistroPanel;
+import com.tix.vista.principal.Principal;
 
 public class Principal {
 	/**
@@ -21,15 +22,5 @@ public class Principal {
 			UIManager.setLookAndFeel(new FlatLightLaf());
 		} catch (UnsupportedLookAndFeelException e) {
 		}
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 }
