@@ -8,7 +8,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/flatlaf-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Germanchoo/wildfly-26.1.0.Final/bin/client/jboss-client.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Germanchoo/wildfly-26.1.0.Final/modules/system/layers/base/org/hibernate/main/hibernate-core-5.3.24.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-client.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-core-5.3.24.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
