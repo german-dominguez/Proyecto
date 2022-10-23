@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Image;
-
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import java.awt.SystemColor;
