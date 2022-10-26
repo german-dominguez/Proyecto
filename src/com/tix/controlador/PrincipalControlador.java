@@ -10,8 +10,10 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.tix.vista.ListadoJustificaciones;
-import com.tix.vista.ListadoUsuarios;
+import com.tix.vista.analista.ListadoJustificacionesAnalista;
+import com.tix.vista.analista.ListadoReclamosAnalista;
+import com.tix.vista.analista.ListadoUsuariosAnalista;
+import com.tix.vista.ModificarDatosPropios;
 import com.tix.vista.Principal;
 
 public class PrincipalControlador {
@@ -25,7 +27,7 @@ public class PrincipalControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getRegistroPanel());
-				vista.setSize(1060, 700);
+				vista.setSize(750, 500);
 				vista.setLocationRelativeTo(null);
 			}
 		});
@@ -35,7 +37,7 @@ public class PrincipalControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getLoginPanel());
-				vista.setSize(400, 500);
+				vista.setSize(350, 500);
 				vista.setLocationRelativeTo(null);
 			}
 		});
@@ -45,7 +47,6 @@ public class PrincipalControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getDashboardAnalista()); 	
-				
 				vista.setSize(1060, 700);
 				vista.setLocationRelativeTo(null);
 			}
@@ -55,7 +56,7 @@ public class PrincipalControlador {
 		vista.getDashboardAnalista().getBtnJustificaciones().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.getDashboardAnalista().cambiarVista(new ListadoJustificaciones());
+				vista.getDashboardAnalista().cambiarVista(new ListadoJustificacionesAnalista());
 			}
 		});
 		
@@ -63,11 +64,37 @@ public class PrincipalControlador {
 		vista.getDashboardAnalista().getBtnUsuarios().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.getDashboardAnalista().cambiarVista(new ListadoUsuarios());
+				vista.getDashboardAnalista().cambiarVista(new ListadoUsuariosAnalista());
 			}
 		});
 		
+		//Botón RECLAMOS en el dashboard
+		vista.getDashboardAnalista().getBtnReclamos().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.getDashboardAnalista().cambiarVista(new ListadoReclamosAnalista());
+			}
+		});
 		
+		//Botón CERRAR SESIÓN en el dashboard
+		vista.getDashboardAnalista().getLblCerrarSesion().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.setContentPane(vista.getLoginPanel());
+				vista.setSize(350, 500);
+				vista.setLocationRelativeTo(null);
+			}
+		});
+		
+		//Botón EDITAR DATOS PROPIOS en el dashboard
+		vista.getDashboardAnalista().getLblEditarUsuario().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.setContentPane(vista.getModificarDatosPropios());
+				vista.setSize(750, 500);
+				vista.setLocationRelativeTo(null);
+			}
+		});
 		
 	}
 

@@ -1,4 +1,4 @@
-package com.tix.vista;
+package com.tix.vista.analista;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,16 +10,22 @@ import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.border.LineBorder;
 
-public class ListadoJustificaciones extends JPanel {
+import com.tix.utilities.RenderTablas;
+
+import javax.swing.border.LineBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+public class ListadoReclamosAnalista extends JPanel {
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public ListadoJustificaciones() {
+	public ListadoReclamosAnalista() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(910, 700));
@@ -29,20 +35,19 @@ public class ListadoJustificaciones extends JPanel {
                 "Fecha",
                 "Usuario",
                 "Nombres",
-                "Evento",
-                "Detalles"};
+                "Título"};
 		Object[][] data = {
-			    {"INGRESADO", "22/10/2022", 
+			    {"Ingresado", "22/10/2022", 
 			    "maria.martinez.p", "Martínez Perugorría, María Agustina", 
-			    "Presencial", "Licencia Médica"},
-			    {"FINALIZADO", "22/10/2022", 
+			    "Faltan créditos VME"},
+			    {"En proceso", "22/10/2022", 
 			    "german.dominguez", "Domínguez Silva, Germán",
-			    "Inglés", "Licencia Médica"},
+			    "Calificación optativa"},
 			};
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.GREEN);
-		scrollPane.setBounds(20, 60, 850, 580);
+		scrollPane.setBounds(20, 125, 850, 515);
 		add(scrollPane);
 		
 		table = new JTable(data, columnNames);
@@ -51,19 +56,41 @@ public class ListadoJustificaciones extends JPanel {
 		scrollPane.setViewportView(table);
 		table.setBorder(null);
 		
-		JLabel lblJustificacionesDeInasistencias = new JLabel("JUSTIFICACIONES DE INASISTENCIAS");
+		this.table.setDefaultRenderer(Object.class, new RenderTablas());
+		
+		JLabel lblJustificacionesDeInasistencias = new JLabel("RECLAMOS");
 		lblJustificacionesDeInasistencias.setForeground(Color.BLACK);
 		lblJustificacionesDeInasistencias.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblJustificacionesDeInasistencias.setBounds(20, 12, 390, 41);
 		add(lblJustificacionesDeInasistencias);
 		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblEstado.setBounds(20, 63, 111, 13);
+		add(lblEstado);
+		
+		JComboBox cmbEstado = new JComboBox();
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Ingresado", "En proceso", "Finalizado"}));
+		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		cmbEstado.setBounds(20, 83, 140, 20);
+		add(cmbEstado);
+		
+		JComboBox cmbUsuario = new JComboBox();
+		cmbUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		cmbUsuario.setBounds(180, 83, 140, 20);
+		add(cmbUsuario);
+		
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblUsuario.setBounds(180, 63, 111, 13);
+		add(lblUsuario);
+		
 		TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(10);
 		columnModel.getColumn(1).setPreferredWidth(15); 
-		columnModel.getColumn(2).setPreferredWidth(150); 
+		columnModel.getColumn(2).setPreferredWidth(100); 
 		columnModel.getColumn(3).setPreferredWidth(180); 
-		columnModel.getColumn(4).setPreferredWidth(10); 
-		columnModel.getColumn(5).setPreferredWidth(50); 
+		columnModel.getColumn(4).setPreferredWidth(200); 
 		
 	}
 }
