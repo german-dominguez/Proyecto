@@ -25,20 +25,20 @@ import javax.swing.Action;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class LoginPanel extends JPanel {
+public class Login extends JPanel {
 	private JTextField txtUsuario;
 	private JPasswordField txtContrasenia;
 	private JButton btnNuevoUsuario;
 	private JButton btnIniciarSesion;
-	private static LoginPanel vista = new LoginPanel();
+	private static Login vista = new Login();
 
 
 	/**
 	 * Create the panel.
 	 */
-	public LoginPanel() {
+	public Login() {
 		setBackground(Color.WHITE);
-		setSize(new Dimension(400, 500));
+		setSize(new Dimension(350, 500));
 		setLayout(null);
 		
 		btnIniciarSesion = new JButton("INICIAR SESIÓN");
@@ -53,7 +53,7 @@ public class LoginPanel extends JPanel {
 		btnIniciarSesion.setFocusable(false);
 		btnIniciarSesion.setBorder(null);
 		btnIniciarSesion.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
-		btnIniciarSesion.setBounds(110, 350, 180, 45);
+		btnIniciarSesion.setBounds(100, 348, 150, 45);
 		add(btnIniciarSesion);
 		
 		btnNuevoUsuario = new JButton("¿Aún no tienes usuario? Regístrate");
@@ -63,52 +63,52 @@ public class LoginPanel extends JPanel {
 		btnNuevoUsuario.setFocusable(false);
 		btnNuevoUsuario.setBorder(null);
 		btnNuevoUsuario.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
-		btnNuevoUsuario.setBounds(86, 405, 233, 23);
+		btnNuevoUsuario.setBounds(81, 403, 188, 23);
 		add(btnNuevoUsuario);
 		
 		txtUsuario = new JTextField();
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setForeground(Color.DARK_GRAY);
-		txtUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 16));
+		txtUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtUsuario.setColumns(10);
 		txtUsuario.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtUsuario.setBounds(110, 190, 180, 25);
+		txtUsuario.setBounds(100, 167, 150, 25);
 		add(txtUsuario);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 17));
-		lblUsuario.setBounds(110, 160, 180, 21);
+		lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblUsuario.setBounds(100, 144, 150, 21);
 		add(lblUsuario);
 		
 		JSeparator spUsuario = new JSeparator();
 		spUsuario.setBackground(SystemColor.textHighlight);
-		spUsuario.setBounds(110, 215, 180, 14);
+		spUsuario.setBounds(100, 192, 150, 14);
 		add(spUsuario);
 		
 		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 17));
-		lblContrasenia.setBounds(110, 235, 180, 21);
+		lblContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblContrasenia.setBounds(100, 233, 150, 21);
 		add(lblContrasenia);
 		
 		txtContrasenia = new JPasswordField();
 		txtContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContrasenia.setForeground(Color.DARK_GRAY);
-		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 16));
+		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtContrasenia.setBounds(110, 265, 180, 25);
+		txtContrasenia.setBounds(100, 255, 150, 25);
 		add(txtContrasenia);
 		
 		JSeparator spContrasenia = new JSeparator();
 		spContrasenia.setBackground(SystemColor.textHighlight);
-		spContrasenia.setBounds(110, 290, 180, 14);
+		spContrasenia.setBounds(100, 280, 150, 14);
 		add(spContrasenia);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setIcon(new ImageIcon("img\\utec2.png"));
-		lblNewLabel_1.setBounds(148, 26, 104, 95);
+		lblNewLabel_1.setBounds(142, 28, 75, 75);
 		add(lblNewLabel_1);
 
 	}
@@ -130,7 +130,7 @@ public class LoginPanel extends JPanel {
 		this.btnIniciarSesion = btnIniciarSesion;
 	}
 
-	public static LoginPanel getVista() {
+	public static Login getVista() {
 		return vista;
 	}
 	
