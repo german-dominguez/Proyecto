@@ -1,29 +1,23 @@
 package com.tix.vista;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
 import java.awt.SystemColor;
-import javax.swing.JPasswordField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
-
-import com.tix.principal.Principal;
-
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import java.awt.Cursor;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.border.EmptyBorder;
 
 public class Login extends JPanel {
 	private JTextField txtUsuario;
@@ -107,7 +101,7 @@ public class Login extends JPanel {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("img\\utec2.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("resources\\utec2.png"));
 		lblNewLabel_1.setBounds(142, 28, 75, 75);
 		add(lblNewLabel_1);
 

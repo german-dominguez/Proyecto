@@ -21,8 +21,8 @@ public class PrincipalControlador {
 	private Principal vista = new Principal();
 
 	public PrincipalControlador() {
-		
-		//Botón NUEVO USUARIO
+
+		// Botón NUEVO USUARIO - Cambia a la vista de registro
 		vista.getLoginPanel().getBtnNuevoUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -31,8 +31,8 @@ public class PrincipalControlador {
 				vista.setLocationRelativeTo(null);
 			}
 		});
-		
-		//Botón REGISTRARSE
+
+		// Botón REGISTRARSE - Cambia a la vista de login
 		vista.getRegistroPanel().getBtnIniciarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -41,42 +41,18 @@ public class PrincipalControlador {
 				vista.setLocationRelativeTo(null);
 			}
 		});
-		
-		//Botón INICIAR SESIÓN
+
+		// Botón INICIAR SESIÓN - Cambia a la vista de dashboard
 		vista.getLoginPanel().getBtnIniciarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.setContentPane(vista.getDashboardAnalista()); 	
+				vista.setContentPane(vista.getDashboardAnalista());
 				vista.setSize(1060, 700);
 				vista.setLocationRelativeTo(null);
 			}
 		});
-		
-		//Botón JUSTIFICACIONES del dashboard
-		vista.getDashboardAnalista().getBtnJustificaciones().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				vista.getDashboardAnalista().cambiarVista(new ListadoJustificacionesAnalista());
-			}
-		});
-		
-		//Botón USUARIOS del dashboard
-		vista.getDashboardAnalista().getBtnUsuarios().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				vista.getDashboardAnalista().cambiarVista(new ListadoUsuariosAnalista());
-			}
-		});
-		
-		//Botón RECLAMOS en el dashboard
-		vista.getDashboardAnalista().getBtnReclamos().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				vista.getDashboardAnalista().cambiarVista(new ListadoReclamosAnalista());
-			}
-		});
-		
-		//Botón CERRAR SESIÓN en el dashboard
+
+		// Botón CERRAR SESIÓN en el dashboard - Cambia a la vista de login
 		vista.getDashboardAnalista().getLblCerrarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -85,8 +61,8 @@ public class PrincipalControlador {
 				vista.setLocationRelativeTo(null);
 			}
 		});
-		
-		//Botón EDITAR DATOS PROPIOS en el dashboard
+
+		// Botón EDITAR DATOS PROPIOS en el dashboard
 		vista.getDashboardAnalista().getLblEditarUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -95,28 +71,7 @@ public class PrincipalControlador {
 				vista.setLocationRelativeTo(null);
 			}
 		});
-		
-	}
 
-	public static void main(String[] args) {
-
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-		} catch (UnsupportedLookAndFeelException e) {
-		}
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PrincipalControlador principalControlador = new PrincipalControlador();
-					principalControlador.getVista().setContentPane(principalControlador.getVista().getLoginPanel());
-					principalControlador.getVista().setVisible(true);
-					principalControlador.getVista().setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	public Principal getVista() {

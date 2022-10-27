@@ -10,6 +10,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.tix.controlador.DashboardAnalistaControlador;
+import com.tix.controlador.LoginControlador;
+import com.tix.controlador.ModificarDatosPropiosControlador;
+import com.tix.controlador.RegistroControlador;
 import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificacionesAnalista;
 import com.tix.vista.analista.ListadoReclamosAnalista;
@@ -30,34 +34,28 @@ public class Principal extends JFrame {
 
 	private JPanel contentPane;
 	JPanel panel;
-	
-	//Paneles de login y registro
-	private Login loginPanel = new Login();
-	private Registro registroPanel = new Registro();
-	private ModificarDatosPropios modificarDatosPropiosPanel = new ModificarDatosPropios();
-	
-	//Dashboards
-	private DashboardAnalista dashboardAnalista = new DashboardAnalista();
-	
-	//Paneles principales
+
+	// Paneles de login y registro
+	private Login loginPanel = new LoginControlador().getVista();
+	private Registro registroPanel = new RegistroControlador().getVista();
+	private ModificarDatosPropios modificarDatosPropiosPanel = new ModificarDatosPropiosControlador().getVista();
+
+	// Dashboards
+	private DashboardAnalista dashboardAnalista = new DashboardAnalistaControlador().getVista();
+
+	// Paneles principales
 	private ListadoUsuariosAnalista listadoUsuarios = new ListadoUsuariosAnalista();
 	private ListadoJustificacionesAnalista listadoJustificaciones = new ListadoJustificacionesAnalista();
 	private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
-	
-	//EmptyPanel
-	private EmptyPanel emptyPanel = new EmptyPanel();
 
-	private static Principal vista = new Principal();
+	// EmptyPanel
+	private EmptyPanel emptyPanel = new EmptyPanel();
 
 	public Principal() {
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 500);
 		getContentPane().setLayout(null);
-	}
-
-	public static Principal getVista() {
-		return vista;
 	}
 
 	public Login getLoginPanel() {
@@ -67,30 +65,29 @@ public class Principal extends JFrame {
 	public Registro getRegistroPanel() {
 		return registroPanel;
 	}
-	
+
 	public DashboardAnalista getDashboardAnalista() {
 		return dashboardAnalista;
 	}
-	
+
 	public ListadoUsuariosAnalista getListadoUsuarios() {
 		return listadoUsuarios;
 	}
-	
+
 	public ListadoJustificacionesAnalista getListadoJustificaciones() {
 		return listadoJustificaciones;
 	}
-	
+
 	public ListadoReclamosAnalista getListadoReclamos() {
 		return listadoReclamos;
 	}
-	
+
 	public ModificarDatosPropios getModificarDatosPropios() {
 		return modificarDatosPropiosPanel;
 	}
-	
+
 	public EmptyPanel getEmptyPanel() {
 		return emptyPanel;
 	}
-	
-	
+
 }

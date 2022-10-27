@@ -116,7 +116,7 @@ public class DashboardAnalista extends JPanel {
 		lblCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblCerrarSesion.setToolTipText("Cerrar sesión");
 		
-		Image exit = new ImageIcon("C:\\Users\\agust\\Downloads\\noun-exit-5256135.png").getImage();
+		Image exit = new ImageIcon("resources\\logout.png").getImage();
 		ImageIcon exitResized =new ImageIcon(exit.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		lblCerrarSesion.setIcon(exitResized);
 		lblCerrarSesion.setBounds(75, 166, 30, 32);
@@ -126,7 +126,7 @@ public class DashboardAnalista extends JPanel {
 		lblEditarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblEditarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEditarUsuario.setToolTipText("Modificar datos de usuario");
-		Image img= new ImageIcon("C:\\Users\\agust\\Downloads\\noun-edit-3956597.png").getImage();
+		Image img= new ImageIcon("resources\\edit.png").getImage();
 		ImageIcon img2=new ImageIcon(img.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		lblEditarUsuario.setIcon(img2);
 		lblEditarUsuario.setBounds(40, 166, 30, 32);
