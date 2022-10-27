@@ -28,6 +28,10 @@ import javax.swing.Action;
 import javax.swing.JTabbedPane;
 import java.awt.event.ActionListener;
 import javax.swing.JFormattedTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Registro extends JPanel {
 	private JTextField txtDocumento;
@@ -613,43 +617,47 @@ public class Registro extends JPanel {
 	}
 
 	public void setCampos() {
-		int selectedIndex = cmbTipoUsuario.getSelectedIndex();
-		if (selectedIndex == 0) { // Analista
-			txtGeneracion.setVisible(false);
-			lblGeneracion.setVisible(false);
-			spGeneracion.setVisible(false);
 
-			cmbArea.setVisible(false);
-			lblArea.setVisible(false);
-			spArea.setVisible(false);
+		switch (cmbTipoUsuario.getSelectedIndex()) {
+			case 0:
+				txtGeneracion.setVisible(false);
+				lblGeneracion.setVisible(false);
+				spGeneracion.setVisible(false);
 
-			cmbRol.setVisible(false);
-			lblRol.setVisible(false);
-			spRol.setVisible(false);
-		} else if (selectedIndex == 1) { // Estudiante
-			txtGeneracion.setVisible(true);
-			lblGeneracion.setVisible(true);
-			spGeneracion.setVisible(true);
+				cmbArea.setVisible(false);
+				lblArea.setVisible(false);
+				spArea.setVisible(false);
 
-			cmbArea.setVisible(false);
-			lblArea.setVisible(false);
-			spArea.setVisible(false);
+				cmbRol.setVisible(false);
+				lblRol.setVisible(false);
+				spRol.setVisible(false);
+				break;
+			case 1:
+				txtGeneracion.setVisible(true);
+				lblGeneracion.setVisible(true);
+				spGeneracion.setVisible(true);
 
-			cmbRol.setVisible(false);
-			lblRol.setVisible(false);
-			spRol.setVisible(false);
-		} else if (selectedIndex == 2) { // Tutor
-			txtGeneracion.setVisible(false);
-			lblGeneracion.setVisible(false);
-			spGeneracion.setVisible(false);
+				cmbArea.setVisible(false);
+				lblArea.setVisible(false);
+				spArea.setVisible(false);
 
-			cmbArea.setVisible(true);
-			lblArea.setVisible(true);
-			spArea.setVisible(true);
+				cmbRol.setVisible(false);
+				lblRol.setVisible(false);
+				spRol.setVisible(false);
+				break;
+			case 2:
+				txtGeneracion.setVisible(false);
+				lblGeneracion.setVisible(false);
+				spGeneracion.setVisible(false);
 
-			cmbRol.setVisible(true);
-			lblRol.setVisible(true);
-			spRol.setVisible(true);
+				cmbArea.setVisible(true);
+				lblArea.setVisible(true);
+				spArea.setVisible(true);
+
+				cmbRol.setVisible(true);
+				lblRol.setVisible(true);
+				spRol.setVisible(true);
+				break;
 		}
 
 	}
@@ -694,8 +702,56 @@ public class Registro extends JPanel {
 		return txtEmailPersonal.getText();
 	}
 
-	public String getTxtGeneracion() {
-		return txtGeneracion.getText();
+	public int getTxtGeneracion() {
+		return Integer.parseInt(txtGeneracion.getText());
+	}
+
+	public JComboBox<String> getCmbLocalidad() {
+		return cmbLocalidad;
+	}
+
+	public void setCmbLocalidad(JComboBox<String> cmbLocalidad) {
+		this.cmbLocalidad = cmbLocalidad;
+	}
+
+	public JComboBox<String> getCmbDepartamento() {
+		return cmbDepartamento;
+	}
+
+	public void setCmbDepartamento(JComboBox<String> cmbDepartamento) {
+		this.cmbDepartamento = cmbDepartamento;
+	}
+
+	public JComboBox<String> getCmbITR() {
+		return cmbITR;
+	}
+
+	public void setCmbITR(JComboBox<String> cmbITR) {
+		this.cmbITR = cmbITR;
+	}
+
+	public JComboBox<String> getCmbArea() {
+		return cmbArea;
+	}
+
+	public void setCmbArea(JComboBox<String> cmbArea) {
+		this.cmbArea = cmbArea;
+	}
+
+	public JComboBox<String> getCmbRol() {
+		return cmbRol;
+	}
+
+	public void setCmbRol(JComboBox<String> cmbRol) {
+		this.cmbRol = cmbRol;
+	}
+
+	public JComboBox<String> getCmbTipoUsuario() {
+		return cmbTipoUsuario;
+	}
+
+	public void setCmbTipoUsuario(JComboBox<String> cmbTipoUsuario) {
+		this.cmbTipoUsuario = cmbTipoUsuario;
 	}
 
 }
