@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.naming.NamingException;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
@@ -37,7 +38,9 @@ public class Principal extends JFrame {
 
 	// Paneles de login y registro
 	private Login loginPanel = new LoginControlador().getVista();
-	private Registro registroPanel = new RegistroControlador().getVista();
+
+	private Registro registroPanel;
+
 	private ModificarDatosPropios modificarDatosPropiosPanel = new ModificarDatosPropiosControlador().getVista();
 
 	// Dashboards
@@ -51,7 +54,8 @@ public class Principal extends JFrame {
 	// EmptyPanel
 	private EmptyPanel emptyPanel = new EmptyPanel();
 
-	public Principal() {
+	public Principal() throws NamingException {
+		registroPanel = new RegistroControlador().getVista();
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 500);

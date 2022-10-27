@@ -1,26 +1,19 @@
 package com.tix.controlador;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.naming.NamingException;
 
-import com.formdev.flatlaf.FlatLightLaf;
-import com.tix.vista.analista.ListadoJustificacionesAnalista;
-import com.tix.vista.analista.ListadoReclamosAnalista;
-import com.tix.vista.analista.ListadoUsuariosAnalista;
-import com.tix.vista.ModificarDatosPropios;
 import com.tix.vista.Principal;
 
 public class PrincipalControlador {
 
-	private Principal vista = new Principal();
+	private Principal vista;
 
-	public PrincipalControlador() {
+	public PrincipalControlador() throws NamingException {
+		
+		vista = new Principal();
 
 		// Botón NUEVO USUARIO - Cambia a la vista de registro
 		vista.getLoginPanel().getBtnNuevoUsuario().addMouseListener(new MouseAdapter() {
