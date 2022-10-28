@@ -48,7 +48,7 @@ public class Login extends JPanel {
 		btnIniciarSesion.setFocusable(false);
 		btnIniciarSesion.setBorder(null);
 		btnIniciarSesion.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
-		btnIniciarSesion.setBounds(100, 348, 150, 45);
+		btnIniciarSesion.setBounds(90, 349, 150, 45);
 		add(btnIniciarSesion);
 
 		btnNuevoUsuario = new JButton("¿Aún no tienes usuario? Regístrate");
@@ -58,7 +58,7 @@ public class Login extends JPanel {
 		btnNuevoUsuario.setFocusable(false);
 		btnNuevoUsuario.setBorder(null);
 		btnNuevoUsuario.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
-		btnNuevoUsuario.setBounds(81, 403, 188, 23);
+		btnNuevoUsuario.setBounds(71, 404, 188, 23);
 		add(btnNuevoUsuario);
 
 		txtUsuario = new JTextField();
@@ -67,24 +67,24 @@ public class Login extends JPanel {
 		txtUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtUsuario.setColumns(10);
 		txtUsuario.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtUsuario.setBounds(100, 167, 150, 25);
+		txtUsuario.setBounds(90, 230, 150, 25);
 		add(txtUsuario);
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblUsuario.setBounds(100, 144, 150, 21);
+		lblUsuario.setBounds(90, 210, 150, 21);
 		add(lblUsuario);
 
 		JSeparator spUsuario = new JSeparator();
 		spUsuario.setBackground(SystemColor.textHighlight);
-		spUsuario.setBounds(100, 192, 150, 14);
+		spUsuario.setBounds(90, 255, 150, 14);
 		add(spUsuario);
 
 		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblContrasenia.setBounds(100, 233, 150, 21);
+		lblContrasenia.setBounds(90, 280, 150, 21);
 		add(lblContrasenia);
 
 		txtContrasenia = new JPasswordField();
@@ -92,26 +92,39 @@ public class Login extends JPanel {
 		txtContrasenia.setForeground(Color.DARK_GRAY);
 		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtContrasenia.setBounds(100, 255, 150, 25);
+		txtContrasenia.setBounds(90, 300, 150, 25);
 		add(txtContrasenia);
 
 		JSeparator spContrasenia = new JSeparator();
 		spContrasenia.setBackground(SystemColor.textHighlight);
-		spContrasenia.setBounds(100, 280, 150, 14);
+		spContrasenia.setBounds(90, 325, 150, 14);
 		add(spContrasenia);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setIcon(new ImageIcon("resources\\utec2.png"));
-		lblNewLabel_1.setBounds(142, 28, 75, 75);
+		lblNewLabel_1.setBounds(132, 30, 75, 75);
 		add(lblNewLabel_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFocusable(false);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Analista", "Estudiante", "Tutor"}));
-		comboBox.setBorder(null);
-		comboBox.setBounds(100, 299, 150, 22);
-		add(comboBox);
+		JComboBox cmbTipoUsuario = new JComboBox();
+		cmbTipoUsuario.setBorder(null);
+		cmbTipoUsuario.setModel(new DefaultComboBoxModel(new String[] {"Analista", "Estudiante", "Tutor"}));
+		cmbTipoUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		cmbTipoUsuario.setBounds(90, 160, 150, 25);
+		((JLabel)cmbTipoUsuario.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		add(cmbTipoUsuario);
+		
+		JLabel lblTipoDeUsuario = new JLabel("Tipo de Usuario");
+		lblTipoDeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipoDeUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblTipoDeUsuario.setBounds(90, 136, 150, 21);
+		add(lblTipoDeUsuario);
+		
+		JSeparator spUsuario_1 = new JSeparator();
+		spUsuario_1.setBackground(SystemColor.textHighlight);
+		spUsuario_1.setBounds(90, 185, 150, 14);
+		add(spUsuario_1);
+
 
 	}
 
@@ -135,6 +148,7 @@ public class Login extends JPanel {
 		return vista;
 	}
 
+
 	public String getTxtUsuario() {
 		return txtUsuario.getText();
 	}
@@ -150,4 +164,5 @@ public class Login extends JPanel {
 	public void setTxtContrasenia(JPasswordField txtContrasenia) {
 		this.txtContrasenia = txtContrasenia;
 	}
+
 }

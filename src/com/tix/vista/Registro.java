@@ -35,6 +35,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import com.toedter.components.JSpinField;
+import com.toedter.calendar.JDateChooser;
 
 public class Registro extends JPanel {
 	private JTextField txtDocumento;
@@ -497,6 +499,10 @@ public class Registro extends JPanel {
 		lblAviso.setFont(new Font("Segoe UI", Font.ITALIC, 10));
 		lblAviso.setBounds(40, 404, 230, 13);
 		add(lblAviso);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(40, 305, 140, 19);
+		add(dateChooser);
 
 	}
 
@@ -756,5 +762,4 @@ public class Registro extends JPanel {
 	public void setCmbTipoUsuario(JComboBox<String> cmbTipoUsuario) {
 		this.cmbTipoUsuario = cmbTipoUsuario;
 	}
-
 }
