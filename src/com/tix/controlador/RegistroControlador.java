@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.tix.modelo.entidades.Analista;
+import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Tutor;
 import com.tix.modelo.entidades.Usuario;
@@ -157,6 +158,8 @@ public class RegistroControlador {
 		tutor.setMail(vista.getTxtEmailInstitucional());
 		tutor.setContrasenia(vista.getTxtContrasenia());
 		tutor.setNombreUsuario(nombreUsuario);
+		tutor.setTipo(vista.getCmbRol().getSelectedItem().toString());
+		tutor.setArea((Area) vista.getCmbArea().getSelectedItem());
 
 		tutor.setFechaNacimiento(new Date(System.currentTimeMillis()));
 		tutor.setEstado(0);
