@@ -82,6 +82,9 @@ public class RegistroControlador {
 	}
 
 	public void registrarAnalista() {
+		
+		System.out.println(itrsBeanRemote.obtenerItrPorId((long) 1));
+		
 		Analista analista = new Analista();
 
 		String emailInstitucional = vista.getTxtEmailInstitucional();
@@ -131,6 +134,7 @@ public class RegistroControlador {
 		estudiante.setEstado(0);
 		estudiante.setGenero("masculino");
 		estudiante.setItr(itrsBeanRemote.obtenerItrPorId((long) 1));
+		System.out.println(itrsBeanRemote.obtenerItrPorId((long) 1).getNombre());
 		estudiante.setLocalidad(localidadesBeanRemote.obtenerLocalidadPorId((long) 1));
 
 		estudiantesBeanRemote.registro(estudiante);
