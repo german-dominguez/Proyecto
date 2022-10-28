@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Login extends JPanel {
 	private JTextField txtUsuario;
@@ -26,7 +28,6 @@ public class Login extends JPanel {
 	private JButton btnIniciarSesion;
 	private static Login vista = new Login();
 
-
 	/**
 	 * Create the panel.
 	 */
@@ -34,11 +35,11 @@ public class Login extends JPanel {
 		setBackground(Color.WHITE);
 		setSize(new Dimension(350, 500));
 		setLayout(null);
-		
+
 		btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 		btnIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -49,7 +50,7 @@ public class Login extends JPanel {
 		btnIniciarSesion.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnIniciarSesion.setBounds(100, 348, 150, 45);
 		add(btnIniciarSesion);
-		
+
 		btnNuevoUsuario = new JButton("¿Aún no tienes usuario? Regístrate");
 		btnNuevoUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNuevoUsuario.setForeground(SystemColor.textHighlight);
@@ -59,7 +60,7 @@ public class Login extends JPanel {
 		btnNuevoUsuario.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 		btnNuevoUsuario.setBounds(81, 403, 188, 23);
 		add(btnNuevoUsuario);
-		
+
 		txtUsuario = new JTextField();
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setForeground(Color.DARK_GRAY);
@@ -68,24 +69,24 @@ public class Login extends JPanel {
 		txtUsuario.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txtUsuario.setBounds(100, 167, 150, 25);
 		add(txtUsuario);
-		
+
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblUsuario.setBounds(100, 144, 150, 21);
 		add(lblUsuario);
-		
+
 		JSeparator spUsuario = new JSeparator();
 		spUsuario.setBackground(SystemColor.textHighlight);
 		spUsuario.setBounds(100, 192, 150, 14);
 		add(spUsuario);
-		
+
 		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblContrasenia.setBounds(100, 233, 150, 21);
 		add(lblContrasenia);
-		
+
 		txtContrasenia = new JPasswordField();
 		txtContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContrasenia.setForeground(Color.DARK_GRAY);
@@ -93,7 +94,7 @@ public class Login extends JPanel {
 		txtContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txtContrasenia.setBounds(100, 255, 150, 25);
 		add(txtContrasenia);
-		
+
 		JSeparator spContrasenia = new JSeparator();
 		spContrasenia.setBackground(SystemColor.textHighlight);
 		spContrasenia.setBounds(100, 280, 150, 14);
@@ -104,9 +105,16 @@ public class Login extends JPanel {
 		lblNewLabel_1.setIcon(new ImageIcon("resources\\utec2.png"));
 		lblNewLabel_1.setBounds(142, 28, 75, 75);
 		add(lblNewLabel_1);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFocusable(false);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Analista", "Estudiante", "Tutor"}));
+		comboBox.setBorder(null);
+		comboBox.setBounds(100, 299, 150, 22);
+		add(comboBox);
 
 	}
-	
+
 	public JButton getBtnNuevoUsuario() {
 		return btnNuevoUsuario;
 	}
@@ -114,8 +122,7 @@ public class Login extends JPanel {
 	public void setBtnNuevoUsuario(JButton btnNuevoUsuario) {
 		this.btnNuevoUsuario = btnNuevoUsuario;
 	}
-	
-	
+
 	public JButton getBtnIniciarSesion() {
 		return btnIniciarSesion;
 	}
@@ -127,5 +134,20 @@ public class Login extends JPanel {
 	public static Login getVista() {
 		return vista;
 	}
-	
+
+	public String getTxtUsuario() {
+		return txtUsuario.getText();
+	}
+
+	public void setTxtUsuario(JTextField txtUsuario) {
+		this.txtUsuario = txtUsuario;
+	}
+
+	public String getTxtContrasenia() {
+		return txtContrasenia.getPassword().toString();
+	}
+
+	public void setTxtContrasenia(JPasswordField txtContrasenia) {
+		this.txtContrasenia = txtContrasenia;
+	}
 }

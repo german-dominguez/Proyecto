@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import com.tix.modelo.entidades.Area;
+
 import javax.swing.JSeparator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -88,7 +91,7 @@ public class Registro extends JPanel {
 	private JComboBox<String> cmbLocalidad;
 	private JComboBox<String> cmbDepartamento;
 	private JComboBox<String> cmbITR;
-	private JComboBox<String> cmbArea;
+	private JComboBox<Area> cmbArea;
 	private JComboBox<String> cmbRol;
 	private JComboBox<String> cmbTipoUsuario;
 	private JButton btnRegistrar;
@@ -432,7 +435,7 @@ public class Registro extends JPanel {
 		cmbITR.setBounds(566, 140, 140, 20);
 		add(cmbITR);
 
-		cmbArea = new JComboBox<String>();
+		cmbArea = new JComboBox<Area>();
 		cmbArea.setVisible(false);
 		cmbArea.setForeground(Color.DARK_GRAY);
 		cmbArea.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -730,11 +733,11 @@ public class Registro extends JPanel {
 		this.cmbITR = cmbITR;
 	}
 
-	public JComboBox<String> getCmbArea() {
+	public JComboBox<Area> getCmbArea() {
 		return cmbArea;
 	}
 
-	public void setCmbArea(JComboBox<String> cmbArea) {
+	public void setCmbArea(JComboBox<Area> cmbArea) {
 		this.cmbArea = cmbArea;
 	}
 
