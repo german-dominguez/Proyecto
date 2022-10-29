@@ -84,8 +84,6 @@ public class RegistroControlador {
 
 	public void registrarAnalista() {
 		
-		System.out.println(itrsBeanRemote.obtenerItrPorId((long) 1));
-		
 		Analista analista = new Analista();
 
 		String emailInstitucional = vista.getTxtEmailInstitucional();

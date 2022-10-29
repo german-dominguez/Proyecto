@@ -26,6 +26,7 @@ public class Login extends JPanel {
 	private JPasswordField txtContrasenia;
 	private JButton btnNuevoUsuario;
 	private JButton btnIniciarSesion;
+	private JComboBox<String> cmbTipoUsuario;
 	private static Login vista = new Login();
 
 	/**
@@ -106,7 +107,7 @@ public class Login extends JPanel {
 		lblNewLabel_1.setBounds(132, 30, 75, 75);
 		add(lblNewLabel_1);
 		
-		JComboBox cmbTipoUsuario = new JComboBox();
+		cmbTipoUsuario = new JComboBox();
 		cmbTipoUsuario.setBorder(null);
 		cmbTipoUsuario.setModel(new DefaultComboBoxModel(new String[] {"Analista", "Estudiante", "Tutor"}));
 		cmbTipoUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -148,7 +149,6 @@ public class Login extends JPanel {
 		return vista;
 	}
 
-
 	public String getTxtUsuario() {
 		return txtUsuario.getText();
 	}
@@ -158,11 +158,16 @@ public class Login extends JPanel {
 	}
 
 	public String getTxtContrasenia() {
-		return txtContrasenia.getPassword().toString();
+		return new String(txtContrasenia.getPassword());
 	}
 
 	public void setTxtContrasenia(JPasswordField txtContrasenia) {
 		this.txtContrasenia = txtContrasenia;
 	}
+
+	public JComboBox<String> getCmbTipoUsuario() {
+		return cmbTipoUsuario;
+	}
+	
 
 }

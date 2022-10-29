@@ -83,20 +83,22 @@ public class DashboardEstudiante extends JPanel {
 		lblEditarUsuario.setBounds(40, 166, 30, 32);
 		add(lblEditarUsuario);
 		
+		spHorizontal = new JSeparator();
 		spHorizontal.setBounds(10, 211, 127, 32);
 		add(spHorizontal);
 		spHorizontal.setBackground(SystemColor.textHighlight);
-		spVertical.setOrientation(SwingConstants.VERTICAL);
 		
+		spVertical = new JSeparator();
 		spVertical.setBounds(148, 0, 13, 700);
 		add(spVertical);
 		spVertical.setBackground(SystemColor.textHighlight);
+		spVertical.setOrientation(SwingConstants.VERTICAL);
 		
 		emptyPanel = new JPanel();
 		emptyPanel.setBounds(150, 0, 910, 700);
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
-
+		
 	}
 
 	public JButton getBtnJustificaciones() {

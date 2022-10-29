@@ -20,7 +20,7 @@ public class DashboardAnalistaControlador {
 		vista.getBtnJustificaciones().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.cambiarVista(listadoUsuarios);
+				vista.cambiarVista(listadoJustificaciones);
 			}
 		});
 
@@ -28,7 +28,7 @@ public class DashboardAnalistaControlador {
 		vista.getBtnUsuarios().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.cambiarVista(listadoJustificaciones);
+				vista.cambiarVista(listadoUsuarios);
 			}
 		});
 

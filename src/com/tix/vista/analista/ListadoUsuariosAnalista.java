@@ -112,16 +112,10 @@ public class ListadoUsuariosAnalista extends JPanel {
 		add(lblEstado);
 		
 		JComboBox cmbEstado = new JComboBox();
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Sin validar", "Validado"}));
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Sin validar", "Validados", "Eliminados"}));
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setBounds(20, 83, 140, 20);
 		add(cmbEstado);
-		
-		JCheckBox chkUsuariosEliminados = new JCheckBox("Mostrar usuarios eliminados");
-		chkUsuariosEliminados.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		chkUsuariosEliminados.setBackground(Color.WHITE);
-		chkUsuariosEliminados.setBounds(660, 84, 210, 21);
-		add(chkUsuariosEliminados);
 		
 		TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(10); //Estado

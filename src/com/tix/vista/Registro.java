@@ -696,7 +696,7 @@ public class Registro extends JPanel {
 	}
 
 	public String getTxtContrasenia() {
-		return txtContrasenia.getPassword().toString();
+		return new String(txtContrasenia.getPassword());
 	}
 
 	public String getTxtReingreseContrasenia() {
