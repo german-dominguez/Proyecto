@@ -39,7 +39,25 @@ public class PrincipalControlador {
 		vista.getLoginPanel().getBtnIniciarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.setContentPane(vista.getDashboardAnalista());
+				
+				int a = vista.getLoginPanel().getCmbTipoUsuario().getSelectedIndex();
+				
+				if (vista.getLoginControlador().login(a)) {
+					switch (a) {
+					case 0: {
+						vista.setContentPane(vista.getDashboardAnalista());
+						break;
+					}
+					case 1: {
+						vista.setContentPane(vista.getDashboardEstudiante());
+						break;
+					} 
+					}	
+				} else {
+					System.out.println("efe");
+				}
+				
+				
 				vista.setSize(1060, 700);
 				vista.setLocationRelativeTo(null);
 			}

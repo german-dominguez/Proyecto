@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.tix.controlador.DashboardAnalistaControlador;
+import com.tix.controlador.DashboardEstudianteControlador;
 import com.tix.controlador.LoginControlador;
 import com.tix.controlador.ModificarDatosPropiosControlador;
 import com.tix.controlador.RegistroControlador;
@@ -18,6 +19,7 @@ import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificacionesAnalista;
 import com.tix.vista.analista.ListadoReclamosAnalista;
 import com.tix.vista.analista.ListadoUsuariosAnalista;
+import com.tix.vista.estudiante.DashboardEstudiante;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JTabbedPane;
@@ -37,7 +39,8 @@ public class Principal extends JFrame {
 	JPanel panel;
 
 	// Paneles de login y registro
-	private Login loginPanel = new LoginControlador().getVista();
+	private LoginControlador loginControlador = new LoginControlador();
+	private Login loginPanel = loginControlador.getVista();
 
 	private Registro registroPanel;
 
@@ -45,6 +48,7 @@ public class Principal extends JFrame {
 
 	// Dashboards
 	private DashboardAnalista dashboardAnalista = new DashboardAnalistaControlador().getVista();
+	private DashboardEstudiante dashboardEstudiante = new DashboardEstudianteControlador().getVista();
 
 	// Paneles principales
 	private ListadoUsuariosAnalista listadoUsuarios = new ListadoUsuariosAnalista();
@@ -94,4 +98,21 @@ public class Principal extends JFrame {
 		return emptyPanel;
 	}
 
+	public LoginControlador getLoginControlador() {
+		return loginControlador;
+	}
+
+	public void setLoginControlador(LoginControlador loginControlador) {
+		this.loginControlador = loginControlador;
+	}
+
+	public DashboardEstudiante getDashboardEstudiante() {
+		return dashboardEstudiante;
+	}
+
+	public void setDashboardEstudiante(DashboardEstudiante dashboardEstudiante) {
+		this.dashboardEstudiante = dashboardEstudiante;
+	}
+
+	
 }
