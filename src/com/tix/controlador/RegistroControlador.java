@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.JOptionPane;
 
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Area;
@@ -21,14 +22,14 @@ import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.tix.modelo.servicios.TutoresBeanRemote;
 import com.tix.vista.Registro;
 
+import org.apache.commons.collections.functors.IfClosure;
+
 public class RegistroControlador {
 	private Registro vista = new Registro();
 
 	private AnalistasBeanRemote analistasBeanRemote;
 	private EstudiantesBeanRemote estudiantesBeanRemote;
 	private TutoresBeanRemote tutoresBeanRemote;
-	private LocalidadesBeanRemote localidadesBeanRemote;
-	private ItrsBeanRemote itrsBeanRemote;
 
 	public RegistroControlador() throws NamingException {
 
@@ -41,30 +42,49 @@ public class RegistroControlador {
 		tutoresBeanRemote = (TutoresBeanRemote) InitialContext
 				.doLookup("ProyectoEJB/TutoresBean!com.tix.modelo.servicios.TutoresBeanRemote");
 
-		localidadesBeanRemote = (LocalidadesBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/LocalidadesBean!com.tix.modelo.servicios.LocalidadesBeanRemote");
-
-		itrsBeanRemote = (ItrsBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/ItrsBean!com.tix.modelo.servicios.ItrsBeanRemote");
-
 		vista.getBtnRegistrar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				vista.validarCamposIngresados();
-
-				switch (vista.getCmbTipoUsuario().getSelectedIndex()) {
-					case 0:
-						registrarAnalista();
-						break;
-					case 1:
-						registrarEstudiante();
-						break;
-					case 2:
-						registrarTutor();
-						break;
+				if (vista.validarCamposIngresados()) {
+					switch (vista.getCmbTipoUsuario().getSelectedIndex()) {
+						case 0:
+							try {
+								registrarAnalista();
+								JOptionPane.showMessageDialog(null,
+										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
+										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null,
+										"El usuario que está tratando de registrar ya existe.");
+							}
+							break;
+						case 1:
+							try {
+								registrarEstudiante();
+								JOptionPane.showMessageDialog(null,
+										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
+										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null,
+										"El usuario que está tratando de registrar ya existe.");
+							}
+							break;
+						case 2:
+							try {
+								registrarTutor();
+								JOptionPane.showMessageDialog(null,
+										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
+										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null,
+										"El usuario que está tratando de registrar ya existe.");
+							}
+							break;
+					}
 				}
 			}
+
 		});
 
 		vista.getCmbTipoUsuario().addItemListener(new ItemListener() {
@@ -82,8 +102,8 @@ public class RegistroControlador {
 		this.vista = vista;
 	}
 
-	public void registrarAnalista() {
-		
+	public void registrarAnalista() throws Exception {
+
 		Analista analista = new Analista();
 
 		String emailInstitucional = vista.getTxtEmailInstitucional();
@@ -97,20 +117,19 @@ public class RegistroControlador {
 		analista.setTelefono(vista.getTxtTelefono());
 		analista.setFechaNacimiento(new Date(0));
 		analista.setDocumento(vista.getTxtDocumento());
+		analista.setGenero(vista.getCmbGenero());
 		analista.setMail(vista.getTxtEmailInstitucional());
 		analista.setContrasenia(vista.getTxtContrasenia());
 		analista.setNombreUsuario(nombreUsuario);
-
-		analista.setFechaNacimiento(new Date(System.currentTimeMillis()));
+		analista.setFechaNacimiento(vista.getDateChooser());
+		analista.setItr(vista.getCmbITR());
+		analista.setLocalidad(vista.getCmbLocalidad());
 		analista.setEstado(0);
-		analista.setGenero("masculino");
-		analista.setItr(itrsBeanRemote.obtenerItrPorId((long) 1));
-		analista.setLocalidad(localidadesBeanRemote.obtenerLocalidadPorId((long) 1));
 
 		analistasBeanRemote.registro((Analista) analista);
 	}
 
-	public void registrarEstudiante() {
+	public void registrarEstudiante() throws Exception {
 		Estudiante estudiante = new Estudiante();
 
 		String emailInstitucional = vista.getTxtEmailInstitucional();
@@ -124,22 +143,20 @@ public class RegistroControlador {
 		estudiante.setTelefono(vista.getTxtTelefono());
 		estudiante.setFechaNacimiento(new Date(0));
 		estudiante.setDocumento(vista.getTxtDocumento());
+		estudiante.setGenero(vista.getCmbGenero());
 		estudiante.setMail(vista.getTxtEmailInstitucional());
 		estudiante.setContrasenia(vista.getTxtContrasenia());
 		estudiante.setNombreUsuario(nombreUsuario);
 		estudiante.setGeneracion(vista.getTxtGeneracion());
-
-		estudiante.setFechaNacimiento(new Date(System.currentTimeMillis()));
+		estudiante.setFechaNacimiento(vista.getDateChooser());
+		estudiante.setItr(vista.getCmbITR());
+		estudiante.setLocalidad(vista.getCmbLocalidad());
 		estudiante.setEstado(0);
-		estudiante.setGenero("masculino");
-		estudiante.setItr(itrsBeanRemote.obtenerItrPorId((long) 1));
-		System.out.println(itrsBeanRemote.obtenerItrPorId((long) 1).getNombre());
-		estudiante.setLocalidad(localidadesBeanRemote.obtenerLocalidadPorId((long) 1));
 
 		estudiantesBeanRemote.registro(estudiante);
 	}
 
-	public void registrarTutor() {
+	public void registrarTutor() throws Exception {
 		Tutor tutor = new Tutor();
 
 		String emailInstitucional = vista.getTxtEmailInstitucional();
@@ -153,17 +170,17 @@ public class RegistroControlador {
 		tutor.setTelefono(vista.getTxtTelefono());
 		tutor.setFechaNacimiento(new Date(0));
 		tutor.setDocumento(vista.getTxtDocumento());
+		tutor.setGenero(vista.getCmbGenero());
 		tutor.setMail(vista.getTxtEmailInstitucional());
 		tutor.setContrasenia(vista.getTxtContrasenia());
 		tutor.setNombreUsuario(nombreUsuario);
-		tutor.setTipo(vista.getCmbRol().getSelectedItem().toString());
-		tutor.setArea((Area) vista.getCmbArea().getSelectedItem());
+		tutor.setTipo(vista.getCmbRol());
+		tutor.setArea((Area) vista.getCmbArea());
+		tutor.setFechaNacimiento(vista.getDateChooser());
+		tutor.setItr(vista.getCmbITR());
+		tutor.setLocalidad(vista.getCmbLocalidad());
 
-		tutor.setFechaNacimiento(new Date(System.currentTimeMillis()));
 		tutor.setEstado(0);
-		tutor.setGenero("masculino");
-		tutor.setItr(itrsBeanRemote.obtenerItrPorId((long) 1));
-		tutor.setLocalidad(localidadesBeanRemote.obtenerLocalidadPorId((long) 1));
 
 		tutoresBeanRemote.registro(tutor);
 	}

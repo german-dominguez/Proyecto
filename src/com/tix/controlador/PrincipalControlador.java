@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.naming.NamingException;
+import javax.swing.JOptionPane;
 
 import com.tix.vista.Principal;
 
@@ -12,7 +13,7 @@ public class PrincipalControlador {
 	private Principal vista;
 
 	public PrincipalControlador() throws NamingException {
-		
+
 		vista = new Principal();
 
 		// Botón NUEVO USUARIO - Cambia a la vista de registro
@@ -20,7 +21,7 @@ public class PrincipalControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getRegistroPanel());
-				vista.setSize(750, 500);
+				vista.setSize(750, 510);
 				vista.setLocationRelativeTo(null);
 			}
 		});
@@ -39,27 +40,34 @@ public class PrincipalControlador {
 		vista.getLoginPanel().getBtnIniciarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				int a = vista.getLoginPanel().getCmbTipoUsuario().getSelectedIndex();
-				
-				if (vista.getLoginControlador().login(a)) {
-					switch (a) {
-					case 0: {
-						vista.setContentPane(vista.getDashboardAnalista());
-						break;
+
+				try {
+					if (vista.getLoginControlador().login(a)) {
+
+						vista.setSize(1060, 700);
+						vista.setLocationRelativeTo(null);
+
+						switch (a) {
+							case 0: {
+								vista.setContentPane(vista.getDashboardAnalista());
+								break;
+							}
+							case 1: {
+								vista.setContentPane(vista.getDashboardEstudiante());
+								break;
+							}
+							case 2:
+								vista.setContentPane(vista.getDashboardEstudiante());
+								break;
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña son incorrectos.");
 					}
-					case 1: {
-						vista.setContentPane(vista.getDashboardEstudiante());
-						break;
-					} 
-					}	
-				} else {
-					System.out.println("efe");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña son incorrectos.");
 				}
-				
-				
-				vista.setSize(1060, 700);
-				vista.setLocationRelativeTo(null);
 			}
 		});
 
