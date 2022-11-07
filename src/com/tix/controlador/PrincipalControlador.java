@@ -12,7 +12,7 @@ public class PrincipalControlador {
 
 	private Principal vista;
 
-	public PrincipalControlador() throws NamingException {
+	public PrincipalControlador() {
 
 		vista = new Principal();
 
@@ -51,6 +51,7 @@ public class PrincipalControlador {
 
 						switch (a) {
 							case 0: {
+								vista.getDashboardAnalista().setUsuario(vista.getLoginControlador().getUsuario());
 								vista.setContentPane(vista.getDashboardAnalista());
 								break;
 							}
@@ -77,16 +78,6 @@ public class PrincipalControlador {
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getLoginPanel());
 				vista.setSize(350, 500);
-				vista.setLocationRelativeTo(null);
-			}
-		});
-
-		// Botón EDITAR DATOS PROPIOS en el dashboard
-		vista.getDashboardAnalista().getLblEditarUsuario().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				vista.setContentPane(vista.getModificarDatosPropios());
-				vista.setSize(750, 500);
 				vista.setLocationRelativeTo(null);
 			}
 		});

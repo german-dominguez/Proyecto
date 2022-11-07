@@ -1,11 +1,14 @@
 package com.tix.controlador;
 
+import javax.naming.NamingException;
+
 import com.tix.vista.ModificarDatosPropios;
 
 public class ModificarDatosPropiosControlador {
-	private ModificarDatosPropios vista = new ModificarDatosPropios();
+	private ModificarDatosPropios vista;
 
-	public ModificarDatosPropiosControlador() {
+	public ModificarDatosPropiosControlador(){
+		vista = new ModificarDatosPropios();
 	}
 
 	public ModificarDatosPropios getVista() {

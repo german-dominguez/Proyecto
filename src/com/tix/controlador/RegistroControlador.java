@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
+import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Estudiante;
@@ -27,20 +28,7 @@ import org.apache.commons.collections.functors.IfClosure;
 public class RegistroControlador {
 	private Registro vista = new Registro();
 
-	private AnalistasBeanRemote analistasBeanRemote;
-	private EstudiantesBeanRemote estudiantesBeanRemote;
-	private TutoresBeanRemote tutoresBeanRemote;
-
-	public RegistroControlador() throws NamingException {
-
-		analistasBeanRemote = (AnalistasBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/AnalistasBean!com.tix.modelo.servicios.AnalistasBeanRemote");
-
-		estudiantesBeanRemote = (EstudiantesBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/EstudiantesBean!com.tix.modelo.servicios.EstudiantesBeanRemote");
-
-		tutoresBeanRemote = (TutoresBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/TutoresBean!com.tix.modelo.servicios.TutoresBeanRemote");
+	public RegistroControlador() {
 
 		vista.getBtnRegistrar().addMouseListener(new MouseAdapter() {
 			@Override
@@ -126,7 +114,7 @@ public class RegistroControlador {
 		analista.setLocalidad(vista.getCmbLocalidad());
 		analista.setEstado(0);
 
-		analistasBeanRemote.registro((Analista) analista);
+		DatabaseManager.getInstance().getAnalistasBeanRemote().registro((Analista) analista);
 	}
 
 	public void registrarEstudiante() throws Exception {
@@ -153,7 +141,7 @@ public class RegistroControlador {
 		estudiante.setLocalidad(vista.getCmbLocalidad());
 		estudiante.setEstado(0);
 
-		estudiantesBeanRemote.registro(estudiante);
+		DatabaseManager.getInstance().getEstudiantesBeanRemote().registro(estudiante);
 	}
 
 	public void registrarTutor() throws Exception {
@@ -182,7 +170,7 @@ public class RegistroControlador {
 
 		tutor.setEstado(0);
 
-		tutoresBeanRemote.registro(tutor);
+		DatabaseManager.getInstance().getTutoresBeanRemote().registro(tutor);
 	}
 
 }

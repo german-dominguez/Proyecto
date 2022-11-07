@@ -55,10 +55,7 @@ public class Principal extends JFrame {
 	private ListadoJustificacionesAnalista listadoJustificaciones = new ListadoJustificacionesAnalista();
 	private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
 
-	// EmptyPanel
-	private EmptyPanel emptyPanel = new EmptyPanel();
-
-	public Principal() throws NamingException {
+	public Principal() {
 		registroPanel = new RegistroControlador().getVista();
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,10 +91,6 @@ public class Principal extends JFrame {
 		return modificarDatosPropiosPanel;
 	}
 
-	public EmptyPanel getEmptyPanel() {
-		return emptyPanel;
-	}
-
 	public LoginControlador getLoginControlador() {
 		return loginControlador;
 	}
@@ -114,5 +107,4 @@ public class Principal extends JFrame {
 		this.dashboardEstudiante = dashboardEstudiante;
 	}
 
-	
 }
