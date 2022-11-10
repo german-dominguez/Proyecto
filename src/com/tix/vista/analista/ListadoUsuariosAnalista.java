@@ -1,15 +1,19 @@
 package com.tix.vista.analista;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import com.tix.database.DatabaseManager;
@@ -26,12 +30,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -63,7 +71,7 @@ public class ListadoUsuariosAnalista extends JPanel {
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Estado", "Tipo de Usuario",
-				"Nombres y Apellidos", "ITR", "Email Institucional", "Tel\u00E9fono" }));
+				"Nombres y Apellidos", "ITR", "Email Institucional", "Tel\u00E9fono", " ", " " }));
 		table.setGridColor(Color.LIGHT_GRAY);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
@@ -81,22 +89,26 @@ public class ListadoUsuariosAnalista extends JPanel {
 		for (Analista analista : analistas) {
 			model.addRow(new Object[] { analista.getEstado(), analista.getClass().getSimpleName(),
 					analista.getNombre1() + " " + analista.getApellido1(), analista.getItr().getNombre(),
-					analista.getMail(), analista.getTelefono() });
+					analista.getMail(), analista.getTelefono(), "Editar", "Eliminar" });
 		}
 
 		for (Estudiante estudiante : estudiantes) {
 			model.addRow(new Object[] { estudiante.getEstado(), estudiante.getClass().getSimpleName(),
 					estudiante.getNombre1() + " " + estudiante.getApellido1(), estudiante.getItr().getNombre(),
-					estudiante.getMail(), estudiante.getTelefono() });
+					estudiante.getMail(), estudiante.getTelefono(), "Editar", "Eliminar" });
 		}
 
 		for (Tutor tutor : tutores) {
 			model.addRow(new Object[] { tutor.getEstado(), tutor.getClass().getSimpleName(),
 					tutor.getNombre1() + " " + tutor.getApellido1(), tutor.getItr().getNombre(), tutor.getMail(),
-					tutor.getTelefono() });
+					tutor.getTelefono(), "Editar", "Eliminar" });
 		}
 
 		this.table.setDefaultRenderer(Object.class, new RenderTablas());
+
+		table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+		table.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer());
+		table.getColumnModel().getColumn(7).setCellEditor(new EliminarButtonEditor(new JCheckBox()));
 
 		JLabel lblTipoUsuario = new JLabel("Tipo de usuario");
 		lblTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -143,5 +155,130 @@ public class ListadoUsuariosAnalista extends JPanel {
 		cmbEstado.setBounds(20, 83, 140, 20);
 		add(cmbEstado);
 
+	}
+
+	class ButtonRenderer extends JButton implements TableCellRenderer {
+
+		public ButtonRenderer() {
+			setOpaque(true);
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (isSelected) {
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else {
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "" : value.toString());
+			return this;
+		}
+	}
+
+	class ButtonEditor extends DefaultCellEditor {
+
+		protected JButton button;
+		private String label;
+		private boolean isPushed;
+
+		public ButtonEditor(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				JOptionPane.showMessageDialog(button, label + ": Ouch!");
+			}
+			isPushed = false;
+			return label;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+	}
+
+	class EliminarButtonEditor extends DefaultCellEditor {
+
+		protected JButton button;
+		private String label;
+		private boolean isPushed;
+
+		public EliminarButtonEditor(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				JOptionPane.showMessageDialog(null, "Chill");
+			}
+			isPushed = false;
+			return label;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+	}
+
+	public void setButtonEditor(com.tix.vista.analista.DashboardAnalista.ButtonEditor buttonEditor) {
+		table.getColumnModel().getColumn(6).setCellEditor(buttonEditor);
 	}
 }

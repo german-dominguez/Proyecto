@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.naming.NamingException;
+import javax.swing.JCheckBox;
 
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
@@ -32,6 +33,7 @@ public class DashboardAnalistaControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.cambiarVista(vista.getListadoUsuarios());
+				vista.getListadoUsuarios().setButtonEditor(vista. new ButtonEditor(new JCheckBox()));
 			}
 		});
 

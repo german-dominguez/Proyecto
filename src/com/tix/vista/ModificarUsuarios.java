@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Departamento;
 import com.tix.modelo.entidades.Itr;
@@ -33,7 +34,7 @@ import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
 
-public class ModificacionUsuarios extends JPanel {
+public class ModificarUsuarios extends JPanel {
 	private JTextField txtDocumento;
 	private JTextField txtPrimerNombre;
 	private JTextField txtSegundoNombre;
@@ -97,29 +98,12 @@ public class ModificacionUsuarios extends JPanel {
 
 	private JDateChooser dateChooser;
 
-	private ItrsBeanRemote itrsBeanRemote;
-	private LocalidadesBeanRemote localidadesBeanRemote;
-	private DepartamentosBeanRemote departamentosBeanRemote;
-	private AreasBeanRemote areasBeanRemote;
-
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws NamingException
 	 */
-	public ModificacionUsuarios() throws NamingException {
-
-		itrsBeanRemote = (ItrsBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/ItrsBean!com.tix.modelo.servicios.ItrsBeanRemote");
-
-		localidadesBeanRemote = (LocalidadesBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/LocalidadesBean!com.tix.modelo.servicios.LocalidadesBeanRemote");
-
-		departamentosBeanRemote = (DepartamentosBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/DepartamentosBean!com.tix.modelo.servicios.DepartamentosBeanRemote");
-
-		areasBeanRemote = (AreasBeanRemote) InitialContext
-				.doLookup("ProyectoEJB/AreasBean!com.tix.modelo.servicios.AreasBeanRemote");
+	public ModificarUsuarios() {
 
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -451,7 +435,7 @@ public class ModificacionUsuarios extends JPanel {
 		add(cmbGenero);
 
 		cmbLocalidad = new JComboBox<Localidad>();
-		for (Localidad localidad : localidadesBeanRemote.obtenerTodos()) {
+		for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
 			cmbLocalidad.addItem(localidad);
 		}
 		cmbLocalidad.setForeground(Color.DARK_GRAY);
@@ -463,7 +447,7 @@ public class ModificacionUsuarios extends JPanel {
 		add(cmbLocalidad);
 
 		cmbDepartamento = new JComboBox<Departamento>();
-		for (Departamento departamento : departamentosBeanRemote.obtenerTodos()) {
+		for (Departamento departamento : DatabaseManager.getInstance().getDepartamentosBeanRemote().obtenerTodos()) {
 			cmbDepartamento.addItem(departamento);
 		}
 		cmbDepartamento.setForeground(Color.DARK_GRAY);
@@ -475,7 +459,7 @@ public class ModificacionUsuarios extends JPanel {
 		add(cmbDepartamento);
 
 		cmbITR = new JComboBox<Itr>();
-		for (Itr itr : itrsBeanRemote.obtenerTodos()) {
+		for (Itr itr : DatabaseManager.getInstance().getItrsBeanRemote().obtenerTodos()) {
 			cmbITR.addItem(itr);
 		}
 		cmbITR.setForeground(Color.DARK_GRAY);
@@ -487,7 +471,7 @@ public class ModificacionUsuarios extends JPanel {
 		add(cmbITR);
 
 		cmbArea = new JComboBox<Area>();
-		for (Area area : areasBeanRemote.obtenerTodos()) {
+		for (Area area : DatabaseManager.getInstance().getAreasBeanRemote().obtenerTodos()) {
 			cmbArea.addItem(area);
 		}
 		cmbArea.setVisible(false);

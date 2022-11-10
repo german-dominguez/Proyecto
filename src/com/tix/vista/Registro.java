@@ -28,6 +28,7 @@ import com.tix.modelo.entidades.Departamento;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Localidad;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Cursor;
 
 public class Registro extends JPanel {
 	private JTextField txtDocumento;
@@ -184,7 +185,7 @@ public class Registro extends JPanel {
 
 		lblFechaNacimiento = new JLabel("Fecha de nacimiento *");
 		lblFechaNacimiento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaNacimiento.setBounds(40, 391, 135, 21);
+		lblFechaNacimiento.setBounds(40, 395, 135, 21);
 		add(lblFechaNacimiento);
 
 		lblEmailPersonal = new JLabel("Email personal *");
@@ -355,7 +356,7 @@ public class Registro extends JPanel {
 
 		spFechaNacimiento = new JSeparator();
 		spFechaNacimiento.setBackground(SystemColor.textHighlight);
-		spFechaNacimiento.setBounds(40, 428, 140, 14);
+		spFechaNacimiento.setBounds(40, 435, 140, 14);
 		add(spFechaNacimiento);
 
 		spDatosPersonales = new JSeparator();
@@ -508,6 +509,7 @@ public class Registro extends JPanel {
 		add(btnRegistrar);
 
 		btnIniciarSesion = new JButton("¿Ya está registrado? Iniciar sesión");
+		btnIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnIniciarSesion.setForeground(SystemColor.textHighlight);
 		btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		btnIniciarSesion.setFocusable(false);
@@ -529,7 +531,7 @@ public class Registro extends JPanel {
 		add(lblAviso);
 
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(40, 412, 140, 19);
+		dateChooser.setBounds(40, 415, 140, 19);
 		add(dateChooser);
 
 	}

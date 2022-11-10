@@ -2,21 +2,28 @@ package com.tix.vista.analista;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 
 import com.tix.modelo.entidades.Usuario;
 import com.tix.vista.ModificarDatosPropios;
+import com.tix.vista.ModificarUsuarios;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,10 +32,11 @@ import java.awt.BorderLayout;
 
 public class DashboardAnalista extends JPanel {
 
-	private ListadoUsuariosAnalista listadoUsuarios;
+	private ListadoUsuariosAnalista listadoUsuarios = new ListadoUsuariosAnalista();
 	private ListadoJustificacionesAnalista listadoJustificaciones = new ListadoJustificacionesAnalista();
 	private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
+	private ModificarUsuarios modificarUsuarios = new ModificarUsuarios();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
@@ -185,6 +193,56 @@ public class DashboardAnalista extends JPanel {
 			btnReclamos.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
+		}
+	}
+
+	public class ButtonEditor extends DefaultCellEditor {
+
+		protected JButton button;
+		private String label;
+		private boolean isPushed;
+
+		public ButtonEditor(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				cambiarVista(modificarUsuarios);
+			}
+			isPushed = false;
+			return label;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
 		}
 	}
 
