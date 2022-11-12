@@ -4,9 +4,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import com.tix.vista.analista.DashboardAnalista;
-import com.tix.vista.analista.ListadoJustificacionesAnalista;
-import com.tix.vista.analista.ListadoReclamosAnalista;
-import com.tix.vista.analista.ListadoUsuariosAnalista;
+import com.tix.vista.analista.ListadoJustificaciones;
+import com.tix.vista.analista.ListadoReclamos;
+import com.tix.vista.analista.ListadoUsuarios;
 import com.tix.vista.estudiante.DashboardEstudiante;
 import com.tix.vista.estudiante.ListadoJustificacionesEstudiante;
 

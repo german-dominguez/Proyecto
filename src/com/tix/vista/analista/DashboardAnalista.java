@@ -21,22 +21,27 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
+import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.Analista;
+import com.tix.modelo.entidades.Estudiante;
+import com.tix.modelo.entidades.Tutor;
 import com.tix.modelo.entidades.Usuario;
 import com.tix.vista.ModificarDatosPropios;
-import com.tix.vista.ModificarUsuarios;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import java.awt.BorderLayout;
 
 public class DashboardAnalista extends JPanel {
 
-	private ListadoUsuariosAnalista listadoUsuarios = new ListadoUsuariosAnalista();
-	private ListadoJustificacionesAnalista listadoJustificaciones = new ListadoJustificacionesAnalista();
-	private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
+	private ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
+	private ListadoJustificaciones listadoJustificaciones = new ListadoJustificaciones();
+	private ListadoReclamos listadoReclamos = new ListadoReclamos();
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
-	private ModificarUsuarios modificarUsuarios = new ModificarUsuarios();
+	private ModificarAnalista modificarAnalista = new ModificarAnalista();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
@@ -53,7 +58,10 @@ public class DashboardAnalista extends JPanel {
 	private JSeparator spHorizontal;
 	private JSeparator spVertical;
 
-	private Usuario usuario;
+	private Analista usuario;
+	private Analista analista;
+	private Estudiante estudiante;
+	private Tutor tutor;
 
 	/**
 	 * Create the panel.
@@ -167,6 +175,20 @@ public class DashboardAnalista extends JPanel {
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
 
+		modificarAnalista.getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (modificarAnalista.validarCamposIngresados()) {
+					try {
+						modificarAnalista.editarAnalista(analista);
+						JOptionPane.showMessageDialog(null, "Los datos del usuario se editaron con éxito");
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos del usuario");
+					}
+				}
+			}
+		});
+
 	}
 
 	public void cambiarVista(JPanel panel) {
@@ -233,7 +255,22 @@ public class DashboardAnalista extends JPanel {
 		@Override
 		public Object getCellEditorValue() {
 			if (isPushed) {
-				cambiarVista(modificarUsuarios);
+				int fila = listadoUsuarios.getTable().getSelectedRow();
+				long id = (long) listadoUsuarios.getTable().getValueAt(fila, 0);
+				String tipoUsuario = (String) listadoUsuarios.getTable().getValueAt(fila, 2);
+
+				if (tipoUsuario.equals("Analista")) {
+					cambiarVista(modificarAnalista);
+					analista = DatabaseManager.getInstance().getAnalistasBeanRemote().obtenerAnalistaPorId(id);
+					modificarAnalista.cargarDatos(analista);
+				}
+				if (tipoUsuario.equals("Estudiante")) {
+					estudiante = DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerEstudiantePorId(id);
+				}
+				if (tipoUsuario.equals("Tutor")) {
+					tutor = DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTutorPorId(id);
+				}
+
 			}
 			isPushed = false;
 			return label;
@@ -246,13 +283,36 @@ public class DashboardAnalista extends JPanel {
 		}
 	}
 
-	public Usuario getUsuario() {
+	public Analista getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		lblNombreUsuario.setText(usuario.getNombre1());
+	public void setUsuario(Analista usuario) {
 		this.usuario = usuario;
+	}
+
+	public Analista getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(Analista analista) {
+		this.analista = analista;
+	}
+
+	public Estudiante getEstudiante() {
+		return estudiante;
+	}
+
+	public void setEstudiante(Estudiante estudiante) {
+		this.estudiante = estudiante;
+	}
+
+	public Tutor getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(Tutor tutor) {
+		this.tutor = tutor;
 	}
 
 	public JButton getBtnUsuarios() {
@@ -295,27 +355,27 @@ public class DashboardAnalista extends JPanel {
 		this.lblEditarUsuario = lblEditarUsuario;
 	}
 
-	public ListadoUsuariosAnalista getListadoUsuarios() {
+	public ListadoUsuarios getListadoUsuarios() {
 		return listadoUsuarios;
 	}
 
-	public void setListadoUsuarios(ListadoUsuariosAnalista listadoUsuarios) {
+	public void setListadoUsuarios(ListadoUsuarios listadoUsuarios) {
 		this.listadoUsuarios = listadoUsuarios;
 	}
 
-	public ListadoJustificacionesAnalista getListadoJustificaciones() {
+	public ListadoJustificaciones getListadoJustificaciones() {
 		return listadoJustificaciones;
 	}
 
-	public void setListadoJustificaciones(ListadoJustificacionesAnalista listadoJustificaciones) {
+	public void setListadoJustificaciones(ListadoJustificaciones listadoJustificaciones) {
 		this.listadoJustificaciones = listadoJustificaciones;
 	}
 
-	public ListadoReclamosAnalista getListadoReclamos() {
+	public ListadoReclamos getListadoReclamos() {
 		return listadoReclamos;
 	}
 
-	public void setListadoReclamos(ListadoReclamosAnalista listadoReclamos) {
+	public void setListadoReclamos(ListadoReclamos listadoReclamos) {
 		this.listadoReclamos = listadoReclamos;
 	}
 

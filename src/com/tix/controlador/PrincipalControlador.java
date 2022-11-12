@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
+import com.tix.modelo.entidades.Analista;
 import com.tix.vista.Principal;
 
 public class PrincipalControlador {
@@ -51,7 +52,8 @@ public class PrincipalControlador {
 
 						switch (a) {
 							case 0: {
-								vista.getDashboardAnalista().setUsuario(vista.getLoginControlador().getUsuario());
+								vista.getDashboardAnalista()
+										.setUsuario((Analista) vista.getLoginControlador().getUsuario());
 								vista.setContentPane(vista.getDashboardAnalista());
 								break;
 							}
@@ -63,6 +65,8 @@ public class PrincipalControlador {
 								vista.setContentPane(vista.getDashboardEstudiante());
 								break;
 						}
+
+						vista.getLoginPanel().vaciarCampos();
 					} else {
 						JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña son incorrectos.");
 					}

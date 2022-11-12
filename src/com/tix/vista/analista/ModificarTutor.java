@@ -1,4 +1,4 @@
-package com.tix.vista;
+package com.tix.vista.analista;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,17 +24,21 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Departamento;
+import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Localidad;
+import com.tix.modelo.entidades.Tutor;
+import com.tix.modelo.entidades.Usuario;
 import com.tix.modelo.servicios.AreasBeanRemote;
 import com.tix.modelo.servicios.DepartamentosBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
 
-public class ModificarUsuarios extends JPanel {
+public class ModificarTutor extends JPanel {
 	private JTextField txtDocumento;
 	private JTextField txtPrimerNombre;
 	private JTextField txtSegundoNombre;
@@ -94,7 +98,6 @@ public class ModificarUsuarios extends JPanel {
 	private JComboBox<String> cmbRol;
 	private JComboBox<String> cmbTipoUsuario;
 	private JButton btnRegistrar;
-	private JButton btnIniciarSesion;
 
 	private JDateChooser dateChooser;
 
@@ -103,7 +106,7 @@ public class ModificarUsuarios extends JPanel {
 	 * 
 	 * @throws NamingException
 	 */
-	public ModificarUsuarios() {
+	public ModificarTutor() {
 
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -260,6 +263,7 @@ public class ModificarUsuarios extends JPanel {
 		add(txtSegundoApellido);
 
 		txtEmailInstitucional = new JTextField();
+		txtEmailInstitucional.setEnabled(false);
 		txtEmailInstitucional.setEditable(false);
 		txtEmailInstitucional.setForeground(Color.DARK_GRAY);
 		txtEmailInstitucional.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -269,6 +273,7 @@ public class ModificarUsuarios extends JPanel {
 		add(txtEmailInstitucional);
 
 		txtContrasenia = new JPasswordField();
+		txtContrasenia.setEnabled(false);
 		txtContrasenia.setEditable(false);
 		txtContrasenia.setForeground(Color.DARK_GRAY);
 		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -303,6 +308,7 @@ public class ModificarUsuarios extends JPanel {
 		add(txtGeneracion);
 
 		txtReingreseContrasenia = new JPasswordField();
+		txtReingreseContrasenia.setEnabled(false);
 		txtReingreseContrasenia.setEditable(false);
 		txtReingreseContrasenia.setForeground(Color.DARK_GRAY);
 		txtReingreseContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -495,6 +501,7 @@ public class ModificarUsuarios extends JPanel {
 		add(cmbRol);
 
 		cmbTipoUsuario = new JComboBox<String>();
+		cmbTipoUsuario.setEnabled(false);
 		cmbTipoUsuario.setForeground(Color.DARK_GRAY);
 		cmbTipoUsuario.setModel(new DefaultComboBoxModel(new String[] { "Analista", "Estudiante", "Tutor" }));
 		cmbTipoUsuario.setSelectedIndex(0);
@@ -505,7 +512,7 @@ public class ModificarUsuarios extends JPanel {
 		cmbTipoUsuario.setBounds(403, 250, 140, 20);
 		add(cmbTipoUsuario);
 
-		btnRegistrar = new JButton("REGISTRAR");
+		btnRegistrar = new JButton("MODIFICAR");
 		btnRegistrar.setForeground(Color.WHITE);
 		btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnRegistrar.setFocusable(false);
@@ -515,16 +522,7 @@ public class ModificarUsuarios extends JPanel {
 		btnRegistrar.setBounds(441, 360, 223, 49);
 		add(btnRegistrar);
 
-		btnIniciarSesion = new JButton("¿Ya está registrado? Iniciar sesión");
-		btnIniciarSesion.setForeground(SystemColor.textHighlight);
-		btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnIniciarSesion.setFocusable(false);
-		btnIniciarSesion.setBorder(null);
-		btnIniciarSesion.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
-		btnIniciarSesion.setBounds(441, 419, 223, 23);
-		add(btnIniciarSesion);
-
-		JLabel lblRegistroDeUsuario = new JLabel("REGISTRO DE USUARIO");
+		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
 		lblRegistroDeUsuario.setForeground(Color.BLACK);
 		lblRegistroDeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblRegistroDeUsuario.setBounds(40, 12, 390, 41);
@@ -540,22 +538,6 @@ public class ModificarUsuarios extends JPanel {
 		dateChooser.setBounds(40, 412, 140, 19);
 		add(dateChooser);
 
-	}
-
-	public JButton getBtnIniciarSesion() {
-		return btnIniciarSesion;
-	}
-
-	public void setBtnIniciarSesion(JButton btnIniciarSesion) {
-		this.btnIniciarSesion = btnIniciarSesion;
-	}
-
-	public JButton getBtnRegistrar() {
-		return btnRegistrar;
-	}
-
-	public void setBtnRegistrar(JButton btnRegistrar) {
-		this.btnRegistrar = btnRegistrar;
 	}
 
 	public boolean validaCI(String ci) {
@@ -750,6 +732,14 @@ public class ModificarUsuarios extends JPanel {
 				break;
 		}
 
+	}
+
+	public JButton getBtnRegistrar() {
+		return btnRegistrar;
+	}
+
+	public void setBtnRegistrar(JButton btnRegistrar) {
+		this.btnRegistrar = btnRegistrar;
 	}
 
 	public String getTxtDocumento() {

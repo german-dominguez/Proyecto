@@ -128,6 +128,11 @@ public class Login extends JPanel {
 
 
 	}
+	
+	public void vaciarCampos() {
+		txtContrasenia.setText("");
+		txtUsuario.setText("");
+	}
 
 	public JButton getBtnNuevoUsuario() {
 		return btnNuevoUsuario;

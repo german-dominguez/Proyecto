@@ -1,4 +1,4 @@
-package com.tix.vista;
+package com.tix.vista.analista;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -23,53 +24,53 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Departamento;
+import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Localidad;
+import com.tix.modelo.entidades.Tutor;
+import com.tix.modelo.entidades.Usuario;
+import com.tix.modelo.servicios.AreasBeanRemote;
+import com.tix.modelo.servicios.DepartamentosBeanRemote;
+import com.tix.modelo.servicios.ItrsBeanRemote;
+import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 
-public class Registro extends JPanel {
+public class ModificarAnalista extends JPanel {
 	private JTextField txtDocumento;
 	private JTextField txtPrimerNombre;
 	private JTextField txtSegundoNombre;
 	private JTextField txtPrimerApellido;
 	private JTextField txtSegundoApellido;
 	private JTextField txtEmailInstitucional;
-	private JPasswordField txtContrasenia;
-	private JPasswordField txtReingreseContrasenia;
 	private JTextField txtTelefono;
 	private JTextField txtEmailPersonal;
-	private JTextField txtGeneracion;
 
 	private JLabel lblPrimerNombre;
 	private JLabel lblSegundoNombre;
 	private JLabel lblSegundoApellido;
 	private JLabel lblDocumento;
-	private JLabel lblReingreseContrasenia;
 	private JLabel lblTelefono;
-	private JLabel lblArea;
-	private JLabel lblTipoUsuario;
 	private JLabel lblLocalidad;
 	private JLabel lblDatosPersonales;
 	private JLabel lblDatosAcadmicos;
 	private JLabel lblPrimerApellido;
 	private JLabel lblEmailInstitucional;
-	private JLabel lblContrasenia;
 	private JLabel lblFechaNacimiento;
 	private JLabel lblEmailPersonal;
 	private JLabel lblITR;
-	private JLabel lblGeneracion;
-	private JLabel lblRol;
 	private JLabel lblDepartamento;
+	JLabel lblEstado;
 
 	private JSeparator spDocumento;
-	private JSeparator spRol;
 	private JSeparator spPrimerApellido;
 	private JSeparator spSegundoApellido;
 	private JSeparator spEmailInstitucional;
-	private JSeparator spContrasenia;
 	private JSeparator spEmailPersonal;
 	private JSeparator spDepartamento;
 	private JSeparator spLocalidad;
@@ -78,19 +79,15 @@ public class Registro extends JPanel {
 	private JSeparator spDatosPersonales;
 	private JSeparator spDatosAcademicos;
 	private JSeparator spITR;
-	private JSeparator spGeneracion;
-	private JSeparator spReintreseContrasenia;
-	private JSeparator spTipoUsuario;
-	private JSeparator spArea;
+	JSeparator spEstado;
+
 	private JComboBox<String> cmbGenero;
 	private JComboBox<Localidad> cmbLocalidad;
 	private JComboBox<Departamento> cmbDepartamento;
 	private JComboBox<Itr> cmbITR;
-	private JComboBox<Area> cmbArea;
-	private JComboBox<String> cmbRol;
-	private JComboBox<String> cmbTipoUsuario;
-	private JButton btnRegistrar;
-	private JButton btnIniciarSesion;
+	JComboBox<String> cmbEstado;
+
+	private JButton btnModificar;
 
 	private JDateChooser dateChooser;
 
@@ -99,120 +96,87 @@ public class Registro extends JPanel {
 	 * 
 	 * @throws NamingException
 	 */
-	public Registro() {
+	public ModificarAnalista() {
 
 		setBackground(Color.WHITE);
 		setLayout(null);
-		setSize(new Dimension(750, 500));
+		setSize(new Dimension(910, 700));
 
 		lblDocumento = new JLabel("Documento *");
 		lblDocumento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDocumento.setBounds(203, 285, 136, 21);
+		lblDocumento.setBounds(284, 389, 136, 21);
 		add(lblDocumento);
-
-		lblReingreseContrasenia = new JLabel("Reingrese su contraseña *");
-		lblReingreseContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblReingreseContrasenia.setBounds(566, 175, 190, 21);
-		add(lblReingreseContrasenia);
 
 		lblPrimerNombre = new JLabel("Primer nombre *");
 		lblPrimerNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblPrimerNombre.setBounds(40, 120, 135, 21);
+		lblPrimerNombre.setBounds(121, 224, 135, 21);
 		add(lblPrimerNombre);
 
 		lblDatosAcadmicos = new JLabel("Datos académicos");
 		lblDatosAcadmicos.setForeground(SystemColor.textHighlight);
 		lblDatosAcadmicos.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lblDatosAcadmicos.setBounds(403, 66, 299, 27);
+		lblDatosAcadmicos.setBounds(484, 170, 299, 27);
 		add(lblDatosAcadmicos);
 
 		lblDatosPersonales = new JLabel("Datos personales");
 		lblDatosPersonales.setForeground(SystemColor.textHighlight);
 		lblDatosPersonales.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lblDatosPersonales.setBounds(40, 66, 299, 27);
+		lblDatosPersonales.setBounds(121, 170, 299, 27);
 		add(lblDatosPersonales);
 
 		lblTelefono = new JLabel("Teléfono de contacto *");
 		lblTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblTelefono.setBounds(203, 230, 136, 21);
+		lblTelefono.setBounds(284, 334, 136, 21);
 		add(lblTelefono);
 
 		lblSegundoNombre = new JLabel("Segundo nombre");
 		lblSegundoNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblSegundoNombre.setBounds(203, 120, 135, 21);
+		lblSegundoNombre.setBounds(284, 224, 135, 21);
 		add(lblSegundoNombre);
-
-		lblArea = new JLabel("Área *");
-		lblArea.setVisible(false);
-		lblArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblArea.setBounds(403, 285, 135, 21);
-		add(lblArea);
 
 		lblSegundoApellido = new JLabel("Segundo apellido");
 		lblSegundoApellido.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblSegundoApellido.setBounds(203, 175, 136, 21);
+		lblSegundoApellido.setBounds(284, 279, 136, 21);
 		add(lblSegundoApellido);
 
 		JLabel lblGnero = new JLabel("Género *");
 		lblGnero.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblGnero.setBounds(40, 285, 135, 21);
+		lblGnero.setBounds(121, 389, 135, 21);
 		add(lblGnero);
-
-		lblTipoUsuario = new JLabel("Tipo de Usuario *");
-		lblTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblTipoUsuario.setBounds(403, 230, 135, 21);
-		add(lblTipoUsuario);
 
 		lblLocalidad = new JLabel("Localidad *");
 		lblLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblLocalidad.setBounds(203, 340, 136, 21);
+		lblLocalidad.setBounds(284, 444, 136, 21);
 		add(lblLocalidad);
 
 		lblPrimerApellido = new JLabel("Primer apellido *");
 		lblPrimerApellido.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblPrimerApellido.setBounds(40, 175, 135, 21);
+		lblPrimerApellido.setBounds(121, 279, 135, 21);
 		add(lblPrimerApellido);
 
 		lblEmailInstitucional = new JLabel("Email institucional *");
 		lblEmailInstitucional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEmailInstitucional.setBounds(403, 120, 190, 21);
+		lblEmailInstitucional.setBounds(484, 224, 140, 21);
 		add(lblEmailInstitucional);
-
-		lblContrasenia = new JLabel("Contraseña *");
-		lblContrasenia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblContrasenia.setBounds(403, 175, 100, 21);
-		add(lblContrasenia);
 
 		lblFechaNacimiento = new JLabel("Fecha de nacimiento *");
 		lblFechaNacimiento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaNacimiento.setBounds(40, 395, 135, 21);
+		lblFechaNacimiento.setBounds(121, 495, 135, 21);
 		add(lblFechaNacimiento);
 
 		lblEmailPersonal = new JLabel("Email personal *");
 		lblEmailPersonal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEmailPersonal.setBounds(40, 230, 135, 21);
+		lblEmailPersonal.setBounds(121, 334, 135, 21);
 		add(lblEmailPersonal);
 
 		lblITR = new JLabel("ITR *");
 		lblITR.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblITR.setBounds(566, 120, 135, 21);
+		lblITR.setBounds(647, 224, 136, 21);
 		add(lblITR);
-
-		lblGeneracion = new JLabel("Generación *");
-		lblGeneracion.setVisible(false);
-		lblGeneracion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblGeneracion.setBounds(566, 230, 111, 21);
-		add(lblGeneracion);
-
-		lblRol = new JLabel("Rol *");
-		lblRol.setVisible(false);
-		lblRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblRol.setBounds(566, 285, 135, 21);
-		add(lblRol);
 
 		lblDepartamento = new JLabel("Departamento *");
 		lblDepartamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDepartamento.setBounds(40, 340, 135, 21);
+		lblDepartamento.setBounds(121, 444, 135, 21);
 		add(lblDepartamento);
 
 		txtDocumento = new JTextField();
@@ -220,7 +184,7 @@ public class Registro extends JPanel {
 		txtDocumento.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtDocumento.setColumns(10);
 		txtDocumento.setBorder(null);
-		txtDocumento.setBounds(203, 305, 140, 20);
+		txtDocumento.setBounds(284, 409, 140, 20);
 		add(txtDocumento);
 
 		txtPrimerNombre = new JTextField();
@@ -228,7 +192,7 @@ public class Registro extends JPanel {
 		txtPrimerNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtPrimerNombre.setColumns(10);
 		txtPrimerNombre.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtPrimerNombre.setBounds(40, 140, 140, 20);
+		txtPrimerNombre.setBounds(121, 244, 140, 20);
 		add(txtPrimerNombre);
 
 		txtSegundoNombre = new JTextField();
@@ -236,7 +200,7 @@ public class Registro extends JPanel {
 		txtSegundoNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtSegundoNombre.setColumns(10);
 		txtSegundoNombre.setBorder(null);
-		txtSegundoNombre.setBounds(203, 140, 140, 20);
+		txtSegundoNombre.setBounds(284, 244, 140, 20);
 		add(txtSegundoNombre);
 
 		txtPrimerApellido = new JTextField();
@@ -244,7 +208,7 @@ public class Registro extends JPanel {
 		txtPrimerApellido.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtPrimerApellido.setColumns(10);
 		txtPrimerApellido.setBorder(null);
-		txtPrimerApellido.setBounds(40, 195, 140, 20);
+		txtPrimerApellido.setBounds(121, 299, 140, 20);
 		add(txtPrimerApellido);
 
 		txtSegundoApellido = new JTextField();
@@ -252,30 +216,25 @@ public class Registro extends JPanel {
 		txtSegundoApellido.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtSegundoApellido.setColumns(10);
 		txtSegundoApellido.setBorder(null);
-		txtSegundoApellido.setBounds(203, 195, 140, 20);
+		txtSegundoApellido.setBounds(284, 299, 140, 20);
 		add(txtSegundoApellido);
 
 		txtEmailInstitucional = new JTextField();
+		txtEmailInstitucional.setEnabled(false);
+		txtEmailInstitucional.setEditable(false);
 		txtEmailInstitucional.setForeground(Color.DARK_GRAY);
 		txtEmailInstitucional.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtEmailInstitucional.setColumns(10);
 		txtEmailInstitucional.setBorder(null);
-		txtEmailInstitucional.setBounds(403, 140, 140, 20);
+		txtEmailInstitucional.setBounds(484, 244, 140, 20);
 		add(txtEmailInstitucional);
-
-		txtContrasenia = new JPasswordField();
-		txtContrasenia.setForeground(Color.DARK_GRAY);
-		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		txtContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtContrasenia.setBounds(403, 195, 140, 20);
-		add(txtContrasenia);
 
 		txtTelefono = new JTextField();
 		txtTelefono.setForeground(Color.DARK_GRAY);
 		txtTelefono.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtTelefono.setColumns(10);
 		txtTelefono.setBorder(null);
-		txtTelefono.setBounds(203, 250, 140, 20);
+		txtTelefono.setBounds(284, 354, 140, 20);
 		add(txtTelefono);
 
 		txtEmailPersonal = new JTextField();
@@ -284,137 +243,88 @@ public class Registro extends JPanel {
 		txtEmailPersonal.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtEmailPersonal.setColumns(10);
 		txtEmailPersonal.setBorder(null);
-		txtEmailPersonal.setBounds(40, 250, 140, 20);
+		txtEmailPersonal.setBounds(121, 354, 140, 20);
 		add(txtEmailPersonal);
-
-		txtGeneracion = new JTextField();
-		txtGeneracion.setVisible(false);
-		txtGeneracion.setForeground(Color.DARK_GRAY);
-		txtGeneracion.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		txtGeneracion.setColumns(10);
-		txtGeneracion.setBorder(null);
-		txtGeneracion.setBounds(566, 250, 140, 20);
-		add(txtGeneracion);
-
-		txtReingreseContrasenia = new JPasswordField();
-		txtReingreseContrasenia.setForeground(Color.DARK_GRAY);
-		txtReingreseContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		txtReingreseContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtReingreseContrasenia.setBounds(566, 195, 140, 20);
-		add(txtReingreseContrasenia);
 
 		spDocumento = new JSeparator();
 		spDocumento.setBackground(SystemColor.textHighlight);
-		spDocumento.setBounds(203, 325, 140, 14);
+		spDocumento.setBounds(284, 429, 140, 14);
 		add(spDocumento);
-
-		spRol = new JSeparator();
-		spRol.setVisible(false);
-		spRol.setBackground(SystemColor.textHighlight);
-		spRol.setBounds(566, 325, 140, 14);
-		add(spRol);
 
 		spPrimerApellido = new JSeparator();
 		spPrimerApellido.setBackground(SystemColor.textHighlight);
-		spPrimerApellido.setBounds(40, 215, 140, 14);
+		spPrimerApellido.setBounds(121, 319, 140, 14);
 		add(spPrimerApellido);
 
 		spSegundoApellido = new JSeparator();
 		spSegundoApellido.setBackground(SystemColor.textHighlight);
-		spSegundoApellido.setBounds(203, 215, 140, 14);
+		spSegundoApellido.setBounds(284, 319, 140, 14);
 		add(spSegundoApellido);
 
 		spEmailInstitucional = new JSeparator();
 		spEmailInstitucional.setBackground(SystemColor.textHighlight);
-		spEmailInstitucional.setBounds(403, 160, 140, 14);
+		spEmailInstitucional.setBounds(484, 264, 140, 14);
 		add(spEmailInstitucional);
-
-		spContrasenia = new JSeparator();
-		spContrasenia.setBackground(SystemColor.textHighlight);
-		spContrasenia.setBounds(403, 215, 140, 14);
-		add(spContrasenia);
 
 		spEmailPersonal = new JSeparator();
 		spEmailPersonal.setBackground(SystemColor.textHighlight);
-		spEmailPersonal.setBounds(40, 270, 140, 14);
+		spEmailPersonal.setBounds(121, 374, 140, 14);
 		add(spEmailPersonal);
 
 		spDepartamento = new JSeparator();
 		spDepartamento.setBackground(SystemColor.textHighlight);
-		spDepartamento.setBounds(40, 380, 140, 14);
+		spDepartamento.setBounds(121, 484, 140, 14);
 		add(spDepartamento);
 
 		spLocalidad = new JSeparator();
 		spLocalidad.setBackground(SystemColor.textHighlight);
-		spLocalidad.setBounds(203, 380, 140, 14);
+		spLocalidad.setBounds(284, 484, 140, 14);
 		add(spLocalidad);
 
 		spTelefono = new JSeparator();
 		spTelefono.setBackground(SystemColor.textHighlight);
-		spTelefono.setBounds(203, 270, 140, 14);
+		spTelefono.setBounds(284, 374, 140, 14);
 		add(spTelefono);
 
 		spFechaNacimiento = new JSeparator();
 		spFechaNacimiento.setBackground(SystemColor.textHighlight);
-		spFechaNacimiento.setBounds(40, 435, 140, 14);
+		spFechaNacimiento.setBounds(121, 532, 140, 14);
 		add(spFechaNacimiento);
 
 		spDatosPersonales = new JSeparator();
 		spDatosPersonales.setBackground(SystemColor.textHighlight);
-		spDatosPersonales.setBounds(40, 96, 299, 14);
+		spDatosPersonales.setBounds(121, 200, 299, 14);
 		add(spDatosPersonales);
 
 		spDatosAcademicos = new JSeparator();
 		spDatosAcademicos.setBackground(SystemColor.textHighlight);
-		spDatosAcademicos.setBounds(403, 96, 299, 14);
+		spDatosAcademicos.setBounds(484, 200, 299, 14);
 		add(spDatosAcademicos);
 
 		spITR = new JSeparator();
 		spITR.setBackground(SystemColor.textHighlight);
-		spITR.setBounds(566, 160, 140, 14);
+		spITR.setBounds(647, 264, 140, 14);
 		add(spITR);
-
-		spGeneracion = new JSeparator();
-		spGeneracion.setVisible(false);
-		spGeneracion.setBackground(SystemColor.textHighlight);
-		spGeneracion.setBounds(566, 270, 140, 14);
-		add(spGeneracion);
-
-		spReintreseContrasenia = new JSeparator();
-		spReintreseContrasenia.setBackground(SystemColor.textHighlight);
-		spReintreseContrasenia.setBounds(566, 215, 140, 14);
-		add(spReintreseContrasenia);
-
-		spTipoUsuario = new JSeparator();
-		spTipoUsuario.setBackground(SystemColor.textHighlight);
-		spTipoUsuario.setBounds(403, 270, 140, 14);
-		add(spTipoUsuario);
-
-		spArea = new JSeparator();
-		spArea.setVisible(false);
-		spArea.setBackground(SystemColor.textHighlight);
-		spArea.setBounds(403, 325, 140, 14);
-		add(spArea);
 
 		JSeparator spVertical = new JSeparator();
 		spVertical.setOrientation(SwingConstants.VERTICAL);
 		spVertical.setBackground(SystemColor.textHighlight);
-		spVertical.setBounds(375, 108, 18, 286);
+		spVertical.setBounds(456, 212, 18, 286);
 		add(spVertical);
 
 		JSeparator spPrimerNombre = new JSeparator();
 		spPrimerNombre.setBackground(SystemColor.textHighlight);
-		spPrimerNombre.setBounds(40, 160, 140, 14);
+		spPrimerNombre.setBounds(121, 264, 140, 14);
 		add(spPrimerNombre);
 
 		JSeparator spSegundoNombre = new JSeparator();
 		spSegundoNombre.setBackground(SystemColor.textHighlight);
-		spSegundoNombre.setBounds(203, 160, 140, 14);
+		spSegundoNombre.setBounds(284, 264, 140, 14);
 		add(spSegundoNombre);
 
 		JSeparator spGenero = new JSeparator();
 		spGenero.setBackground(SystemColor.textHighlight);
-		spGenero.setBounds(40, 325, 140, 14);
+		spGenero.setBounds(121, 429, 140, 14);
 		add(spGenero);
 
 		cmbGenero = new JComboBox();
@@ -424,7 +334,7 @@ public class Registro extends JPanel {
 		cmbGenero.setFocusable(false);
 		cmbGenero.setBorder(null);
 		cmbGenero.setBackground(Color.WHITE);
-		cmbGenero.setBounds(40, 306, 140, 22);
+		cmbGenero.setBounds(121, 410, 140, 22);
 		add(cmbGenero);
 
 		cmbLocalidad = new JComboBox<Localidad>();
@@ -436,7 +346,7 @@ public class Registro extends JPanel {
 		cmbLocalidad.setFocusable(false);
 		cmbLocalidad.setBorder(null);
 		cmbLocalidad.setBackground(Color.WHITE);
-		cmbLocalidad.setBounds(203, 360, 140, 20);
+		cmbLocalidad.setBounds(284, 464, 140, 20);
 		add(cmbLocalidad);
 
 		cmbDepartamento = new JComboBox<Departamento>();
@@ -448,7 +358,7 @@ public class Registro extends JPanel {
 		cmbDepartamento.setFocusable(false);
 		cmbDepartamento.setBorder(null);
 		cmbDepartamento.setBackground(Color.WHITE);
-		cmbDepartamento.setBounds(40, 360, 140, 20);
+		cmbDepartamento.setBounds(121, 464, 140, 20);
 		add(cmbDepartamento);
 
 		cmbITR = new JComboBox<Itr>();
@@ -460,97 +370,56 @@ public class Registro extends JPanel {
 		cmbITR.setFocusable(false);
 		cmbITR.setBorder(null);
 		cmbITR.setBackground(Color.WHITE);
-		cmbITR.setBounds(566, 140, 140, 20);
+		cmbITR.setBounds(647, 244, 140, 20);
 		add(cmbITR);
 
-		cmbArea = new JComboBox<Area>();
-		for (Area area : DatabaseManager.getInstance().getAreasBeanRemote().obtenerTodos()) {
-			cmbArea.addItem(area);
-		}
-		cmbArea.setVisible(false);
-		cmbArea.setForeground(Color.DARK_GRAY);
-		cmbArea.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		cmbArea.setFocusable(false);
-		cmbArea.setBorder(new EmptyBorder(0, 0, 0, 0));
-		cmbArea.setBackground(Color.WHITE);
-		cmbArea.setBounds(403, 305, 140, 20);
-		add(cmbArea);
+		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnModificar.setForeground(Color.WHITE);
+		btnModificar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnModificar.setFocusable(false);
+		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnModificar.setBackground(SystemColor.textHighlight);
+		btnModificar.setActionCommand("");
+		btnModificar.setBounds(485, 373, 223, 49);
+		add(btnModificar);
 
-		cmbRol = new JComboBox<String>();
-		cmbRol.setModel(new DefaultComboBoxModel(new String[] { "Encargado", "Tutor" }));
-		cmbRol.setVisible(false);
-		cmbRol.setForeground(Color.DARK_GRAY);
-		cmbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		cmbRol.setFocusable(false);
-		cmbRol.setBorder(null);
-		cmbRol.setBackground(Color.WHITE);
-		cmbRol.setBounds(566, 305, 140, 20);
-		add(cmbRol);
-
-		cmbTipoUsuario = new JComboBox<String>();
-		cmbTipoUsuario.setForeground(Color.DARK_GRAY);
-		cmbTipoUsuario.setModel(new DefaultComboBoxModel(new String[] { "Analista", "Estudiante", "Tutor" }));
-		cmbTipoUsuario.setSelectedIndex(0);
-		cmbTipoUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		cmbTipoUsuario.setFocusable(false);
-		cmbTipoUsuario.setBorder(null);
-		cmbTipoUsuario.setBackground(Color.WHITE);
-		cmbTipoUsuario.setBounds(403, 250, 140, 20);
-		add(cmbTipoUsuario);
-
-		btnRegistrar = new JButton("REGISTRAR");
-		btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRegistrar.setForeground(Color.WHITE);
-		btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnRegistrar.setFocusable(false);
-		btnRegistrar.setBorder(new EmptyBorder(0, 0, 0, 0));
-		btnRegistrar.setBackground(SystemColor.textHighlight);
-		btnRegistrar.setActionCommand("");
-		btnRegistrar.setBounds(441, 360, 223, 49);
-		add(btnRegistrar);
-
-		btnIniciarSesion = new JButton("¿Ya está registrado? Iniciar sesión");
-		btnIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnIniciarSesion.setForeground(SystemColor.textHighlight);
-		btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnIniciarSesion.setFocusable(false);
-		btnIniciarSesion.setBorder(null);
-		btnIniciarSesion.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
-		btnIniciarSesion.setBounds(441, 419, 223, 23);
-		add(btnIniciarSesion);
-
-		JLabel lblRegistroDeUsuario = new JLabel("REGISTRO DE USUARIO");
+		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
 		lblRegistroDeUsuario.setForeground(Color.BLACK);
 		lblRegistroDeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblRegistroDeUsuario.setBounds(40, 12, 390, 41);
+		lblRegistroDeUsuario.setBounds(121, 116, 390, 41);
 		add(lblRegistroDeUsuario);
 
 		JLabel lblAviso = new JLabel("Los campos marcados con * son obligatorios.");
 		lblAviso.setForeground(Color.DARK_GRAY);
 		lblAviso.setFont(new Font("Segoe UI", Font.ITALIC, 10));
-		lblAviso.setBounds(40, 453, 230, 13);
+		lblAviso.setBounds(121, 557, 230, 13);
 		add(lblAviso);
 
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(40, 415, 140, 19);
+		dateChooser.setBounds(121, 516, 140, 19);
 		add(dateChooser);
 
-	}
+		lblEstado = new JLabel("Estado *");
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblEstado.setBounds(484, 279, 136, 21);
+		add(lblEstado);
 
-	public JButton getBtnIniciarSesion() {
-		return btnIniciarSesion;
-	}
+		cmbEstado = new JComboBox<String>();
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Activo", "Eliminado" }));
+		cmbEstado.setForeground(Color.DARK_GRAY);
+		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		cmbEstado.setFocusable(false);
+		cmbEstado.setBorder(null);
+		cmbEstado.setBackground(Color.WHITE);
+		cmbEstado.setBounds(484, 299, 140, 20);
+		add(cmbEstado);
 
-	public void setBtnIniciarSesion(JButton btnIniciarSesion) {
-		this.btnIniciarSesion = btnIniciarSesion;
-	}
+		spEstado = new JSeparator();
+		spEstado.setBackground(SystemColor.textHighlight);
+		spEstado.setBounds(484, 319, 140, 14);
+		add(spEstado);
 
-	public JButton getBtnRegistrar() {
-		return btnRegistrar;
-	}
-
-	public void setBtnRegistrar(JButton btnRegistrar) {
-		this.btnRegistrar = btnRegistrar;
 	}
 
 	public boolean validaCI(String ci) {
@@ -642,13 +511,11 @@ public class Registro extends JPanel {
 		String emailInstitucional = txtEmailInstitucional.getText();
 		// String contrasenia = txtContrasenia.getText();
 		// int ITR = cmbITR.getSelectedIndex();
-		int tipoUsuario = cmbTipoUsuario.getSelectedIndex();
-		String generacion = txtGeneracion.getText();
 
 		// Verifico que haya ingresado todos los campos OBLIGATORIOS
 		if (primerNombre.length() == 0 || primerApellido.length() == 0 || documento.length() == 0
 				|| emailPersonal.length() == 0 || telefono.length() == 0 || emailInstitucional.length() == 0
-				|| (tipoUsuario == 1 && generacion.length() == 0) || dateChooser.getDate() == null) {
+				|| dateChooser.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Los campos marcados con * son obligatorios", "ATENCIÓN",
 					JOptionPane.WARNING_MESSAGE);
 
@@ -661,23 +528,6 @@ public class Registro extends JPanel {
 
 			return false;
 
-			// Verifico que el EMAIL INSTITUCIONAL tenga el formato correcto y pertenezc al
-			// dominio UTEC
-		} else if (!validarEmail(emailInstitucional, 1) && (cmbTipoUsuario.getSelectedIndex() == 0
-				|| cmbTipoUsuario.getSelectedIndex() == 2)) {
-			JOptionPane.showMessageDialog(null, "El email institucional debe pertenecer al dominio utec.edu.uy",
-					"ATENCIÓN", JOptionPane.WARNING_MESSAGE);
-
-			return false;
-
-		} else if (!validarEmail(emailInstitucional, 0) && cmbTipoUsuario.getSelectedIndex() == 1) {
-
-			JOptionPane.showMessageDialog(null,
-					"El email institucional debe pertenecer al dominio estudiantes.utec.edu.uy", "ATENCIÓN",
-					JOptionPane.WARNING_MESSAGE);
-
-			return false;
-
 			// Verifico que la CÉDULA tenga el formato correcto
 		} else if (!validaCI(documento)) {
 			JOptionPane.showMessageDialog(null, "El documento que ingresó es incorrecto", "ATENCIÓN",
@@ -685,66 +535,50 @@ public class Registro extends JPanel {
 
 			return false;
 
-		} else if (!validarContrasenia(new String(txtContrasenia.getPassword()))) {
-			JOptionPane.showMessageDialog(null,
-					"La contraseña debe contener al menos 8 caracteres entre números y letras.");
-
-			return false;
-
-		} else if (!(new String(txtContrasenia.getPassword())
-				.equals(new String(txtReingreseContrasenia.getPassword())))) {
-			JOptionPane.showMessageDialog(null, "Las contraseñas deben coincidir.");
-
-			return false;
 		}
-
 		return true;
 	}
 
-	public void setCampos() {
+	public void cargarDatos(Analista analista) {
+		txtDocumento.setText(analista.getDocumento());
+		txtEmailInstitucional.setText(analista.getMail());
+		txtEmailPersonal.setText(analista.getMailPersonal());
+		txtPrimerApellido.setText(analista.getApellido1());
+		txtPrimerNombre.setText(analista.getNombre1());
+		txtSegundoApellido.setText(analista.getApellido2());
+		txtSegundoNombre.setText(analista.getNombre2());
+		txtTelefono.setText(analista.getTelefono());
+		cmbLocalidad.setSelectedItem(analista.getLocalidad());
+		cmbDepartamento.setSelectedItem(analista.getLocalidad().getDepartamento());
+		cmbITR.setSelectedItem(analista.getItr());
+		cmbGenero.setSelectedItem(analista.getGenero());
+		cmbEstado.setSelectedItem(analista.getEstado());
+		dateChooser.setDate(analista.getFechaNacimiento());
 
-		switch (cmbTipoUsuario.getSelectedIndex()) {
-			case 0:
-				txtGeneracion.setVisible(false);
-				lblGeneracion.setVisible(false);
-				spGeneracion.setVisible(false);
+	}
 
-				cmbArea.setVisible(false);
-				lblArea.setVisible(false);
-				spArea.setVisible(false);
+	public void editarAnalista(Analista analista) throws Exception {
+		analista.setApellido1(getTxtPrimerApellido());
+		analista.setApellido2(getTxtSegundoApellido());
+		analista.setDocumento(getTxtDocumento());
+		analista.setFechaNacimiento(getDateChooser());
+		analista.setGenero(getCmbGenero());
+		analista.setItr(getCmbITR());
+		analista.setLocalidad(getCmbLocalidad());
+		analista.setMailPersonal(getTxtEmailPersonal());
+		analista.setNombre1(getTxtPrimerNombre());
+		analista.setNombre2(getTxtSegundoNombre());
+		analista.setEstado(getCmbEstado());
 
-				cmbRol.setVisible(false);
-				lblRol.setVisible(false);
-				spRol.setVisible(false);
-				break;
-			case 1:
-				txtGeneracion.setVisible(true);
-				lblGeneracion.setVisible(true);
-				spGeneracion.setVisible(true);
+		DatabaseManager.getInstance().getAnalistasBeanRemote().editar(analista);
+	}
 
-				cmbArea.setVisible(false);
-				lblArea.setVisible(false);
-				spArea.setVisible(false);
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
 
-				cmbRol.setVisible(false);
-				lblRol.setVisible(false);
-				spRol.setVisible(false);
-				break;
-			case 2:
-				txtGeneracion.setVisible(false);
-				lblGeneracion.setVisible(false);
-				spGeneracion.setVisible(false);
-
-				cmbArea.setVisible(true);
-				lblArea.setVisible(true);
-				spArea.setVisible(true);
-
-				cmbRol.setVisible(true);
-				lblRol.setVisible(true);
-				spRol.setVisible(true);
-				break;
-		}
-
+	public void setBtnModificar(JButton btnModificar) {
+		this.btnModificar = btnModificar;
 	}
 
 	public String getTxtDocumento() {
@@ -771,24 +605,12 @@ public class Registro extends JPanel {
 		return txtEmailInstitucional.getText();
 	}
 
-	public String getTxtContrasenia() {
-		return new String(txtContrasenia.getPassword());
-	}
-
-	public String getTxtReingreseContrasenia() {
-		return txtReingreseContrasenia.getPassword().toString();
-	}
-
 	public String getTxtTelefono() {
 		return txtTelefono.getText();
 	}
 
 	public String getTxtEmailPersonal() {
 		return txtEmailPersonal.getText();
-	}
-
-	public int getTxtGeneracion() {
-		return Integer.parseInt(txtGeneracion.getText());
 	}
 
 	public Localidad getCmbLocalidad() {
@@ -815,36 +637,20 @@ public class Registro extends JPanel {
 		this.cmbITR = cmbITR;
 	}
 
-	public Area getCmbArea() {
-		return (Area) cmbArea.getSelectedItem();
-	}
-
-	public void setCmbArea(JComboBox<Area> cmbArea) {
-		this.cmbArea = cmbArea;
-	}
-
-	public String getCmbRol() {
-		return (String) cmbRol.getSelectedItem();
-	}
-
-	public void setCmbRol(JComboBox<String> cmbRol) {
-		this.cmbRol = cmbRol;
-	}
-
-	public JComboBox<String> getCmbTipoUsuario() {
-		return cmbTipoUsuario;
-	}
-
-	public void setCmbTipoUsuario(JComboBox<String> cmbTipoUsuario) {
-		this.cmbTipoUsuario = cmbTipoUsuario;
-	}
-
 	public String getCmbGenero() {
 		return (String) cmbGenero.getSelectedItem();
 	}
 
 	public void setCmbGenero(JComboBox<String> cmbGenero) {
 		this.cmbGenero = cmbGenero;
+	}
+
+	public String getCmbEstado() {
+		return (String) cmbEstado.getSelectedItem();
+	}
+
+	public void setCmbEstado(JComboBox<String> cmbEstado) {
+		this.cmbEstado = cmbEstado;
 	}
 
 	public Date getDateChooser() {
@@ -854,5 +660,4 @@ public class Registro extends JPanel {
 	public void setDateChooser(JDateChooser dateChooser) {
 		this.dateChooser = dateChooser;
 	}
-
 }

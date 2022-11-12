@@ -1,4 +1,4 @@
-package com.tix.vista;
+package com.tix.vista.analista;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -23,14 +24,21 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Area;
 import com.tix.modelo.entidades.Departamento;
+import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Localidad;
+import com.tix.modelo.entidades.Tutor;
+import com.tix.modelo.entidades.Usuario;
+import com.tix.modelo.servicios.AreasBeanRemote;
+import com.tix.modelo.servicios.DepartamentosBeanRemote;
+import com.tix.modelo.servicios.ItrsBeanRemote;
+import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Cursor;
 
-public class Registro extends JPanel {
+public class ModificarEstudiante extends JPanel {
 	private JTextField txtDocumento;
 	private JTextField txtPrimerNombre;
 	private JTextField txtSegundoNombre;
@@ -90,7 +98,6 @@ public class Registro extends JPanel {
 	private JComboBox<String> cmbRol;
 	private JComboBox<String> cmbTipoUsuario;
 	private JButton btnRegistrar;
-	private JButton btnIniciarSesion;
 
 	private JDateChooser dateChooser;
 
@@ -99,7 +106,7 @@ public class Registro extends JPanel {
 	 * 
 	 * @throws NamingException
 	 */
-	public Registro() {
+	public ModificarEstudiante() {
 
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -185,7 +192,7 @@ public class Registro extends JPanel {
 
 		lblFechaNacimiento = new JLabel("Fecha de nacimiento *");
 		lblFechaNacimiento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaNacimiento.setBounds(40, 395, 135, 21);
+		lblFechaNacimiento.setBounds(40, 391, 135, 21);
 		add(lblFechaNacimiento);
 
 		lblEmailPersonal = new JLabel("Email personal *");
@@ -256,6 +263,8 @@ public class Registro extends JPanel {
 		add(txtSegundoApellido);
 
 		txtEmailInstitucional = new JTextField();
+		txtEmailInstitucional.setEnabled(false);
+		txtEmailInstitucional.setEditable(false);
 		txtEmailInstitucional.setForeground(Color.DARK_GRAY);
 		txtEmailInstitucional.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtEmailInstitucional.setColumns(10);
@@ -264,6 +273,8 @@ public class Registro extends JPanel {
 		add(txtEmailInstitucional);
 
 		txtContrasenia = new JPasswordField();
+		txtContrasenia.setEnabled(false);
+		txtContrasenia.setEditable(false);
 		txtContrasenia.setForeground(Color.DARK_GRAY);
 		txtContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -297,6 +308,8 @@ public class Registro extends JPanel {
 		add(txtGeneracion);
 
 		txtReingreseContrasenia = new JPasswordField();
+		txtReingreseContrasenia.setEnabled(false);
+		txtReingreseContrasenia.setEditable(false);
 		txtReingreseContrasenia.setForeground(Color.DARK_GRAY);
 		txtReingreseContrasenia.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtReingreseContrasenia.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -356,7 +369,7 @@ public class Registro extends JPanel {
 
 		spFechaNacimiento = new JSeparator();
 		spFechaNacimiento.setBackground(SystemColor.textHighlight);
-		spFechaNacimiento.setBounds(40, 435, 140, 14);
+		spFechaNacimiento.setBounds(40, 428, 140, 14);
 		add(spFechaNacimiento);
 
 		spDatosPersonales = new JSeparator();
@@ -488,6 +501,7 @@ public class Registro extends JPanel {
 		add(cmbRol);
 
 		cmbTipoUsuario = new JComboBox<String>();
+		cmbTipoUsuario.setEnabled(false);
 		cmbTipoUsuario.setForeground(Color.DARK_GRAY);
 		cmbTipoUsuario.setModel(new DefaultComboBoxModel(new String[] { "Analista", "Estudiante", "Tutor" }));
 		cmbTipoUsuario.setSelectedIndex(0);
@@ -498,8 +512,7 @@ public class Registro extends JPanel {
 		cmbTipoUsuario.setBounds(403, 250, 140, 20);
 		add(cmbTipoUsuario);
 
-		btnRegistrar = new JButton("REGISTRAR");
-		btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRegistrar = new JButton("MODIFICAR");
 		btnRegistrar.setForeground(Color.WHITE);
 		btnRegistrar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnRegistrar.setFocusable(false);
@@ -509,17 +522,7 @@ public class Registro extends JPanel {
 		btnRegistrar.setBounds(441, 360, 223, 49);
 		add(btnRegistrar);
 
-		btnIniciarSesion = new JButton("¿Ya está registrado? Iniciar sesión");
-		btnIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnIniciarSesion.setForeground(SystemColor.textHighlight);
-		btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnIniciarSesion.setFocusable(false);
-		btnIniciarSesion.setBorder(null);
-		btnIniciarSesion.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
-		btnIniciarSesion.setBounds(441, 419, 223, 23);
-		add(btnIniciarSesion);
-
-		JLabel lblRegistroDeUsuario = new JLabel("REGISTRO DE USUARIO");
+		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
 		lblRegistroDeUsuario.setForeground(Color.BLACK);
 		lblRegistroDeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblRegistroDeUsuario.setBounds(40, 12, 390, 41);
@@ -532,25 +535,9 @@ public class Registro extends JPanel {
 		add(lblAviso);
 
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(40, 415, 140, 19);
+		dateChooser.setBounds(40, 412, 140, 19);
 		add(dateChooser);
 
-	}
-
-	public JButton getBtnIniciarSesion() {
-		return btnIniciarSesion;
-	}
-
-	public void setBtnIniciarSesion(JButton btnIniciarSesion) {
-		this.btnIniciarSesion = btnIniciarSesion;
-	}
-
-	public JButton getBtnRegistrar() {
-		return btnRegistrar;
-	}
-
-	public void setBtnRegistrar(JButton btnRegistrar) {
-		this.btnRegistrar = btnRegistrar;
 	}
 
 	public boolean validaCI(String ci) {
@@ -663,8 +650,8 @@ public class Registro extends JPanel {
 
 			// Verifico que el EMAIL INSTITUCIONAL tenga el formato correcto y pertenezc al
 			// dominio UTEC
-		} else if (!validarEmail(emailInstitucional, 1) && (cmbTipoUsuario.getSelectedIndex() == 0
-				|| cmbTipoUsuario.getSelectedIndex() == 2)) {
+		} else if (!validarEmail(emailInstitucional, 1) && cmbTipoUsuario.getSelectedIndex() == 0
+				|| cmbTipoUsuario.getSelectedIndex() == 2) {
 			JOptionPane.showMessageDialog(null, "El email institucional debe pertenecer al dominio utec.edu.uy",
 					"ATENCIÓN", JOptionPane.WARNING_MESSAGE);
 
@@ -745,6 +732,14 @@ public class Registro extends JPanel {
 				break;
 		}
 
+	}
+
+	public JButton getBtnRegistrar() {
+		return btnRegistrar;
+	}
+
+	public void setBtnRegistrar(JButton btnRegistrar) {
+		this.btnRegistrar = btnRegistrar;
 	}
 
 	public String getTxtDocumento() {

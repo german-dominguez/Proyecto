@@ -18,13 +18,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class ListadoJustificacionesAnalista extends JPanel {
+public class ListadoJustificaciones extends JPanel {
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public ListadoJustificacionesAnalista() {
+	public ListadoJustificaciones() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(910, 700));

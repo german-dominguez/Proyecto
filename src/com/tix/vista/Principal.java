@@ -12,14 +12,16 @@ import javax.swing.border.EmptyBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.tix.controlador.DashboardAnalistaControlador;
 import com.tix.controlador.DashboardEstudianteControlador;
+import com.tix.controlador.DashboardTutorControlador;
 import com.tix.controlador.LoginControlador;
 import com.tix.controlador.ModificarDatosPropiosControlador;
 import com.tix.controlador.RegistroControlador;
 import com.tix.vista.analista.DashboardAnalista;
-import com.tix.vista.analista.ListadoJustificacionesAnalista;
-import com.tix.vista.analista.ListadoReclamosAnalista;
-import com.tix.vista.analista.ListadoUsuariosAnalista;
+import com.tix.vista.analista.ListadoJustificaciones;
+import com.tix.vista.analista.ListadoReclamos;
+import com.tix.vista.analista.ListadoUsuarios;
 import com.tix.vista.estudiante.DashboardEstudiante;
+import com.tix.vista.tutor.DashboardTutor;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JTabbedPane;
@@ -49,11 +51,12 @@ public class Principal extends JFrame {
 	// Dashboards
 	private DashboardAnalista dashboardAnalista = new DashboardAnalistaControlador().getVista();
 	private DashboardEstudiante dashboardEstudiante = new DashboardEstudianteControlador().getVista();
+	private DashboardTutor dashboardTutor = new DashboardTutorControlador().getVista();
 
 	// Paneles principales
-	private ListadoUsuariosAnalista listadoUsuarios = new ListadoUsuariosAnalista();
-	private ListadoJustificacionesAnalista listadoJustificaciones = new ListadoJustificacionesAnalista();
-	private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
+	private ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
+	private ListadoJustificaciones listadoJustificaciones = new ListadoJustificaciones();
+	private ListadoReclamos listadoReclamos = new ListadoReclamos();
 
 	public Principal() {
 		registroPanel = new RegistroControlador().getVista();
@@ -75,15 +78,15 @@ public class Principal extends JFrame {
 		return dashboardAnalista;
 	}
 
-	public ListadoUsuariosAnalista getListadoUsuarios() {
+	public ListadoUsuarios getListadoUsuarios() {
 		return listadoUsuarios;
 	}
 
-	public ListadoJustificacionesAnalista getListadoJustificaciones() {
+	public ListadoJustificaciones getListadoJustificaciones() {
 		return listadoJustificaciones;
 	}
 
-	public ListadoReclamosAnalista getListadoReclamos() {
+	public ListadoReclamos getListadoReclamos() {
 		return listadoReclamos;
 	}
 

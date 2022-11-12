@@ -10,9 +10,9 @@ import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
 import com.tix.vista.ModificarDatosPropios;
 import com.tix.vista.analista.DashboardAnalista;
-import com.tix.vista.analista.ListadoJustificacionesAnalista;
-import com.tix.vista.analista.ListadoReclamosAnalista;
-import com.tix.vista.analista.ListadoUsuariosAnalista;
+import com.tix.vista.analista.ListadoJustificaciones;
+import com.tix.vista.analista.ListadoReclamos;
+import com.tix.vista.analista.ListadoUsuarios;
 
 public class DashboardAnalistaControlador {
 	private DashboardAnalista vista;
@@ -32,8 +32,9 @@ public class DashboardAnalistaControlador {
 		vista.getBtnUsuarios().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				vista.getListadoUsuarios().limpiarFiltros();
 				vista.cambiarVista(vista.getListadoUsuarios());
-				vista.getListadoUsuarios().setButtonEditor(vista. new ButtonEditor(new JCheckBox()));
+				vista.getListadoUsuarios().setButtonEditor(vista.new ButtonEditor(new JCheckBox()));
 			}
 		});
 
@@ -48,7 +49,7 @@ public class DashboardAnalistaControlador {
 		vista.getLblEditarUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.getModificarDatosPropios().setAnalista((Analista) vista.getUsuario());
+				vista.getModificarDatosPropios().setAnalista(vista.getUsuario());
 				vista.getModificarDatosPropios().cargarDatos();
 				vista.cambiarVista(vista.getModificarDatosPropios());
 			}

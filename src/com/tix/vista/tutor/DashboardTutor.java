@@ -1,4 +1,4 @@
-package com.tix.vista.estudiante;
+package com.tix.vista.tutor;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import java.awt.BorderLayout;
 
-public class DashboardEstudiante extends JPanel {
+public class DashboardTutor extends JPanel {
 
 	private JButton btnJustificaciones;
 
@@ -35,12 +35,12 @@ public class DashboardEstudiante extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public DashboardEstudiante() {
+	public DashboardTutor() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(1060, 700));
 
-		btnJustificaciones = new JButton("Justificaciones");
+		btnJustificaciones = new JButton("Asistencias");
 		btnJustificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnJustificaciones.setForeground(Color.WHITE);
 		btnJustificaciones.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -62,11 +62,11 @@ public class DashboardEstudiante extends JPanel {
 		lblLogo.setBounds(42, 10, 70, 70);
 		add(lblLogo);
 
-		lblTipoUsuario = new JLabel("Estudiante");
+		lblTipoUsuario = new JLabel("Profesor");
 		lblTipoUsuario.setForeground(Color.DARK_GRAY);
 		lblTipoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		lblTipoUsuario.setBounds(0, 110, 150, 56);
+		lblTipoUsuario.setBounds(0, 121, 150, 45);
 		add(lblTipoUsuario);
 
 		lblCerrarSesion = new JLabel("");
