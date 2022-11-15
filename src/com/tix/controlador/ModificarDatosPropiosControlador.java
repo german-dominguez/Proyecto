@@ -2,7 +2,7 @@ package com.tix.controlador;
 
 import javax.naming.NamingException;
 
-import com.tix.vista.ModificarDatosPropios;
+import com.tix.vista.analista.ModificarDatosPropios;
 
 public class ModificarDatosPropiosControlador {
 	private ModificarDatosPropios vista;

@@ -1,4 +1,4 @@
-package com.tix.vista;
+package com.tix.vista.tutor;
 
 import java.awt.Color;
 import java.awt.Dimension;

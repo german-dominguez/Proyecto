@@ -20,6 +20,7 @@ import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificaciones;
 import com.tix.vista.analista.ListadoReclamos;
 import com.tix.vista.analista.ListadoUsuarios;
+import com.tix.vista.analista.ModificarDatosPropios;
 import com.tix.vista.estudiante.DashboardEstudiante;
 import com.tix.vista.tutor.DashboardTutor;
 

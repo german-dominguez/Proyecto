@@ -8,11 +8,11 @@ import javax.swing.JCheckBox;
 
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
-import com.tix.vista.ModificarDatosPropios;
 import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificaciones;
 import com.tix.vista.analista.ListadoReclamos;
 import com.tix.vista.analista.ListadoUsuarios;
+import com.tix.vista.analista.ModificarDatosPropios;
 
 public class DashboardAnalistaControlador {
 	private DashboardAnalista vista;

@@ -26,7 +26,6 @@ import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Tutor;
 import com.tix.modelo.entidades.Usuario;
-import com.tix.vista.ModificarDatosPropios;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -386,4 +385,13 @@ public class DashboardAnalista extends JPanel {
 	public void setModificarDatosPropios(ModificarDatosPropios modificarDatosPropios) {
 		this.modificarDatosPropios = modificarDatosPropios;
 	}
+
+	public JLabel getLblNombreUsuario() {
+		return lblNombreUsuario;
+	}
+
+	public void setLblNombreUsuario(String nombreUsuario) {
+		this.lblNombreUsuario.setText(nombreUsuario);
+	}
+
 }
