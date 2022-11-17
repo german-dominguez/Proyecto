@@ -41,6 +41,8 @@ public class DashboardAnalista extends JPanel {
 	private ListadoReclamos listadoReclamos = new ListadoReclamos();
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
 	private ModificarAnalista modificarAnalista = new ModificarAnalista();
+	private ModificarEstudiante modificarEstudiante = new ModificarEstudiante();
+	private ModificarTutor modificarTutor = new ModificarTutor();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
@@ -187,6 +189,36 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
+		
+		modificarEstudiante.getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (modificarEstudiante.validarCamposIngresados()) {
+					try {
+						modificarEstudiante.editarEstudiante(estudiante);
+						JOptionPane.showMessageDialog(null, "Los datos del usuario se editaron con éxito");
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos del usuario");
+					}
+				}
+			}
+		});
+		
+		modificarTutor.getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (modificarTutor.validarCamposIngresados()) {
+					try {
+						modificarTutor.editarTutor(tutor);
+						JOptionPane.showMessageDialog(null, "Los datos del usuario se editaron con éxito");
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos del usuario");
+					}
+				}
+			}
+		});
+		
+		
 
 	}
 
@@ -264,10 +296,14 @@ public class DashboardAnalista extends JPanel {
 					modificarAnalista.cargarDatos(analista);
 				}
 				if (tipoUsuario.equals("Estudiante")) {
+					cambiarVista(modificarEstudiante);
 					estudiante = DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerEstudiantePorId(id);
+					modificarEstudiante.cargarDatos(estudiante);
 				}
 				if (tipoUsuario.equals("Tutor")) {
+					cambiarVista(modificarTutor);
 					tutor = DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTutorPorId(id);
+					modificarTutor.cargarDatos(tutor);
 				}
 
 			}
