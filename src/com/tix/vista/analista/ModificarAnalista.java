@@ -40,6 +40,9 @@ import com.tix.modelo.servicios.DepartamentosBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
+
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
@@ -353,6 +356,19 @@ public class ModificarAnalista extends JPanel {
 		add(cmbLocalidad);
 
 		cmbDepartamento = new JComboBox<Departamento>();
+		cmbDepartamento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				cmbLocalidad.removeAllItems();
+				for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
+					if (localidad.getDepartamento()
+							.getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
+									.getIdDepartamento()) {
+						cmbLocalidad.addItem(localidad);
+					}
+				}
+			}
+		});
+
 		for (Departamento departamento : DatabaseManager.getInstance().getDepartamentosBeanRemote().obtenerTodos()) {
 			cmbDepartamento.addItem(departamento);
 		}
@@ -384,7 +400,7 @@ public class ModificarAnalista extends JPanel {
 		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnModificar.setBackground(SystemColor.textHighlight);
 		btnModificar.setActionCommand("");
-		btnModificar.setBounds(485, 373, 223, 49);
+		btnModificar.setBounds(525, 415, 223, 49);
 		add(btnModificar);
 
 		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
@@ -503,17 +519,11 @@ public class ModificarAnalista extends JPanel {
 
 	public boolean validarCamposIngresados() {
 		String primerNombre = txtPrimerNombre.getText();
-		// String segundoNombre = txtSegundoNombre.getText();
 		String primerApellido = txtPrimerApellido.getText();
-		// String segundoApellido = txtSegundoApellido.getText();
 		String documento = txtDocumento.getText();
 		String emailPersonal = txtEmailPersonal.getText();
 		String telefono = txtTelefono.getText();
-		// int localidad = cmbLocalidad.getSelectedIndex();
-		// int departamento = cmbDepartamento.getSelectedIndex();
 		String emailInstitucional = txtEmailInstitucional.getText();
-		// String contrasenia = txtContrasenia.getText();
-		// int ITR = cmbITR.getSelectedIndex();
 
 		// Verifico que haya ingresado todos los campos OBLIGATORIOS
 		if (primerNombre.length() == 0 || primerApellido.length() == 0 || documento.length() == 0
