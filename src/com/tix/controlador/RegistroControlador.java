@@ -39,6 +39,7 @@ public class RegistroControlador {
 						case 0:
 							try {
 								registrarAnalista();
+								vista.vaciarCampos();
 								JOptionPane.showMessageDialog(null,
 										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
 										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -50,6 +51,7 @@ public class RegistroControlador {
 						case 1:
 							try {
 								registrarEstudiante();
+								vista.vaciarCampos();
 								JOptionPane.showMessageDialog(null,
 										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
 										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -61,6 +63,7 @@ public class RegistroControlador {
 						case 2:
 							try {
 								registrarTutor();
+								vista.vaciarCampos();
 								JOptionPane.showMessageDialog(null,
 										"Su solicitud de registro se procesó correctamente y será revisada antes de estar activa.",
 										"Registro de usuario", JOptionPane.INFORMATION_MESSAGE);

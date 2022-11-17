@@ -56,6 +56,7 @@ public class PrincipalControlador {
 										.setUsuario((Analista) vista.getLoginControlador().getUsuario());
 								vista.getDashboardAnalista()
 										.setLblNombreUsuario(vista.getDashboardAnalista().getUsuario().getNombre1());
+								vista.getDashboardAnalista().getListadoUsuarios().cargarTabla();
 								vista.setContentPane(vista.getDashboardAnalista());
 								break;
 							}

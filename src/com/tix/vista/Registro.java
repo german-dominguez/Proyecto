@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,8 @@ import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Localidad;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Cursor;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Registro extends JPanel {
 	private JTextField txtDocumento;
@@ -440,6 +443,19 @@ public class Registro extends JPanel {
 		add(cmbLocalidad);
 
 		cmbDepartamento = new JComboBox<Departamento>();
+		cmbDepartamento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				cmbLocalidad.removeAllItems();
+				for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
+					if (localidad.getDepartamento()
+							.getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
+									.getIdDepartamento()) {
+						cmbLocalidad.addItem(localidad);
+					}
+				}
+			}
+		});
+
 		for (Departamento departamento : DatabaseManager.getInstance().getDepartamentosBeanRemote().obtenerTodos()) {
 			cmbDepartamento.addItem(departamento);
 		}
@@ -663,8 +679,8 @@ public class Registro extends JPanel {
 
 			// Verifico que el EMAIL INSTITUCIONAL tenga el formato correcto y pertenezc al
 			// dominio UTEC
-		} else if (!validarEmail(emailInstitucional, 1) && (cmbTipoUsuario.getSelectedIndex() == 0
-				|| cmbTipoUsuario.getSelectedIndex() == 2)) {
+		} else if (!validarEmail(emailInstitucional, 1)
+				&& (cmbTipoUsuario.getSelectedIndex() == 0 || cmbTipoUsuario.getSelectedIndex() == 2)) {
 			JOptionPane.showMessageDialog(null, "El email institucional debe pertenecer al dominio utec.edu.uy",
 					"ATENCIÓN", JOptionPane.WARNING_MESSAGE);
 
@@ -745,6 +761,27 @@ public class Registro extends JPanel {
 				break;
 		}
 
+	}
+
+	public void vaciarCampos() {
+		txtContrasenia.setText("");
+		txtDocumento.setText("");
+		txtEmailInstitucional.setText("");
+		txtEmailPersonal.setText("");
+		txtGeneracion.setText("");
+		txtPrimerApellido.setText("");
+		txtPrimerNombre.setText("");
+		txtReingreseContrasenia.setText("");
+		txtSegundoApellido.setText("");
+		txtSegundoNombre.setText("");
+		txtTelefono.setText("");
+		cmbTipoUsuario.setSelectedIndex(0);
+		cmbArea.setSelectedIndex(0);
+		cmbDepartamento.setSelectedIndex(0);
+		cmbGenero.setSelectedIndex(0);
+		cmbITR.setSelectedIndex(0);
+		cmbLocalidad.setSelectedIndex(0);
+		cmbRol.setSelectedIndex(0);
 	}
 
 	public String getTxtDocumento() {

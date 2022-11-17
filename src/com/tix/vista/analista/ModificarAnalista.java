@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,7 +88,7 @@ public class ModificarAnalista extends JPanel {
 	private JComboBox<Localidad> cmbLocalidad;
 	private JComboBox<Departamento> cmbDepartamento;
 	private JComboBox<Itr> cmbITR;
-	JComboBox<String> cmbEstado;
+	private JComboBox<String> cmbEstado;
 
 	private JButton btnModificar;
 
@@ -548,13 +551,46 @@ public class ModificarAnalista extends JPanel {
 		txtSegundoApellido.setText(analista.getApellido2());
 		txtSegundoNombre.setText(analista.getNombre2());
 		txtTelefono.setText(analista.getTelefono());
-		cmbLocalidad.setSelectedItem(analista.getLocalidad());
-		cmbDepartamento.setSelectedItem(analista.getLocalidad().getDepartamento());
-		cmbITR.setSelectedItem(analista.getItr());
+
+		List<Localidad> localidades = new ArrayList<>();
+
+		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
+			localidades.add(cmbLocalidad.getItemAt(i));
+		}
+
+		for (Localidad localidad : localidades) {
+			if (localidad.getIdLocalidad() == analista.getLocalidad().getIdLocalidad()) {
+				cmbLocalidad.setSelectedItem(localidad);
+			}
+		}
+
+		List<Departamento> departamentos = new ArrayList<>();
+
+		for (int i = 0; i < cmbDepartamento.getItemCount(); i++) {
+			departamentos.add(cmbDepartamento.getItemAt(i));
+		}
+
+		for (Departamento departamento : departamentos) {
+			if (departamento.getIdDepartamento() == analista.getLocalidad().getDepartamento().getIdDepartamento()) {
+				cmbDepartamento.setSelectedItem(departamento);
+			}
+		}
+
+		List<Itr> itrs = new ArrayList<>();
+
+		for (int i = 0; i < cmbITR.getItemCount(); i++) {
+			itrs.add(cmbITR.getItemAt(i));
+		}
+
+		for (Itr itr : itrs) {
+			if (itr.getIdItr() == analista.getItr().getIdItr()) {
+				cmbITR.setSelectedItem(itr);
+			}
+		}
+
 		cmbGenero.setSelectedItem(analista.getGenero());
 		cmbEstado.setSelectedItem(analista.getEstado());
 		dateChooser.setDate(analista.getFechaNacimiento());
-
 	}
 
 	public void editarAnalista(Analista analista) throws Exception {
