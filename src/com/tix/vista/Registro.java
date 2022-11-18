@@ -647,17 +647,11 @@ public class Registro extends JPanel {
 
 	public boolean validarCamposIngresados() {
 		String primerNombre = txtPrimerNombre.getText();
-		// String segundoNombre = txtSegundoNombre.getText();
 		String primerApellido = txtPrimerApellido.getText();
-		// String segundoApellido = txtSegundoApellido.getText();
 		String documento = txtDocumento.getText();
 		String emailPersonal = txtEmailPersonal.getText();
 		String telefono = txtTelefono.getText();
-		// int localidad = cmbLocalidad.getSelectedIndex();
-		// int departamento = cmbDepartamento.getSelectedIndex();
 		String emailInstitucional = txtEmailInstitucional.getText();
-		// String contrasenia = txtContrasenia.getText();
-		// int ITR = cmbITR.getSelectedIndex();
 		int tipoUsuario = cmbTipoUsuario.getSelectedIndex();
 		String generacion = txtGeneracion.getText();
 

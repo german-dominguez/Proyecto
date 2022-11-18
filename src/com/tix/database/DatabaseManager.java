@@ -19,7 +19,6 @@ public class DatabaseManager {
 		try {
 			instance = new DatabaseManager();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
