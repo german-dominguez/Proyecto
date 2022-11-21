@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
+import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Tutor;
 import com.tix.modelo.entidades.Usuario;
 
@@ -39,14 +40,17 @@ public class DashboardAnalista extends JPanel {
 	private ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
 	private ListadoJustificaciones listadoJustificaciones = new ListadoJustificaciones();
 	private ListadoReclamos listadoReclamos = new ListadoReclamos();
+	private ListadoItrs listadoItrs = new ListadoItrs();
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
 	private ModificarAnalista modificarAnalista = new ModificarAnalista();
 	private ModificarEstudiante modificarEstudiante = new ModificarEstudiante();
 	private ModificarTutor modificarTutor = new ModificarTutor();
+	private ModificarItr modificarItr = new ModificarItr();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
 	private JButton btnJustificaciones;
+	private JButton btnItr;
 
 	private JPanel emptyPanel;
 
@@ -63,6 +67,7 @@ public class DashboardAnalista extends JPanel {
 	private Analista analista;
 	private Estudiante estudiante;
 	private Tutor tutor;
+	private Itr itr;
 
 	/**
 	 * Create the panel.
@@ -75,8 +80,7 @@ public class DashboardAnalista extends JPanel {
 		btnUsuarios = new JButton("Usuarios");
 		btnUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String btnNombre = e.getActionCommand(); // Obtengo el nombre del botón
-				setColoresBotones(btnNombre);
+				setColoresBotones("Usuarios");
 			}
 		});
 		btnUsuarios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -91,8 +95,7 @@ public class DashboardAnalista extends JPanel {
 		btnReclamos = new JButton("Reclamos");
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String btnNombre = e.getActionCommand(); // Obtengo el nombre del botón
-				setColoresBotones(btnNombre);
+				setColoresBotones("Reclamos");
 			}
 		});
 		btnReclamos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -107,8 +110,7 @@ public class DashboardAnalista extends JPanel {
 		btnJustificaciones = new JButton("Justificaciones");
 		btnJustificaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String btnNombre = e.getActionCommand(); // Obtengo el nombre del botón
-				setColoresBotones(btnNombre);
+				setColoresBotones("Justificaciones");
 			}
 		});
 		btnJustificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -176,6 +178,22 @@ public class DashboardAnalista extends JPanel {
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
 
+		btnItr = new JButton("ITR");
+		btnItr.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setColoresBotones("ITR");
+			}
+		});
+		btnItr.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnItr.setForeground(Color.WHITE);
+		btnItr.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		btnItr.setFocusable(false);
+		btnItr.setBorder(null);
+		btnItr.setBackground(SystemColor.activeCaption);
+		btnItr.setBounds(10, 398, 127, 45);
+		add(btnItr);
+
 		modificarAnalista.getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -189,7 +207,7 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
-		
+
 		modificarEstudiante.getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -203,7 +221,7 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
-		
+
 		modificarTutor.getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -217,9 +235,21 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
-		
-		
 
+		modificarItr.getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (modificarItr.validarCamposIngresados()) {
+					try {
+						modificarItr.editarItr(itr);
+						JOptionPane.showMessageDialog(null, "Los datos del ITR se editaron con éxito");
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos del ITR");
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	public void cambiarVista(JPanel panel) {
@@ -237,15 +267,23 @@ public class DashboardAnalista extends JPanel {
 		if (btnNombre == "Justificaciones") {
 			btnReclamos.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnNoSeleccionado);
+			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnSeleccionado);
 		} else if (btnNombre == "Reclamos") {
 			btnReclamos.setBackground(btnSeleccionado);
 			btnUsuarios.setBackground(btnNoSeleccionado);
+			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
 		} else if (btnNombre == "Usuarios") {
 			btnReclamos.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnSeleccionado);
+			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
+		} else if (btnNombre == "ITR") {
+			btnReclamos.setBackground(btnNoSeleccionado);
+			btnUsuarios.setBackground(btnNoSeleccionado);
+			btnJustificaciones.setBackground(btnNoSeleccionado);
+			btnItr.setBackground(btnSeleccionado);
 		}
 	}
 
@@ -318,6 +356,61 @@ public class DashboardAnalista extends JPanel {
 		}
 	}
 
+	public class ItrsButtonEditor extends DefaultCellEditor {
+
+		protected JButton button;
+		private String label;
+		private boolean isPushed;
+
+		public ItrsButtonEditor(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				int fila = listadoItrs.getTable().getSelectedRow();
+				long id = (long) listadoItrs.getTable().getValueAt(fila, 0);
+
+				cambiarVista(modificarItr);
+				itr = DatabaseManager.getInstance().getItrsBeanRemote().obtenerItrPorId(id);
+				modificarItr.cargarDatos(itr);
+			}
+			isPushed = false;
+			return label;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+	}
+
 	public Analista getUsuario() {
 		return usuario;
 	}
@@ -362,8 +455,24 @@ public class DashboardAnalista extends JPanel {
 		return btnReclamos;
 	}
 
+	public ListadoItrs getListadoItrs() {
+		return listadoItrs;
+	}
+
+	public void setListadoItrs(ListadoItrs listadoItrs) {
+		this.listadoItrs = listadoItrs;
+	}
+
 	public void setBtnReclamos(JButton btnReclamos) {
 		this.btnReclamos = btnReclamos;
+	}
+
+	public JButton getBtnItr() {
+		return btnItr;
+	}
+
+	public void setBtnItr(JButton btnItr) {
+		this.btnItr = btnItr;
 	}
 
 	public JButton getBtnJustificaciones() {
@@ -429,5 +538,4 @@ public class DashboardAnalista extends JPanel {
 	public void setLblNombreUsuario(String nombreUsuario) {
 		this.lblNombreUsuario.setText(nombreUsuario);
 	}
-
 }

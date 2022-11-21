@@ -32,6 +32,10 @@ public class LoginControlador {
 				break;
 		}
 
+		if (usuario.getEstado() == "Sin Validar" || usuario.getEstado() == "Eliminado") {
+			return false;
+		}
+
 		if (usuario.getContrasenia().equals(vista.getTxtContrasenia())) {
 			return true;
 		} else {

@@ -13,7 +13,8 @@ import com.tix.vista.estudiante.ListadoJustificacionesEstudiante;
 public class DashboardEstudianteControlador {
 	private DashboardEstudiante vista = new DashboardEstudiante();
 	private ListadoJustificacionesEstudiante listadoJustificaciones = new ListadoJustificacionesEstudiante();
-	//private ListadoReclamosAnalista listadoReclamos = new ListadoReclamosAnalista();
+	// private ListadoReclamosAnalista listadoReclamos = new
+	// ListadoReclamosAnalista();
 
 	public DashboardEstudianteControlador() {
 
@@ -22,6 +23,15 @@ public class DashboardEstudianteControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.cambiarVista(listadoJustificaciones);
+			}
+		});
+
+		vista.getLblEditarUsuario().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.getModificarDatosPropios().setEstudiante((vista.getUsuario()));
+				vista.getModificarDatosPropios().cargarDatos();
+				vista.cambiarVista(vista.getModificarDatosPropios());
 			}
 		});
 

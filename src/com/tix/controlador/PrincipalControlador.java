@@ -7,6 +7,7 @@ import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
 import com.tix.modelo.entidades.Analista;
+import com.tix.modelo.entidades.Estudiante;
 import com.tix.vista.Principal;
 
 public class PrincipalControlador {
@@ -62,6 +63,7 @@ public class PrincipalControlador {
 							}
 							case 1: {
 								vista.setContentPane(vista.getDashboardEstudiante());
+								vista.getDashboardEstudiante().setUsuario((Estudiante) vista.getLoginControlador().getUsuario());
 								break;
 							}
 							case 2:

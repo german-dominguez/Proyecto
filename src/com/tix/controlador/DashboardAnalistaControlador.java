@@ -46,6 +46,15 @@ public class DashboardAnalistaControlador {
 			}
 		});
 
+		// Botón ITR en el dashboard
+		vista.getBtnItr().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.cambiarVista(vista.getListadoItrs());
+				vista.getListadoItrs().setButtonEditor(vista.new ItrsButtonEditor(new JCheckBox()));
+			}
+		});
+
 		vista.getLblEditarUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

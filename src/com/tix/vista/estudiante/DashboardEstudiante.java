@@ -8,10 +8,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
+
+import com.tix.modelo.entidades.Estudiante;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
@@ -31,6 +36,10 @@ public class DashboardEstudiante extends JPanel {
 
 	private JSeparator spHorizontal;
 	private JSeparator spVertical;
+
+	private Estudiante usuario;
+
+	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
 
 	/**
 	 * Create the panel.
@@ -72,13 +81,18 @@ public class DashboardEstudiante extends JPanel {
 		lblCerrarSesion = new JLabel("");
 		lblCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblCerrarSesion.setToolTipText("Cerrar sesión");
-		lblCerrarSesion.setIcon(new ImageIcon("C:\\Users\\agust\\Downloads\\noun-exit-5256135 (3).png"));
+		Image exit = new ImageIcon("resources\\logout.png").getImage();
+		ImageIcon exitResized = new ImageIcon(exit.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+		lblCerrarSesion.setIcon(exitResized);
 		lblCerrarSesion.setBounds(75, 166, 30, 32);
 		add(lblCerrarSesion);
 
 		lblEditarUsuario = new JLabel("");
+		lblEditarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblEditarUsuario.setToolTipText("Modificar datos de usuario");
-		lblEditarUsuario.setIcon(new ImageIcon("C:\\Users\\agust\\Downloads\\noun-edit-3956597 (1).png"));
+		Image img = new ImageIcon("resources\\edit.png").getImage();
+		ImageIcon img2 = new ImageIcon(img.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+		lblEditarUsuario.setIcon(img2);
 		lblEditarUsuario.setBounds(40, 166, 30, 32);
 		add(lblEditarUsuario);
 
@@ -113,5 +127,37 @@ public class DashboardEstudiante extends JPanel {
 		emptyPanel.add(panel);
 		emptyPanel.repaint();
 		emptyPanel.revalidate();
+	}
+
+	public JLabel getLblCerrarSesion() {
+		return lblCerrarSesion;
+	}
+
+	public void setLblCerrarSesion(JLabel lblCerrarSesion) {
+		this.lblCerrarSesion = lblCerrarSesion;
+	}
+
+	public JLabel getLblEditarUsuario() {
+		return lblEditarUsuario;
+	}
+
+	public void setLblEditarUsuario(JLabel lblEditarUsuario) {
+		this.lblEditarUsuario = lblEditarUsuario;
+	}
+
+	public ModificarDatosPropios getModificarDatosPropios() {
+		return modificarDatosPropios;
+	}
+
+	public void setModificarDatosPropios(ModificarDatosPropios modificarDatosPropios) {
+		this.modificarDatosPropios = modificarDatosPropios;
+	}
+
+	public Estudiante getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Estudiante usuario) {
+		this.usuario = usuario;
 	}
 }

@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -69,15 +73,33 @@ public class ListadoUsuarios extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Estado", "Tipo de Usuario",
-				"Nombres y Apellidos", "ITR", "Email Institucional", "Tel\u00E9fono", "Generación", " " }));
+		table.setModel(
+				new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null }, },
+						new String[] { "ID", "Estado", "Tipo de Usuario", "Nombres y Apellidos", "ITR",
+								"Email Institucional", "Tel\u00E9fono", "Generaci\u00F3n", " " }) {
+					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
+							false };
+
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(6).setResizable(false);
+		table.getColumnModel().getColumn(7).setResizable(false);
+		table.getColumnModel().getColumn(8).setResizable(false);
 		table.setGridColor(Color.LIGHT_GRAY);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
 		table.setBorder(null);
 		model = (DefaultTableModel) table.getModel();
 
-		table.setDefaultRenderer(Object.class, new RenderTablas());
+		table.getColumnModel().getColumn(8).setCellRenderer(new ButtonRenderer());
 
 		sorter = new TableRowSorter<TableModel>(model);
 
@@ -155,6 +177,27 @@ public class ListadoUsuarios extends JPanel {
 
 	}
 
+	class ButtonRenderer extends JButton implements TableCellRenderer {
+
+		public ButtonRenderer() {
+			setOpaque(true);
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (isSelected) {
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else {
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "" : value.toString());
+			return this;
+		}
+	}
+
 	public void cargarTabla() {
 
 		actualizarListas();
@@ -181,7 +224,6 @@ public class ListadoUsuarios extends JPanel {
 					tutor.getNombre1() + " " + tutor.getApellido1(), tutor.getItr().getNombre(), tutor.getMail(),
 					tutor.getTelefono(), null, "Modificar" });
 		}
-
 	}
 
 	public void actualizarListas() {
@@ -193,27 +235,6 @@ public class ListadoUsuarios extends JPanel {
 		analistas.addAll(DatabaseManager.getInstance().getAnalistasBeanRemote().obtenerTodos());
 		estudiantes.addAll(DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerTodos());
 		tutores.addAll(DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTodos());
-	}
-
-	class ButtonRenderer extends JButton implements TableCellRenderer {
-
-		public ButtonRenderer() {
-			setOpaque(true);
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			if (isSelected) {
-				setForeground(table.getSelectionForeground());
-				setBackground(table.getSelectionBackground());
-			} else {
-				setForeground(table.getForeground());
-				setBackground(UIManager.getColor("Button.background"));
-			}
-			setText((value == null) ? "" : value.toString());
-			return this;
-		}
 	}
 
 	public void filtros() {
