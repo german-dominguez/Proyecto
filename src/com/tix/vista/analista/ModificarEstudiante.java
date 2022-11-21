@@ -593,7 +593,7 @@ public class ModificarEstudiante extends JPanel {
 			if (localidad.getIdLocalidad() == estudiante.getLocalidad().getIdLocalidad()) {
 				cmbLocalidad.setSelectedItem(localidad);
 			}
-		}
+		}	
 
 		List<Departamento> departamentos = new ArrayList<>();
 

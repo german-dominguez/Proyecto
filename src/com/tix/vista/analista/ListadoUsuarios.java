@@ -2,20 +2,17 @@ package com.tix.vista.analista;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,10 +30,6 @@ import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Tutor;
-import com.tix.utilities.RenderTablas;
-import com.tix.vista.analista.DashboardAnalista.ButtonEditor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ListadoUsuarios extends JPanel {
 	private JTable table;
@@ -183,6 +176,7 @@ public class ListadoUsuarios extends JPanel {
 
 		public ButtonRenderer() {
 			setOpaque(true);
+			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
 		@Override
@@ -260,10 +254,6 @@ public class ListadoUsuarios extends JPanel {
 		cmbGeneracion.setSelectedIndex(0);
 		cmbITR.setSelectedIndex(0);
 		cmbTipoUsuario.setSelectedIndex(0);
-	}
-
-	public void setButtonEditor(ButtonEditor buttonEditor) {
-		table.getColumnModel().getColumn(8).setCellEditor(buttonEditor);
 	}
 
 	public String getCmbEstado() {
