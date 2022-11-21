@@ -81,7 +81,7 @@ public class ModificarItr extends JPanel {
 		add(lblEstado);
 
 		cmbEstado = new JComboBox<String>();
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Activo", "Eliminado" }));
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Validado", "Eliminado" }));
 		cmbEstado.setForeground(Color.DARK_GRAY);
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setFocusable(false);
