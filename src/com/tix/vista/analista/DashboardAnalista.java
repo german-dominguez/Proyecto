@@ -194,6 +194,35 @@ public class DashboardAnalista extends JPanel {
 		btnItr.setBounds(10, 398, 127, 45);
 		add(btnItr);
 
+		listadoUsuarios.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (listadoUsuarios.getTable().getSelectedColumn() == 8) {
+					int fila = listadoUsuarios.getTable().getSelectedRow();
+					long id = (long) listadoUsuarios.getTable().getValueAt(fila, 0);
+					String tipoUsuario = (String) listadoUsuarios.getTable().getValueAt(fila, 2);
+
+					if (tipoUsuario.equals("Analista")) {
+						cambiarVista(modificarAnalista);
+						analista = DatabaseManager.getInstance().getAnalistasBeanRemote().obtenerAnalistaPorId(id);
+						modificarAnalista.cargarDatos(analista);
+					}
+					if (tipoUsuario.equals("Estudiante")) {
+						cambiarVista(modificarEstudiante);
+						estudiante = DatabaseManager.getInstance().getEstudiantesBeanRemote()
+								.obtenerEstudiantePorId(id);
+						modificarEstudiante.cargarDatos(estudiante);
+					}
+					if (tipoUsuario.equals("Tutor")) {
+						cambiarVista(modificarTutor);
+						tutor = DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTutorPorId(id);
+						modificarTutor.cargarDatos(tutor);
+					}
+				}
+			}
+		});
+
 		modificarAnalista.getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -284,75 +313,6 @@ public class DashboardAnalista extends JPanel {
 			btnUsuarios.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
 			btnItr.setBackground(btnSeleccionado);
-		}
-	}
-
-	public class ButtonEditor extends DefaultCellEditor {
-
-		protected JButton button;
-		private String label;
-		private boolean isPushed;
-
-		public ButtonEditor(JCheckBox checkBox) {
-			super(checkBox);
-			button = new JButton();
-			button.setOpaque(true);
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					fireEditingStopped();
-				}
-			});
-		}
-
-		@Override
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-				int column) {
-			if (isSelected) {
-				button.setForeground(table.getSelectionForeground());
-				button.setBackground(table.getSelectionBackground());
-			} else {
-				button.setForeground(table.getForeground());
-				button.setBackground(table.getBackground());
-			}
-			label = (value == null) ? "" : value.toString();
-			button.setText(label);
-			isPushed = true;
-			return button;
-		}
-
-		@Override
-		public Object getCellEditorValue() {
-			if (isPushed) {
-				int fila = listadoUsuarios.getTable().getSelectedRow();
-				long id = (long) listadoUsuarios.getTable().getValueAt(fila, 0);
-				String tipoUsuario = (String) listadoUsuarios.getTable().getValueAt(fila, 2);
-
-				if (tipoUsuario.equals("Analista")) {
-					cambiarVista(modificarAnalista);
-					analista = DatabaseManager.getInstance().getAnalistasBeanRemote().obtenerAnalistaPorId(id);
-					modificarAnalista.cargarDatos(analista);
-				}
-				if (tipoUsuario.equals("Estudiante")) {
-					cambiarVista(modificarEstudiante);
-					estudiante = DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerEstudiantePorId(id);
-					modificarEstudiante.cargarDatos(estudiante);
-				}
-				if (tipoUsuario.equals("Tutor")) {
-					cambiarVista(modificarTutor);
-					tutor = DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTutorPorId(id);
-					modificarTutor.cargarDatos(tutor);
-				}
-
-			}
-			isPushed = false;
-			return label;
-		}
-
-		@Override
-		public boolean stopCellEditing() {
-			isPushed = false;
-			return super.stopCellEditing();
 		}
 	}
 

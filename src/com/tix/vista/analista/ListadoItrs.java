@@ -66,6 +66,7 @@ public class ListadoItrs extends JPanel {
 	}
 
 	public void setButtonEditor(ItrsButtonEditor itrsButtonEditor) {
+		System.out.println(1);
 		table.getColumnModel().getColumn(3).setCellEditor(itrsButtonEditor);
 	}
 

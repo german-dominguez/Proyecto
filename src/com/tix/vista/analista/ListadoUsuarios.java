@@ -35,6 +35,8 @@ import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Tutor;
 import com.tix.utilities.RenderTablas;
 import com.tix.vista.analista.DashboardAnalista.ButtonEditor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListadoUsuarios extends JPanel {
 	private JTable table;

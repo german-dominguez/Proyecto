@@ -34,7 +34,6 @@ public class DashboardAnalistaControlador {
 			public void mouseClicked(MouseEvent e) {
 				vista.getListadoUsuarios().limpiarFiltros();
 				vista.cambiarVista(vista.getListadoUsuarios());
-				vista.getListadoUsuarios().setButtonEditor(vista.new ButtonEditor(new JCheckBox()));
 			}
 		});
 
