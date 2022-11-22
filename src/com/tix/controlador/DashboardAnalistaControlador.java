@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import javax.naming.NamingException;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
@@ -68,8 +69,9 @@ public class DashboardAnalistaControlador {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					vista.getModificarDatosPropios().editarAnalista();
+					JOptionPane.showMessageDialog(null, "El usuario ha sido actualizado con éxito");
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error al tratar de actualizar el usuario");
 				}
 			}
 		});

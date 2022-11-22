@@ -115,7 +115,7 @@ public class RegistroControlador {
 		analista.setFechaNacimiento(vista.getDateChooser());
 		analista.setItr(vista.getCmbITR());
 		analista.setLocalidad(vista.getCmbLocalidad());
-		analista.setEstado("Sin Validar");
+		analista.setEstado(0);
 
 		DatabaseManager.getInstance().getAnalistasBeanRemote().registro((Analista) analista);
 	}
@@ -142,7 +142,7 @@ public class RegistroControlador {
 		estudiante.setFechaNacimiento(vista.getDateChooser());
 		estudiante.setItr(vista.getCmbITR());
 		estudiante.setLocalidad(vista.getCmbLocalidad());
-		estudiante.setEstado("Sin Validar");
+		estudiante.setEstado(0);
 
 		DatabaseManager.getInstance().getEstudiantesBeanRemote().registro(estudiante);
 	}
@@ -171,7 +171,7 @@ public class RegistroControlador {
 		tutor.setItr(vista.getCmbITR());
 		tutor.setLocalidad(vista.getCmbLocalidad());
 
-		tutor.setEstado("Sin Validar");
+		tutor.setEstado(0);
 
 		DatabaseManager.getInstance().getTutoresBeanRemote().registro(tutor);
 	}

@@ -427,7 +427,7 @@ public class ModificarTutor extends JPanel {
 		add(lblEstado);
 
 		cmbEstado = new JComboBox<String>();
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Activo", "Eliminado" }));
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Validado", "Eliminado" }));
 		cmbEstado.setForeground(Color.DARK_GRAY);
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setFocusable(false);
@@ -761,8 +761,8 @@ public class ModificarTutor extends JPanel {
 		this.cmbGenero = cmbGenero;
 	}
 
-	public String getCmbEstado() {
-		return (String) cmbEstado.getSelectedItem();
+	public int getCmbEstado() {
+		return cmbEstado.getSelectedIndex();
 	}
 
 	public void setCmbEstado(JComboBox<String> cmbEstado) {

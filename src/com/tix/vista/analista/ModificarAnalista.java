@@ -691,8 +691,8 @@ public class ModificarAnalista extends JPanel {
 		this.cmbGenero = cmbGenero;
 	}
 
-	public String getCmbEstado() {
-		return (String) cmbEstado.getSelectedItem();
+	public int getCmbEstado() {
+		return cmbEstado.getSelectedIndex();
 	}
 
 	public void setCmbEstado(JComboBox<String> cmbEstado) {

@@ -59,7 +59,7 @@ public class DashboardEstudiante extends JPanel {
 		btnJustificaciones.setBounds(10, 232, 127, 45);
 		add(btnJustificaciones);
 
-		lblNombreUsuario = new JLabel("Anita González");
+		lblNombreUsuario = new JLabel("");
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Segoe UI", Font.BOLD, 17));
 		lblNombreUsuario.setBounds(0, 90, 150, 32);
@@ -111,7 +111,6 @@ public class DashboardEstudiante extends JPanel {
 		emptyPanel.setBounds(150, 0, 910, 700);
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
-
 	}
 
 	public JButton getBtnJustificaciones() {
@@ -160,4 +159,13 @@ public class DashboardEstudiante extends JPanel {
 	public void setUsuario(Estudiante usuario) {
 		this.usuario = usuario;
 	}
+
+	public JLabel getLblNombreUsuario() {
+		return lblNombreUsuario;
+	}
+
+	public void setLblNombreUsuario(String nombreUsuario) {
+		this.lblNombreUsuario.setText(nombreUsuario);
+	}
+
 }

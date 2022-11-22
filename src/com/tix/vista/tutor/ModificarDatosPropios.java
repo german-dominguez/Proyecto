@@ -71,7 +71,6 @@ public class ModificarDatosPropios extends JPanel {
 	private JLabel lblEmailPersonal;
 	private JLabel lblITR;
 	private JLabel lblDepartamento;
-	JLabel lblEstado;
 
 	private JSeparator spDocumento;
 	private JSeparator spPrimerApellido;
@@ -85,19 +84,19 @@ public class ModificarDatosPropios extends JPanel {
 	private JSeparator spDatosPersonales;
 	private JSeparator spDatosAcademicos;
 	private JSeparator spITR;
-	JSeparator spEstado;
 
 	private JComboBox<String> cmbGenero;
 	private JComboBox<Localidad> cmbLocalidad;
 	private JComboBox<Departamento> cmbDepartamento;
 	private JComboBox<Itr> cmbITR;
-	private JComboBox<String> cmbEstado;
 	private JComboBox<Area> cmbArea;
 	private JComboBox<String> cmbRol;
 
 	private JButton btnModificar;
 
 	private JDateChooser dateChooser;
+
+	private Tutor tutor;
 
 	/**
 	 * Create the panel.
@@ -402,7 +401,7 @@ public class ModificarDatosPropios extends JPanel {
 		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnModificar.setBackground(SystemColor.textHighlight);
 		btnModificar.setActionCommand("");
-		btnModificar.setBounds(525, 415, 223, 49);
+		btnModificar.setBounds(522, 389, 223, 49);
 		add(btnModificar);
 
 		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
@@ -421,36 +420,16 @@ public class ModificarDatosPropios extends JPanel {
 		dateChooser.setBounds(121, 516, 140, 19);
 		add(dateChooser);
 
-		lblEstado = new JLabel("Estado *");
-		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEstado.setBounds(484, 334, 136, 21);
-		add(lblEstado);
-
-		cmbEstado = new JComboBox<String>();
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Activo", "Eliminado" }));
-		cmbEstado.setForeground(Color.DARK_GRAY);
-		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
-		cmbEstado.setFocusable(false);
-		cmbEstado.setBorder(null);
-		cmbEstado.setBackground(Color.WHITE);
-		cmbEstado.setBounds(484, 354, 140, 20);
-		add(cmbEstado);
-
-		spEstado = new JSeparator();
-		spEstado.setBackground(SystemColor.textHighlight);
-		spEstado.setBounds(484, 374, 140, 14);
-		add(spEstado);
-		
 		JLabel lblArea = new JLabel("Área *");
 		lblArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblArea.setBounds(484, 279, 135, 21);
 		add(lblArea);
-		
+
 		JSeparator spGenero_1 = new JSeparator();
 		spGenero_1.setBackground(SystemColor.textHighlight);
 		spGenero_1.setBounds(484, 319, 140, 14);
 		add(spGenero_1);
-		
+
 		cmbArea = new JComboBox<Area>();
 		cmbArea.setForeground(Color.DARK_GRAY);
 		cmbArea.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -462,19 +441,19 @@ public class ModificarDatosPropios extends JPanel {
 		for (Area area : DatabaseManager.getInstance().getAreasBeanRemote().obtenerTodos()) {
 			cmbArea.addItem(area);
 		}
-		
+
 		JLabel lblRol = new JLabel("Rol *");
 		lblRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblRol.setBounds(647, 279, 135, 21);
 		add(lblRol);
-		
+
 		JSeparator spGenero_2 = new JSeparator();
 		spGenero_2.setBackground(SystemColor.textHighlight);
 		spGenero_2.setBounds(647, 319, 140, 14);
 		add(spGenero_2);
-		
+
 		cmbRol = new JComboBox<String>();
-		cmbRol.setModel(new DefaultComboBoxModel(new String[] {"Encargado", "Tutor"}));
+		cmbRol.setModel(new DefaultComboBoxModel(new String[] { "Encargado", "Tutor" }));
 		cmbRol.setForeground(Color.DARK_GRAY);
 		cmbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbRol.setFocusable(false);
@@ -596,7 +575,7 @@ public class ModificarDatosPropios extends JPanel {
 		return true;
 	}
 
-	public void cargarDatos(Tutor tutor) {
+	public void cargarDatos() {
 		txtDocumento.setText(tutor.getDocumento());
 		txtEmailInstitucional.setText(tutor.getMail());
 		txtEmailPersonal.setText(tutor.getMailPersonal());
@@ -643,9 +622,8 @@ public class ModificarDatosPropios extends JPanel {
 		}
 
 		cmbGenero.setSelectedItem(tutor.getGenero());
-		cmbEstado.setSelectedItem(tutor.getEstado());
 		dateChooser.setDate(tutor.getFechaNacimiento());
-		
+
 		List<Area> areas = new ArrayList<>();
 
 		for (int i = 0; i < cmbArea.getItemCount(); i++) {
@@ -657,11 +635,11 @@ public class ModificarDatosPropios extends JPanel {
 				cmbArea.setSelectedItem(area);
 			}
 		}
-		
+
 		cmbRol.setSelectedItem(tutor.getTipo());
 	}
 
-	public void editarTutor(Tutor tutor) throws Exception {
+	public void editarTutor() throws Exception {
 		tutor.setApellido1(getTxtPrimerApellido());
 		tutor.setApellido2(getTxtSegundoApellido());
 		tutor.setDocumento(getTxtDocumento());
@@ -672,11 +650,18 @@ public class ModificarDatosPropios extends JPanel {
 		tutor.setMailPersonal(getTxtEmailPersonal());
 		tutor.setNombre1(getTxtPrimerNombre());
 		tutor.setNombre2(getTxtSegundoNombre());
-		tutor.setEstado(getCmbEstado());
 		tutor.setTipo(getTxtRol());
 		tutor.setArea(getCmbArea());
 
 		DatabaseManager.getInstance().getTutoresBeanRemote().editar(tutor);
+	}
+
+	public Tutor getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(Tutor tutor) {
+		this.tutor = tutor;
 	}
 
 	public JButton getBtnModificar() {
@@ -690,11 +675,11 @@ public class ModificarDatosPropios extends JPanel {
 	public String getTxtDocumento() {
 		return txtDocumento.getText();
 	}
-	
+
 	public String getTxtRol() {
 		return (String) cmbRol.getSelectedItem();
 	}
-	
+
 	public Area getCmbArea() {
 		return (Area) cmbArea.getSelectedItem();
 	}
@@ -726,8 +711,6 @@ public class ModificarDatosPropios extends JPanel {
 	public String getTxtEmailPersonal() {
 		return txtEmailPersonal.getText();
 	}
-	
-
 
 	public Localidad getCmbLocalidad() {
 		return (Localidad) cmbLocalidad.getSelectedItem();
@@ -759,14 +742,6 @@ public class ModificarDatosPropios extends JPanel {
 
 	public void setCmbGenero(JComboBox<String> cmbGenero) {
 		this.cmbGenero = cmbGenero;
-	}
-
-	public String getCmbEstado() {
-		return (String) cmbEstado.getSelectedItem();
-	}
-
-	public void setCmbEstado(JComboBox<String> cmbEstado) {
-		this.cmbEstado = cmbEstado;
 	}
 
 	public Date getDateChooser() {

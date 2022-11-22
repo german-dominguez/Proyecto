@@ -426,7 +426,7 @@ public class ModificarEstudiante extends JPanel {
 		add(lblEstado);
 
 		cmbEstado = new JComboBox<String>();
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Activo", "Eliminado" }));
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Sin Validar", "Validado", "Eliminado" }));
 		cmbEstado.setForeground(Color.DARK_GRAY);
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setFocusable(false);
@@ -439,12 +439,12 @@ public class ModificarEstudiante extends JPanel {
 		spEstado.setBackground(SystemColor.textHighlight);
 		spEstado.setBounds(484, 374, 140, 14);
 		add(spEstado);
-		
+
 		JLabel lblGeneracion = new JLabel("Generación");
 		lblGeneracion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblGeneracion.setBounds(484, 279, 135, 21);
 		add(lblGeneracion);
-		
+
 		txtGeneracion = new JTextField();
 		txtGeneracion.setForeground(Color.DARK_GRAY);
 		txtGeneracion.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -452,7 +452,7 @@ public class ModificarEstudiante extends JPanel {
 		txtGeneracion.setBorder(null);
 		txtGeneracion.setBounds(484, 299, 140, 20);
 		add(txtGeneracion);
-		
+
 		JSeparator spSegundoNombre_1 = new JSeparator();
 		spSegundoNombre_1.setBackground(SystemColor.textHighlight);
 		spSegundoNombre_1.setBounds(484, 319, 140, 14);
@@ -593,7 +593,7 @@ public class ModificarEstudiante extends JPanel {
 			if (localidad.getIdLocalidad() == estudiante.getLocalidad().getIdLocalidad()) {
 				cmbLocalidad.setSelectedItem(localidad);
 			}
-		}	
+		}
 
 		List<Departamento> departamentos = new ArrayList<>();
 
@@ -680,11 +680,10 @@ public class ModificarEstudiante extends JPanel {
 	public String getTxtEmailPersonal() {
 		return txtEmailPersonal.getText();
 	}
-	
+
 	public String getTxtGeneracion() {
 		return txtGeneracion.getText();
 	}
-
 
 	public Localidad getCmbLocalidad() {
 		return (Localidad) cmbLocalidad.getSelectedItem();
@@ -718,8 +717,8 @@ public class ModificarEstudiante extends JPanel {
 		this.cmbGenero = cmbGenero;
 	}
 
-	public String getCmbEstado() {
-		return (String) cmbEstado.getSelectedItem();
+	public int getCmbEstado() {
+		return cmbEstado.getSelectedIndex();
 	}
 
 	public void setCmbEstado(JComboBox<String> cmbEstado) {

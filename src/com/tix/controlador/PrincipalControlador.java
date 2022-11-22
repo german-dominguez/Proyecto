@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
+import com.tix.modelo.entidades.Tutor;
 import com.tix.vista.Principal;
 
 public class PrincipalControlador {
@@ -63,11 +64,17 @@ public class PrincipalControlador {
 							}
 							case 1: {
 								vista.setContentPane(vista.getDashboardEstudiante());
-								vista.getDashboardEstudiante().setUsuario((Estudiante) vista.getLoginControlador().getUsuario());
+								vista.getDashboardEstudiante()
+										.setUsuario((Estudiante) vista.getLoginControlador().getUsuario());
+								vista.getDashboardEstudiante()
+										.setLblNombreUsuario(vista.getDashboardEstudiante().getUsuario().getNombre1());
 								break;
 							}
 							case 2:
-								vista.setContentPane(vista.getDashboardEstudiante());
+								vista.setContentPane(vista.getDashboardTutor());
+								vista.getDashboardTutor().setUsuario((Tutor) vista.getLoginControlador().getUsuario());
+								vista.getDashboardTutor()
+										.setLblNombreUsuario(vista.getDashboardTutor().getUsuario().getNombre1());
 								break;
 						}
 
@@ -83,6 +90,26 @@ public class PrincipalControlador {
 
 		// Botón CERRAR SESIÓN en el dashboard - Cambia a la vista de login
 		vista.getDashboardAnalista().getLblCerrarSesion().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.setContentPane(vista.getLoginPanel());
+				vista.setSize(350, 500);
+				vista.setLocationRelativeTo(null);
+			}
+		});
+
+		// Botón CERRAR SESIÓN en el dashboard - Cambia a la vista de login
+		vista.getDashboardEstudiante().getLblCerrarSesion().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.setContentPane(vista.getLoginPanel());
+				vista.setSize(350, 500);
+				vista.setLocationRelativeTo(null);
+			}
+		});
+
+		// Botón CERRAR SESIÓN en el dashboard - Cambia a la vista de login
+		vista.getDashboardTutor().getLblCerrarSesion().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.setContentPane(vista.getLoginPanel());

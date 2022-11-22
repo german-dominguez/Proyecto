@@ -79,6 +79,14 @@ public class Principal extends JFrame {
 		return dashboardAnalista;
 	}
 
+	public DashboardTutor getDashboardTutor() {
+		return dashboardTutor;
+	}
+
+	public void setDashboardTutor(DashboardTutor dashboardTutor) {
+		this.dashboardTutor = dashboardTutor;
+	}
+
 	public ListadoUsuarios getListadoUsuarios() {
 		return listadoUsuarios;
 	}

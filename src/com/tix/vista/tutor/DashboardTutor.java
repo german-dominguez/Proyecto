@@ -1,21 +1,23 @@
 package com.tix.vista.tutor;
 
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Cursor;
-import java.awt.BorderLayout;
+
+import com.tix.modelo.entidades.Tutor;
+import com.tix.vista.tutor.ModificarDatosPropios;
 
 public class DashboardTutor extends JPanel {
 
@@ -31,6 +33,10 @@ public class DashboardTutor extends JPanel {
 
 	private JSeparator spHorizontal;
 	private JSeparator spVertical;
+
+	private Tutor usuario;
+
+	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
 
 	/**
 	 * Create the panel.
@@ -72,13 +78,17 @@ public class DashboardTutor extends JPanel {
 		lblCerrarSesion = new JLabel("");
 		lblCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblCerrarSesion.setToolTipText("Cerrar sesión");
-		lblCerrarSesion.setIcon(new ImageIcon("C:\\Users\\agust\\Downloads\\noun-exit-5256135 (3).png"));
+		Image exit = new ImageIcon("resources\\logout.png").getImage();
+		ImageIcon exitResized = new ImageIcon(exit.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+		lblCerrarSesion.setIcon(exitResized);
 		lblCerrarSesion.setBounds(75, 166, 30, 32);
 		add(lblCerrarSesion);
 
 		lblEditarUsuario = new JLabel("");
 		lblEditarUsuario.setToolTipText("Modificar datos de usuario");
-		lblEditarUsuario.setIcon(new ImageIcon("C:\\Users\\agust\\Downloads\\noun-edit-3956597 (1).png"));
+		Image img = new ImageIcon("resources\\edit.png").getImage();
+		ImageIcon img2 = new ImageIcon(img.getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+		lblEditarUsuario.setIcon(img2);
 		lblEditarUsuario.setBounds(40, 166, 30, 32);
 		add(lblEditarUsuario);
 
@@ -98,6 +108,46 @@ public class DashboardTutor extends JPanel {
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
 
+	}
+
+	public ModificarDatosPropios getModificarDatosPropios() {
+		return modificarDatosPropios;
+	}
+
+	public void setModificarDatosPropios(ModificarDatosPropios modificarDatosPropios) {
+		this.modificarDatosPropios = modificarDatosPropios;
+	}
+
+	public Tutor getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Tutor usuario) {
+		this.usuario = usuario;
+	}
+
+	public JLabel getLblCerrarSesion() {
+		return lblCerrarSesion;
+	}
+
+	public void setLblCerrarSesion(JLabel lblCerrarSesion) {
+		this.lblCerrarSesion = lblCerrarSesion;
+	}
+
+	public JLabel getLblEditarUsuario() {
+		return lblEditarUsuario;
+	}
+
+	public void setLblEditarUsuario(JLabel lblEditarUsuario) {
+		this.lblEditarUsuario = lblEditarUsuario;
+	}
+
+	public JLabel getLblNombreUsuario() {
+		return lblNombreUsuario;
+	}
+
+	public void setLblNombreUsuario(String nombreUsuario) {
+		this.lblNombreUsuario.setText(nombreUsuario);
 	}
 
 	public JButton getBtnJustificaciones() {

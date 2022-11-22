@@ -680,6 +680,10 @@ public class ModificarDatosPropios extends JPanel {
 		this.estudiante = estudiante;
 	}
 
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+
 	public void setBtnModificar(JButton btnModificar) {
 		this.btnModificar = btnModificar;
 	}
