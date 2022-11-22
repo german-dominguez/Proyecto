@@ -8,6 +8,7 @@ import com.tix.modelo.servicios.AreasBeanRemote;
 import com.tix.modelo.servicios.DepartamentosBeanRemote;
 import com.tix.modelo.servicios.EstudiantesBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
+import com.tix.modelo.servicios.JustificacionesBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.tix.modelo.servicios.TutoresBeanRemote;
 
@@ -30,6 +31,7 @@ public class DatabaseManager {
 	private LocalidadesBeanRemote localidadesBeanRemote;
 	private DepartamentosBeanRemote departamentosBeanRemote;
 	private AreasBeanRemote areasBeanRemote;
+	private JustificacionesBeanRemote justificacionesBeanRemote;
 
 	public DatabaseManager() throws NamingException {
 
@@ -53,6 +55,9 @@ public class DatabaseManager {
 
 		areasBeanRemote = (AreasBeanRemote) InitialContext
 				.doLookup("ProyectoEJB/AreasBean!com.tix.modelo.servicios.AreasBeanRemote");
+		
+		justificacionesBeanRemote = (JustificacionesBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/JustificacionesBean!com.tix.modelo.servicios.JustificacionesBeanRemote");
 	}
 
 	public static DatabaseManager getInstance() {
@@ -117,6 +122,14 @@ public class DatabaseManager {
 
 	public void setAreasBeanRemote(AreasBeanRemote areasBeanRemote) {
 		this.areasBeanRemote = areasBeanRemote;
+	}
+	
+	public JustificacionesBeanRemote getJustificacionesBeanRemote() {
+		return justificacionesBeanRemote;
+	}
+
+	public void setJustificacionesBeanRemote(JustificacionesBeanRemote justificacionesBeanRemote) {
+		this.justificacionesBeanRemote = justificacionesBeanRemote;
 	}
 
 }
