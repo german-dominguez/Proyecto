@@ -37,7 +37,7 @@ public class ModificarItr extends JPanel {
 
 		JLabel lblDepartamento = new JLabel("Departamento *");
 		lblDepartamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDepartamento.setBounds(277, 270, 140, 21);
+		lblDepartamento.setBounds(114, 186, 98, 21);
 		add(lblDepartamento);
 
 		cmbDepartamento = new JComboBox<Departamento>();
@@ -49,17 +49,17 @@ public class ModificarItr extends JPanel {
 		cmbDepartamento.setFocusable(false);
 		cmbDepartamento.setBorder(null);
 		cmbDepartamento.setBackground(Color.WHITE);
-		cmbDepartamento.setBounds(277, 290, 140, 20);
+		cmbDepartamento.setBounds(61, 208, 207, 20);
 		add(cmbDepartamento);
 
 		JSeparator spDepartamento = new JSeparator();
 		spDepartamento.setBackground(SystemColor.textHighlight);
-		spDepartamento.setBounds(277, 310, 140, 14);
+		spDepartamento.setBounds(61, 228, 207, 14);
 		add(spDepartamento);
 
 		JLabel lblNombre = new JLabel("Nombre *");
 		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblNombre.setBounds(277, 205, 140, 21);
+		lblNombre.setBounds(132, 100, 63, 21);
 		add(lblNombre);
 
 		txtNombre = new JTextField();
@@ -67,17 +67,17 @@ public class ModificarItr extends JPanel {
 		txtNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtNombre.setBounds(277, 225, 140, 20);
+		txtNombre.setBounds(61, 120, 207, 20);
 		add(txtNombre);
 
 		JSeparator spPrimerNombre = new JSeparator();
 		spPrimerNombre.setBackground(SystemColor.textHighlight);
-		spPrimerNombre.setBounds(277, 245, 140, 14);
+		spPrimerNombre.setBounds(61, 140, 207, 14);
 		add(spPrimerNombre);
 
 		JLabel lblEstado = new JLabel("Estado *");
 		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEstado.setBounds(473, 205, 140, 21);
+		lblEstado.setBounds(138, 274, 52, 21);
 		add(lblEstado);
 
 		cmbEstado = new JComboBox<String>();
@@ -87,12 +87,12 @@ public class ModificarItr extends JPanel {
 		cmbEstado.setFocusable(false);
 		cmbEstado.setBorder(null);
 		cmbEstado.setBackground(Color.WHITE);
-		cmbEstado.setBounds(473, 225, 140, 20);
+		cmbEstado.setBounds(61, 294, 207, 20);
 		add(cmbEstado);
 
 		JSeparator spEstado = new JSeparator();
 		spEstado.setBackground(SystemColor.textHighlight);
-		spEstado.setBounds(473, 245, 140, 14);
+		spEstado.setBounds(61, 314, 207, 14);
 		add(spEstado);
 
 		btnModificar = new JButton("MODIFICAR");
@@ -102,8 +102,14 @@ public class ModificarItr extends JPanel {
 		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnModificar.setBackground(SystemColor.textHighlight);
 		btnModificar.setActionCommand("");
-		btnModificar.setBounds(277, 347, 223, 49);
+		btnModificar.setBounds(61, 382, 207, 49);
 		add(btnModificar);
+		
+		JLabel lblModificarItr = new JLabel("MODIFICAR ITR");
+		lblModificarItr.setForeground(Color.BLACK);
+		lblModificarItr.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblModificarItr.setBounds(94, 30, 156, 41);
+		add(lblModificarItr);
 
 	}
 

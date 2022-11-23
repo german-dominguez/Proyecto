@@ -71,7 +71,7 @@ public class ListadoUsuarios extends JPanel {
 		table.setModel(
 				new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null }, },
 						new String[] { "ID", "Estado", "Tipo de Usuario", "Nombres y Apellidos", "ITR",
-								"Email Institucional", "Tel\u00E9fono", "Generaci\u00F3n", " " }) {
+								"Email Institucional", "Teléfono", "Generación", " " }) {
 					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
 							false };
 

@@ -54,7 +54,7 @@ public class ListadoItrs extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Estado", "Nombre", "" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Estado", "Nombre", "Departamento", "" }));
 		table.setGridColor(Color.LIGHT_GRAY);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
@@ -105,7 +105,7 @@ public class ListadoItrs extends JPanel {
 		}
 
 		for (Itr itr : itrs) {
-			model.addRow(new Object[] { itr.getIdItr(), itr.getEstado(), itr.getNombre(), "Modificar" });
+			model.addRow(new Object[] { itr.getIdItr(), itr.getEstado(), itr.getDepartamento().getNombre(), itr.getNombre(), "Modificar" });
 		}
 	}
 

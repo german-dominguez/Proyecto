@@ -111,79 +111,79 @@ public class ModificarDatosPropios extends JPanel {
 
 		lblDocumento = new JLabel("Documento *");
 		lblDocumento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDocumento.setBounds(284, 389, 136, 21);
+		lblDocumento.setBounds(183, 283, 136, 21);
 		add(lblDocumento);
 
 		lblPrimerNombre = new JLabel("Primer nombre *");
 		lblPrimerNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblPrimerNombre.setBounds(121, 224, 135, 21);
+		lblPrimerNombre.setBounds(20, 118, 135, 21);
 		add(lblPrimerNombre);
 
 		lblDatosAcadmicos = new JLabel("Datos académicos");
 		lblDatosAcadmicos.setForeground(SystemColor.textHighlight);
 		lblDatosAcadmicos.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lblDatosAcadmicos.setBounds(484, 170, 299, 27);
+		lblDatosAcadmicos.setBounds(383, 64, 299, 27);
 		add(lblDatosAcadmicos);
 
 		lblDatosPersonales = new JLabel("Datos personales");
 		lblDatosPersonales.setForeground(SystemColor.textHighlight);
 		lblDatosPersonales.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 20));
-		lblDatosPersonales.setBounds(121, 170, 299, 27);
+		lblDatosPersonales.setBounds(20, 64, 299, 27);
 		add(lblDatosPersonales);
 
 		lblTelefono = new JLabel("Teléfono de contacto *");
 		lblTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblTelefono.setBounds(284, 334, 136, 21);
+		lblTelefono.setBounds(183, 228, 136, 21);
 		add(lblTelefono);
 
 		lblSegundoNombre = new JLabel("Segundo nombre");
 		lblSegundoNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblSegundoNombre.setBounds(284, 224, 135, 21);
+		lblSegundoNombre.setBounds(183, 118, 135, 21);
 		add(lblSegundoNombre);
 
 		lblSegundoApellido = new JLabel("Segundo apellido");
 		lblSegundoApellido.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblSegundoApellido.setBounds(284, 279, 136, 21);
+		lblSegundoApellido.setBounds(183, 173, 136, 21);
 		add(lblSegundoApellido);
 
 		JLabel lblGnero = new JLabel("Género *");
 		lblGnero.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblGnero.setBounds(121, 389, 135, 21);
+		lblGnero.setBounds(20, 283, 135, 21);
 		add(lblGnero);
 
 		lblLocalidad = new JLabel("Localidad *");
 		lblLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblLocalidad.setBounds(284, 444, 136, 21);
+		lblLocalidad.setBounds(183, 338, 136, 21);
 		add(lblLocalidad);
 
 		lblPrimerApellido = new JLabel("Primer apellido *");
 		lblPrimerApellido.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblPrimerApellido.setBounds(121, 279, 135, 21);
+		lblPrimerApellido.setBounds(20, 173, 135, 21);
 		add(lblPrimerApellido);
 
 		lblEmailInstitucional = new JLabel("Email institucional *");
 		lblEmailInstitucional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEmailInstitucional.setBounds(484, 224, 140, 21);
+		lblEmailInstitucional.setBounds(383, 118, 140, 21);
 		add(lblEmailInstitucional);
 
 		lblFechaNacimiento = new JLabel("Fecha de nacimiento *");
 		lblFechaNacimiento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaNacimiento.setBounds(121, 495, 135, 21);
+		lblFechaNacimiento.setBounds(20, 389, 135, 21);
 		add(lblFechaNacimiento);
 
 		lblEmailPersonal = new JLabel("Email personal *");
 		lblEmailPersonal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEmailPersonal.setBounds(121, 334, 135, 21);
+		lblEmailPersonal.setBounds(20, 228, 135, 21);
 		add(lblEmailPersonal);
 
 		lblITR = new JLabel("ITR *");
 		lblITR.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblITR.setBounds(647, 224, 136, 21);
+		lblITR.setBounds(546, 118, 136, 21);
 		add(lblITR);
 
 		lblDepartamento = new JLabel("Departamento *");
 		lblDepartamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDepartamento.setBounds(121, 444, 135, 21);
+		lblDepartamento.setBounds(20, 338, 135, 21);
 		add(lblDepartamento);
 
 		txtDocumento = new JTextField();
@@ -191,7 +191,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtDocumento.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtDocumento.setColumns(10);
 		txtDocumento.setBorder(null);
-		txtDocumento.setBounds(284, 409, 140, 20);
+		txtDocumento.setBounds(183, 303, 140, 20);
 		add(txtDocumento);
 
 		txtPrimerNombre = new JTextField();
@@ -199,7 +199,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtPrimerNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtPrimerNombre.setColumns(10);
 		txtPrimerNombre.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtPrimerNombre.setBounds(121, 244, 140, 20);
+		txtPrimerNombre.setBounds(20, 138, 140, 20);
 		add(txtPrimerNombre);
 
 		txtSegundoNombre = new JTextField();
@@ -207,7 +207,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtSegundoNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtSegundoNombre.setColumns(10);
 		txtSegundoNombre.setBorder(null);
-		txtSegundoNombre.setBounds(284, 244, 140, 20);
+		txtSegundoNombre.setBounds(183, 138, 140, 20);
 		add(txtSegundoNombre);
 
 		txtPrimerApellido = new JTextField();
@@ -215,7 +215,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtPrimerApellido.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtPrimerApellido.setColumns(10);
 		txtPrimerApellido.setBorder(null);
-		txtPrimerApellido.setBounds(121, 299, 140, 20);
+		txtPrimerApellido.setBounds(20, 193, 140, 20);
 		add(txtPrimerApellido);
 
 		txtSegundoApellido = new JTextField();
@@ -223,7 +223,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtSegundoApellido.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtSegundoApellido.setColumns(10);
 		txtSegundoApellido.setBorder(null);
-		txtSegundoApellido.setBounds(284, 299, 140, 20);
+		txtSegundoApellido.setBounds(183, 193, 140, 20);
 		add(txtSegundoApellido);
 
 		txtEmailInstitucional = new JTextField();
@@ -233,7 +233,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtEmailInstitucional.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtEmailInstitucional.setColumns(10);
 		txtEmailInstitucional.setBorder(null);
-		txtEmailInstitucional.setBounds(484, 244, 140, 20);
+		txtEmailInstitucional.setBounds(383, 138, 140, 20);
 		add(txtEmailInstitucional);
 
 		txtTelefono = new JTextField();
@@ -241,7 +241,7 @@ public class ModificarDatosPropios extends JPanel {
 		txtTelefono.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtTelefono.setColumns(10);
 		txtTelefono.setBorder(null);
-		txtTelefono.setBounds(284, 354, 140, 20);
+		txtTelefono.setBounds(183, 248, 140, 20);
 		add(txtTelefono);
 
 		txtEmailPersonal = new JTextField();
@@ -250,88 +250,88 @@ public class ModificarDatosPropios extends JPanel {
 		txtEmailPersonal.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtEmailPersonal.setColumns(10);
 		txtEmailPersonal.setBorder(null);
-		txtEmailPersonal.setBounds(121, 354, 140, 20);
+		txtEmailPersonal.setBounds(20, 248, 140, 20);
 		add(txtEmailPersonal);
 
 		spDocumento = new JSeparator();
 		spDocumento.setBackground(SystemColor.textHighlight);
-		spDocumento.setBounds(284, 429, 140, 14);
+		spDocumento.setBounds(183, 323, 140, 14);
 		add(spDocumento);
 
 		spPrimerApellido = new JSeparator();
 		spPrimerApellido.setBackground(SystemColor.textHighlight);
-		spPrimerApellido.setBounds(121, 319, 140, 14);
+		spPrimerApellido.setBounds(20, 213, 140, 14);
 		add(spPrimerApellido);
 
 		spSegundoApellido = new JSeparator();
 		spSegundoApellido.setBackground(SystemColor.textHighlight);
-		spSegundoApellido.setBounds(284, 319, 140, 14);
+		spSegundoApellido.setBounds(183, 213, 140, 14);
 		add(spSegundoApellido);
 
 		spEmailInstitucional = new JSeparator();
 		spEmailInstitucional.setBackground(SystemColor.textHighlight);
-		spEmailInstitucional.setBounds(484, 264, 140, 14);
+		spEmailInstitucional.setBounds(383, 158, 140, 14);
 		add(spEmailInstitucional);
 
 		spEmailPersonal = new JSeparator();
 		spEmailPersonal.setBackground(SystemColor.textHighlight);
-		spEmailPersonal.setBounds(121, 374, 140, 14);
+		spEmailPersonal.setBounds(20, 268, 140, 14);
 		add(spEmailPersonal);
 
 		spDepartamento = new JSeparator();
 		spDepartamento.setBackground(SystemColor.textHighlight);
-		spDepartamento.setBounds(121, 484, 140, 14);
+		spDepartamento.setBounds(20, 378, 140, 14);
 		add(spDepartamento);
 
 		spLocalidad = new JSeparator();
 		spLocalidad.setBackground(SystemColor.textHighlight);
-		spLocalidad.setBounds(284, 484, 140, 14);
+		spLocalidad.setBounds(183, 378, 140, 14);
 		add(spLocalidad);
 
 		spTelefono = new JSeparator();
 		spTelefono.setBackground(SystemColor.textHighlight);
-		spTelefono.setBounds(284, 374, 140, 14);
+		spTelefono.setBounds(183, 268, 140, 14);
 		add(spTelefono);
 
 		spFechaNacimiento = new JSeparator();
 		spFechaNacimiento.setBackground(SystemColor.textHighlight);
-		spFechaNacimiento.setBounds(121, 532, 140, 14);
+		spFechaNacimiento.setBounds(20, 426, 140, 14);
 		add(spFechaNacimiento);
 
 		spDatosPersonales = new JSeparator();
 		spDatosPersonales.setBackground(SystemColor.textHighlight);
-		spDatosPersonales.setBounds(121, 200, 299, 14);
+		spDatosPersonales.setBounds(20, 94, 299, 14);
 		add(spDatosPersonales);
 
 		spDatosAcademicos = new JSeparator();
 		spDatosAcademicos.setBackground(SystemColor.textHighlight);
-		spDatosAcademicos.setBounds(484, 200, 299, 14);
+		spDatosAcademicos.setBounds(383, 94, 299, 14);
 		add(spDatosAcademicos);
 
 		spITR = new JSeparator();
 		spITR.setBackground(SystemColor.textHighlight);
-		spITR.setBounds(647, 264, 140, 14);
+		spITR.setBounds(546, 158, 140, 14);
 		add(spITR);
 
 		JSeparator spVertical = new JSeparator();
 		spVertical.setOrientation(SwingConstants.VERTICAL);
 		spVertical.setBackground(SystemColor.textHighlight);
-		spVertical.setBounds(456, 212, 18, 286);
+		spVertical.setBounds(355, 106, 18, 286);
 		add(spVertical);
 
 		JSeparator spPrimerNombre = new JSeparator();
 		spPrimerNombre.setBackground(SystemColor.textHighlight);
-		spPrimerNombre.setBounds(121, 264, 140, 14);
+		spPrimerNombre.setBounds(20, 158, 140, 14);
 		add(spPrimerNombre);
 
 		JSeparator spSegundoNombre = new JSeparator();
 		spSegundoNombre.setBackground(SystemColor.textHighlight);
-		spSegundoNombre.setBounds(284, 264, 140, 14);
+		spSegundoNombre.setBounds(183, 158, 140, 14);
 		add(spSegundoNombre);
 
 		JSeparator spGenero = new JSeparator();
 		spGenero.setBackground(SystemColor.textHighlight);
-		spGenero.setBounds(121, 429, 140, 14);
+		spGenero.setBounds(20, 323, 140, 14);
 		add(spGenero);
 
 		cmbGenero = new JComboBox();
@@ -341,7 +341,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbGenero.setFocusable(false);
 		cmbGenero.setBorder(null);
 		cmbGenero.setBackground(Color.WHITE);
-		cmbGenero.setBounds(121, 410, 140, 22);
+		cmbGenero.setBounds(20, 304, 140, 22);
 		add(cmbGenero);
 
 		cmbLocalidad = new JComboBox<Localidad>();
@@ -353,7 +353,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbLocalidad.setFocusable(false);
 		cmbLocalidad.setBorder(null);
 		cmbLocalidad.setBackground(Color.WHITE);
-		cmbLocalidad.setBounds(284, 464, 140, 20);
+		cmbLocalidad.setBounds(183, 358, 140, 20);
 		add(cmbLocalidad);
 
 		cmbDepartamento = new JComboBox<Departamento>();
@@ -378,7 +378,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbDepartamento.setFocusable(false);
 		cmbDepartamento.setBorder(null);
 		cmbDepartamento.setBackground(Color.WHITE);
-		cmbDepartamento.setBounds(121, 464, 140, 20);
+		cmbDepartamento.setBounds(20, 358, 140, 20);
 		add(cmbDepartamento);
 
 		cmbITR = new JComboBox<Itr>();
@@ -390,7 +390,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbITR.setFocusable(false);
 		cmbITR.setBorder(null);
 		cmbITR.setBackground(Color.WHITE);
-		cmbITR.setBounds(647, 244, 140, 20);
+		cmbITR.setBounds(546, 138, 140, 20);
 		add(cmbITR);
 
 		btnModificar = new JButton("MODIFICAR");
@@ -401,33 +401,33 @@ public class ModificarDatosPropios extends JPanel {
 		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnModificar.setBackground(SystemColor.textHighlight);
 		btnModificar.setActionCommand("");
-		btnModificar.setBounds(522, 389, 223, 49);
+		btnModificar.setBounds(421, 283, 223, 49);
 		add(btnModificar);
 
-		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS DE USUARIO");
+		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR DATOS PROPIOS");
 		lblRegistroDeUsuario.setForeground(Color.BLACK);
 		lblRegistroDeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblRegistroDeUsuario.setBounds(121, 116, 390, 41);
+		lblRegistroDeUsuario.setBounds(20, 10, 390, 41);
 		add(lblRegistroDeUsuario);
 
 		JLabel lblAviso = new JLabel("Los campos marcados con * son obligatorios.");
 		lblAviso.setForeground(Color.DARK_GRAY);
 		lblAviso.setFont(new Font("Segoe UI", Font.ITALIC, 10));
-		lblAviso.setBounds(121, 557, 230, 13);
+		lblAviso.setBounds(20, 451, 230, 13);
 		add(lblAviso);
 
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(121, 516, 140, 19);
+		dateChooser.setBounds(20, 410, 140, 19);
 		add(dateChooser);
 
 		JLabel lblArea = new JLabel("Área *");
 		lblArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblArea.setBounds(484, 279, 135, 21);
+		lblArea.setBounds(383, 173, 135, 21);
 		add(lblArea);
 
 		JSeparator spGenero_1 = new JSeparator();
 		spGenero_1.setBackground(SystemColor.textHighlight);
-		spGenero_1.setBounds(484, 319, 140, 14);
+		spGenero_1.setBounds(383, 213, 140, 14);
 		add(spGenero_1);
 
 		cmbArea = new JComboBox<Area>();
@@ -436,7 +436,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbArea.setFocusable(false);
 		cmbArea.setBorder(null);
 		cmbArea.setBackground(Color.WHITE);
-		cmbArea.setBounds(484, 300, 140, 22);
+		cmbArea.setBounds(383, 194, 140, 22);
 		add(cmbArea);
 		for (Area area : DatabaseManager.getInstance().getAreasBeanRemote().obtenerTodos()) {
 			cmbArea.addItem(area);
@@ -444,12 +444,12 @@ public class ModificarDatosPropios extends JPanel {
 
 		JLabel lblRol = new JLabel("Rol *");
 		lblRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblRol.setBounds(647, 279, 135, 21);
+		lblRol.setBounds(546, 173, 135, 21);
 		add(lblRol);
 
 		JSeparator spGenero_2 = new JSeparator();
 		spGenero_2.setBackground(SystemColor.textHighlight);
-		spGenero_2.setBounds(647, 319, 140, 14);
+		spGenero_2.setBounds(546, 213, 140, 14);
 		add(spGenero_2);
 
 		cmbRol = new JComboBox<String>();
@@ -459,7 +459,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbRol.setFocusable(false);
 		cmbRol.setBorder(null);
 		cmbRol.setBackground(Color.WHITE);
-		cmbRol.setBounds(647, 300, 140, 22);
+		cmbRol.setBounds(546, 194, 140, 22);
 		add(cmbRol);
 
 	}

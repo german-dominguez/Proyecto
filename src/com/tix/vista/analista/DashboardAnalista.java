@@ -47,6 +47,7 @@ public class DashboardAnalista extends JPanel {
 	private ModificarTutor modificarTutor = new ModificarTutor();
 	private ModificarItr modificarItr = new ModificarItr();
 	private RegistroItr registroItr = new RegistroItr();
+	private AccionJustificacionAnalista accionJustificacionAnalista = new AccionJustificacionAnalista();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
@@ -131,7 +132,7 @@ public class DashboardAnalista extends JPanel {
 
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setIcon(new ImageIcon("img\\utec2.png"));
+		lblLogo.setIcon(new ImageIcon("resources\\utec2.png"));
 		lblLogo.setBounds(42, 10, 70, 70);
 		add(lblLogo);
 
@@ -179,7 +180,7 @@ public class DashboardAnalista extends JPanel {
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
 
-		btnItr = new JButton("ITR");
+		btnItr = new JButton("ITRs");
 		btnItr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -220,6 +221,19 @@ public class DashboardAnalista extends JPanel {
 						tutor = DatabaseManager.getInstance().getTutoresBeanRemote().obtenerTutorPorId(id);
 						modificarTutor.cargarDatos(tutor);
 					}
+				}
+			}
+		});
+		
+		listadoJustificaciones.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (listadoJustificaciones.getTable().getSelectedColumn() == 6) {
+					int fila = listadoJustificaciones.getTable().getSelectedRow();
+					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
+					cambiarVista(accionJustificacionAnalista);
+					accionJustificacionAnalista.cargarDatos(DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
 				}
 			}
 		});
