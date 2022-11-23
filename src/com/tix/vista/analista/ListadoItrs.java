@@ -3,24 +3,40 @@ package com.tix.vista.analista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Itr;
-import com.tix.utilities.RenderTablas;
 import com.tix.vista.analista.DashboardAnalista.ItrsButtonEditor;
+import javax.swing.JButton;
+import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 
 public class ListadoItrs extends JPanel {
 	private JTable table;
 	private List<Itr> itrs = new ArrayList<>();
 	private DefaultTableModel model;
+	JComboBox<String> cmbEstado;
+
+	private TableRowSorter<TableModel> sorter;
+
+	private JButton btnNuevoItr;
 
 	/**
 	 * Create the panel.
@@ -34,7 +50,7 @@ public class ListadoItrs extends JPanel {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.GREEN);
-		scrollPane.setBounds(20, 64, 850, 534);
+		scrollPane.setBounds(20, 125, 850, 515);
 		add(scrollPane);
 
 		table = new JTable();
@@ -47,11 +63,39 @@ public class ListadoItrs extends JPanel {
 
 		cargarTabla();
 
+		sorter = new TableRowSorter<TableModel>(model);
+
 		JLabel lblItr = new JLabel("ITRS");
 		lblItr.setForeground(Color.BLACK);
 		lblItr.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblItr.setBounds(20, 12, 390, 41);
 		add(lblItr);
+
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblEstado.setBounds(20, 64, 111, 13);
+		add(lblEstado);
+
+		cmbEstado = new JComboBox<String>();
+		cmbEstado.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				filtros();
+			}
+		});
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Sin Validar", "Validado", "Eliminado" }));
+		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		cmbEstado.setBounds(20, 84, 140, 20);
+		add(cmbEstado);
+
+		btnNuevoItr = new JButton("NUEVO ITR");
+		btnNuevoItr.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNuevoItr.setForeground(Color.WHITE);
+		btnNuevoItr.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnNuevoItr.setFocusable(false);
+		btnNuevoItr.setBorder(null);
+		btnNuevoItr.setBackground(SystemColor.textHighlight);
+		btnNuevoItr.setBounds(692, 59, 178, 45);
+		add(btnNuevoItr);
 
 	}
 
@@ -65,8 +109,48 @@ public class ListadoItrs extends JPanel {
 		}
 	}
 
+	public void filtros() {
+		List<RowFilter<Object, Object>> filtros = new ArrayList<RowFilter<Object, Object>>();
+
+		filtros.add(RowFilter.regexFilter(getCmbEstado()));
+		RowFilter<Object, Object> rf = RowFilter.andFilter(filtros);
+
+		sorter.setRowFilter(rf);
+
+		table.setRowSorter(sorter);
+	}
+
+	public void limpiarFiltros() {
+		table.setRowSorter(null);
+		cargarTabla();
+		cmbEstado.setSelectedIndex(0);
+	}
+
+	public String getCmbEstado() {
+		switch (cmbEstado.getSelectedIndex()) {
+			case 1:
+				return "Sin Validar";
+			case 2:
+				return "Validado";
+			case 3:
+				return "Eliminado";
+		}
+		return "";
+	}
+
+	public JButton getBtnNuevoItr() {
+		return btnNuevoItr;
+	}
+
+	public void setBtnNuevoItr(JButton btnNuevoItr) {
+		this.btnNuevoItr = btnNuevoItr;
+	}
+
+	public void setCmbEstado(JComboBox<String> cmbEstado) {
+		this.cmbEstado = cmbEstado;
+	}
+
 	public void setButtonEditor(ItrsButtonEditor itrsButtonEditor) {
-		System.out.println(1);
 		table.getColumnModel().getColumn(3).setCellEditor(itrsButtonEditor);
 	}
 
@@ -77,5 +161,4 @@ public class ListadoItrs extends JPanel {
 	public void setTable(JTable table) {
 		this.table = table;
 	}
-
 }

@@ -46,6 +46,7 @@ public class DashboardAnalista extends JPanel {
 	private ModificarEstudiante modificarEstudiante = new ModificarEstudiante();
 	private ModificarTutor modificarTutor = new ModificarTutor();
 	private ModificarItr modificarItr = new ModificarItr();
+	private RegistroItr registroItr = new RegistroItr();
 
 	private JButton btnUsuarios;
 	private JButton btnReclamos;
@@ -223,6 +224,13 @@ public class DashboardAnalista extends JPanel {
 			}
 		});
 
+		listadoItrs.getBtnNuevoItr().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarVista(registroItr);
+			}
+		});
+
 		modificarAnalista.getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -279,6 +287,23 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
+
+		registroItr.getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (registroItr.validarCamposIngresados()) {
+					try {
+						registroItr.registrarItr();
+						JOptionPane.showMessageDialog(null, "El ITR se ha registrado con éxito");
+						registroItr.vaciarCampos();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error al tratar de registrar el ITR");
+					}
+
+				}
+			}
+		});
+
 	}
 
 	public void cambiarVista(JPanel panel) {
@@ -489,6 +514,14 @@ public class DashboardAnalista extends JPanel {
 
 	public void setModificarDatosPropios(ModificarDatosPropios modificarDatosPropios) {
 		this.modificarDatosPropios = modificarDatosPropios;
+	}
+
+	public RegistroItr getRegistroItr() {
+		return registroItr;
+	}
+
+	public void setRegistroItr(RegistroItr registroItr) {
+		this.registroItr = registroItr;
 	}
 
 	public JLabel getLblNombreUsuario() {

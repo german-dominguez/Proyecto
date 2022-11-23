@@ -50,6 +50,7 @@ public class DashboardAnalistaControlador {
 		vista.getBtnItr().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				vista.getListadoItrs().limpiarFiltros();
 				vista.cambiarVista(vista.getListadoItrs());
 				vista.getListadoItrs().setButtonEditor(vista.new ItrsButtonEditor(new JCheckBox()));
 			}
