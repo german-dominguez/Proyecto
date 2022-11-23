@@ -64,11 +64,11 @@ public class DashboardTutor extends JPanel {
 
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setIcon(new ImageIcon("img\\utec2.png"));
+		lblLogo.setIcon(new ImageIcon("resources\\utec2.png"));
 		lblLogo.setBounds(42, 10, 70, 70);
 		add(lblLogo);
 
-		lblTipoUsuario = new JLabel("Profesor");
+		lblTipoUsuario = new JLabel("Tutor");
 		lblTipoUsuario.setForeground(Color.DARK_GRAY);
 		lblTipoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 15));

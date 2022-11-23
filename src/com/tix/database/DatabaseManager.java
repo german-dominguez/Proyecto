@@ -3,10 +3,17 @@ package com.tix.database;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.tix.modelo.entidades.AccionJustificacion;
+import com.tix.modelo.entidades.AsistEstEvto;
+import com.tix.modelo.entidades.EstadoRecConJus;
+import com.tix.modelo.servicios.AccionJustificacionesBeanRemote;
 import com.tix.modelo.servicios.AnalistasBeanRemote;
 import com.tix.modelo.servicios.AreasBeanRemote;
+import com.tix.modelo.servicios.AsistEstEvtosBeanRemote;
 import com.tix.modelo.servicios.DepartamentosBeanRemote;
+import com.tix.modelo.servicios.EstadosRecConJusBeanRemote;
 import com.tix.modelo.servicios.EstudiantesBeanRemote;
+import com.tix.modelo.servicios.EventosBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.JustificacionesBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
@@ -32,6 +39,10 @@ public class DatabaseManager {
 	private DepartamentosBeanRemote departamentosBeanRemote;
 	private AreasBeanRemote areasBeanRemote;
 	private JustificacionesBeanRemote justificacionesBeanRemote;
+	private EventosBeanRemote eventosBeanRemote;
+	private AsistEstEvtosBeanRemote asistEstEvtosBeanRemote;
+	private EstadosRecConJusBeanRemote estadosRecConJusBeanRemote;
+	private AccionJustificacionesBeanRemote accionJustificacionesBeanRemote;
 
 	public DatabaseManager() throws NamingException {
 
@@ -56,8 +67,20 @@ public class DatabaseManager {
 		areasBeanRemote = (AreasBeanRemote) InitialContext
 				.doLookup("ProyectoEJB/AreasBean!com.tix.modelo.servicios.AreasBeanRemote");
 		
+		eventosBeanRemote = (EventosBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/EventosBean!com.tix.modelo.servicios.EventosBeanRemote");
+		
 		justificacionesBeanRemote = (JustificacionesBeanRemote) InitialContext
 				.doLookup("ProyectoEJB/JustificacionesBean!com.tix.modelo.servicios.JustificacionesBeanRemote");
+		
+		asistEstEvtosBeanRemote = (AsistEstEvtosBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/AsistEstEvtosBean!com.tix.modelo.servicios.AsistEstEvtosBeanRemote");
+		
+		estadosRecConJusBeanRemote = (EstadosRecConJusBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/EstadosRecConJusBean!com.tix.modelo.servicios.EstadosRecConJusBeanRemote");
+		
+		accionJustificacionesBeanRemote = (AccionJustificacionesBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/AccionJustificacionesBean!com.tix.modelo.servicios.AccionJustificacionesBeanRemote");
 	}
 
 	public static DatabaseManager getInstance() {
@@ -131,5 +154,41 @@ public class DatabaseManager {
 	public void setJustificacionesBeanRemote(JustificacionesBeanRemote justificacionesBeanRemote) {
 		this.justificacionesBeanRemote = justificacionesBeanRemote;
 	}
+
+	public EventosBeanRemote getEventosBeanRemote() {
+		return eventosBeanRemote;
+	}
+
+	public void setEventosBeanRemote(EventosBeanRemote eventosBeanRemote) {
+		this.eventosBeanRemote = eventosBeanRemote;
+	}
+
+	public AsistEstEvtosBeanRemote getAsistEstEvtosBeanRemote() {
+		return asistEstEvtosBeanRemote;
+	}
+
+	public void setAsistEstEvtosBeanRemote(AsistEstEvtosBeanRemote asistEstEvtosBeanRemote) {
+		this.asistEstEvtosBeanRemote = asistEstEvtosBeanRemote;
+	}
+
+	public EstadosRecConJusBeanRemote getEstadosRecConJusBeanRemote() {
+		return estadosRecConJusBeanRemote;
+	}
+
+	public void setEstadosRecConJusBeanRemote(EstadosRecConJusBeanRemote estadosRecConJusBeanRemote) {
+		this.estadosRecConJusBeanRemote = estadosRecConJusBeanRemote;
+	}
+
+	public AccionJustificacionesBeanRemote getAccionJustificacionesBeanRemote() {
+		return accionJustificacionesBeanRemote;
+	}
+
+	public void setAccionJustificacionesBeanRemote(AccionJustificacionesBeanRemote accionJustificacionesBeanRemote) {
+		this.accionJustificacionesBeanRemote = accionJustificacionesBeanRemote;
+	}
+
+	
+	
+	
 
 }

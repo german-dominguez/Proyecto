@@ -14,7 +14,7 @@ import com.tix.vista.estudiante.ListadoJustificacionesEstudiante;
 
 public class DashboardEstudianteControlador {
 	private DashboardEstudiante vista = new DashboardEstudiante();
-	private ListadoJustificacionesEstudiante listadoJustificaciones = new ListadoJustificacionesEstudiante();
+	
 	// private ListadoReclamosAnalista listadoReclamos = new
 	// ListadoReclamosAnalista();
 
@@ -24,7 +24,9 @@ public class DashboardEstudianteControlador {
 		vista.getBtnJustificaciones().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.cambiarVista(listadoJustificaciones);
+				vista.cambiarVista(vista.getListadoJustificaciones());
+				vista.getListadoJustificaciones().setUsuario(vista.getUsuario());
+				vista.getListadoJustificaciones().cargarTabla();
 			}
 		});
 
@@ -46,6 +48,15 @@ public class DashboardEstudianteControlador {
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Error al tratar de actualizar el usuario");
 				}
+			}
+		});
+		
+		vista.getListadoJustificaciones().getBtnModificar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vista.cambiarVista(vista.getIngresoJustificacionEstudiante());
+				vista.getIngresoJustificacionEstudiante().setUsuario(vista.getUsuario());
+				vista.getIngresoJustificacionEstudiante().cargarEventos();
 			}
 		});
 

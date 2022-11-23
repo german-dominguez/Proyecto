@@ -38,7 +38,7 @@ public class RegistroItr extends JPanel {
 
 		JLabel lblDepartamento = new JLabel("Departamento *");
 		lblDepartamento.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDepartamento.setBounds(314, 268, 140, 21);
+		lblDepartamento.setBounds(114, 186, 98, 21);
 		add(lblDepartamento);
 
 		cmbDepartamento = new JComboBox<Departamento>();
@@ -50,17 +50,17 @@ public class RegistroItr extends JPanel {
 		cmbDepartamento.setFocusable(false);
 		cmbDepartamento.setBorder(null);
 		cmbDepartamento.setBackground(Color.WHITE);
-		cmbDepartamento.setBounds(314, 288, 140, 20);
+		cmbDepartamento.setBounds(61, 208, 207, 20);
 		add(cmbDepartamento);
 
 		JSeparator spDepartamento = new JSeparator();
 		spDepartamento.setBackground(SystemColor.textHighlight);
-		spDepartamento.setBounds(314, 308, 140, 14);
+		spDepartamento.setBounds(61, 228, 207, 14);
 		add(spDepartamento);
 
 		JLabel lblNombre = new JLabel("Nombre *");
 		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblNombre.setBounds(314, 203, 140, 21);
+		lblNombre.setBounds(132, 100, 64, 21);
 		add(lblNombre);
 
 		txtNombre = new JTextField();
@@ -68,12 +68,12 @@ public class RegistroItr extends JPanel {
 		txtNombre.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(new EmptyBorder(0, 0, 0, 0));
-		txtNombre.setBounds(314, 223, 140, 20);
+		txtNombre.setBounds(61, 120, 207, 20);
 		add(txtNombre);
 
 		JSeparator spPrimerNombre = new JSeparator();
 		spPrimerNombre.setBackground(SystemColor.textHighlight);
-		spPrimerNombre.setBounds(314, 243, 140, 14);
+		spPrimerNombre.setBounds(61, 140, 207, 14);
 		add(spPrimerNombre);
 
 		btnModificar = new JButton("REGISTRAR");
@@ -83,8 +83,14 @@ public class RegistroItr extends JPanel {
 		btnModificar.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnModificar.setBackground(SystemColor.textHighlight);
 		btnModificar.setActionCommand("");
-		btnModificar.setBounds(277, 347, 223, 49);
+		btnModificar.setBounds(61, 290, 207, 49);
 		add(btnModificar);
+		
+		JLabel lblNuevoItr = new JLabel("AGREGAR ITR");
+		lblNuevoItr.setForeground(Color.BLACK);
+		lblNuevoItr.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblNuevoItr.setBounds(94, 30, 139, 41);
+		add(lblNuevoItr);
 
 	}
 

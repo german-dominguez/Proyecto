@@ -35,18 +35,10 @@ import com.tix.modelo.entidades.Tutor;
 public class ListadoJustificaciones extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
-	/*private List<Analista> analistas = new ArrayList<>();
-	private List<Estudiante> estudiantes = new ArrayList<>();
-	private List<Tutor> tutores = new ArrayList<>();*/
 	
 	private List<Justificacion> justificaciones = new ArrayList<>();
 
 	private TableRowSorter<TableModel> sorter;
-
-	/*JComboBox<String> cmbEstado;
-	JComboBox<String> cmbTipoUsuario;
-	JComboBox<String> cmbITR;
-	JComboBox<String> cmbGeneracion;*/
 	
 	
 	JComboBox<String> cmbEstado;
@@ -175,9 +167,9 @@ public class ListadoJustificaciones extends JPanel {
 		for (Justificacion justificacion : justificaciones) {
 
 			model.addRow(new Object[] { justificacion.getIdJustificacion(), justificacion.getEstadoRecConJus(), 
-					justificacion.getEstudiante().getNombreUsuario(), justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getNombre2() + 
-					" " + justificacion.getEstudiante().getApellido1() + " " + justificacion.getEstudiante().getApellido2(),
-					justificacion.getFechahora(), justificacion.getDetalle(), "Modificar" });
+					justificacion.getEstudiante().getNombreUsuario(), justificacion.getEstudiante().getNombre1() + " " + 
+							justificacion.getEstudiante().getApellido1(),
+					justificacion.getFechahora(), justificacion.getDetalle(), "Ver ficha" });
 		}
 
 	}

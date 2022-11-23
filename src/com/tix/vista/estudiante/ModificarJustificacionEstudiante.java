@@ -15,7 +15,9 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,23 +46,25 @@ import com.tix.modelo.entidades.AsistEstEvto;
 import com.tix.modelo.entidades.Departamento;
 import com.tix.modelo.entidades.EstadoRecConJus;
 import com.tix.modelo.entidades.Evento;
+import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Justificacion;
 import com.tix.modelo.entidades.Usuario;
 
-public class IngresoJustificacionEstudiante extends JPanel {
+public class ModificarJustificacionEstudiante extends JPanel {
 	
 	private JLabel lblEvento;
-	private static IngresoJustificacionEstudiante vista = new IngresoJustificacionEstudiante();
+	private static ModificarJustificacionEstudiante vista = new ModificarJustificacionEstudiante();
 	private JComboBox<Evento> cmbEvento;
 	JButton btnIngresar;
 	JLabel lblInformacionAdicional;
 	JTextArea txtInfoAdjunta;
+	JTextArea txtDetalle;
 	
 	private Usuario usuario;
 	/**
 	 * Create the panel.
 	 */
-	public IngresoJustificacionEstudiante() {
+	public ModificarJustificacionEstudiante() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(910, 700));
@@ -75,13 +79,16 @@ public class IngresoJustificacionEstudiante extends JPanel {
 		spEvento.setBounds(75, 133, 333, 14);
 		add(spEvento);
 		
-		JLabel lblRegistroDeUsuario = new JLabel("INGRESO DE JUSTIFICACIÓN DE INASISTENCIA");
+		JLabel lblRegistroDeUsuario = new JLabel("MODIFICAR JUSTIFICACIÓN DE INASISTENCIA");
 		lblRegistroDeUsuario.setForeground(Color.BLACK);
 		lblRegistroDeUsuario.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblRegistroDeUsuario.setBounds(20, 12, 443, 41);
+		lblRegistroDeUsuario.setBounds(22, 12, 438, 41);
 		add(lblRegistroDeUsuario);
 		
 		cmbEvento = new JComboBox<Evento>();		
+		for (Evento evento : DatabaseManager.getInstance().getEventosBeanRemote().obtenerTodos()) {
+			cmbEvento.addItem(evento);
+		}
 		cmbEvento.setForeground(Color.DARK_GRAY);
 		cmbEvento.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEvento.setFocusable(false);
@@ -93,23 +100,34 @@ public class IngresoJustificacionEstudiante extends JPanel {
 		txtInfoAdjunta = new JTextArea();
 		txtInfoAdjunta.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		txtInfoAdjunta.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		txtInfoAdjunta.setBounds(75, 201, 333, 100);
+		txtInfoAdjunta.setBounds(75, 341, 333, 100);
 		add(txtInfoAdjunta);
 		
 		lblInformacionAdicional = new JLabel("Información adjunta (enlaces)");
 		lblInformacionAdicional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblInformacionAdicional.setBounds(152, 171, 178, 21);
+		lblInformacionAdicional.setBounds(152, 311, 178, 21);
 		add(lblInformacionAdicional);
 		
-		btnIngresar = new JButton("INGRESAR");
+		btnIngresar = new JButton("CONFIRMAR");
 		
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnIngresar.setFocusable(false);
 		btnIngresar.setBorder(null);
 		btnIngresar.setBackground(SystemColor.textHighlight);
-		btnIngresar.setBounds(152, 354, 178, 45);
+		btnIngresar.setBounds(152, 552, 178, 45);
 		add(btnIngresar);
+		
+		JLabel lblDetalle = new JLabel("Detalle");
+		lblDetalle.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblDetalle.setBounds(220, 171, 43, 21);
+		add(lblDetalle);
+		
+		txtDetalle = new JTextArea();
+		txtDetalle.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		txtDetalle.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		txtDetalle.setBounds(75, 201, 333, 72);
+		add(txtDetalle);
 		
 	}
 	
@@ -121,18 +139,34 @@ public class IngresoJustificacionEstudiante extends JPanel {
 		}
 	}
 	
-	public void ingresarJustificacion() throws Exception {
-		Justificacion justificacion = new Justificacion();
+	public void cargarDatos(Justificacion justificacion) {
+		txtDetalle.setText(justificacion.getDetalle());
+		txtInfoAdjunta.setText(justificacion.getInfoAdjunta());
+		cmbEvento.setSelectedItem(justificacion.getEvento());
+
+		List<Evento> eventos = new ArrayList<>();
+
+		for (int i = 0; i < cmbEvento.getItemCount(); i++) {
+			eventos.add(cmbEvento.getItemAt(i));
+		}
+
+		for (Evento evento : eventos) {
+			if (evento.getIdEvento() == justificacion.getEvento().getIdEvento()) {
+				cmbEvento.setSelectedItem(evento);
+			}
+		}
+	}
+	
+	public void modificarJustificacion(Justificacion justificacion) {
 		justificacion.setInfoAdjunta(getTxtInfoAdjunta().getText());
-		justificacion.setEstadoRecConJus(DatabaseManager.getInstance().getEstadosRecConJusBeanRemote().obtenerEstadoRecConJusPorId((1l)));
-		justificacion.setEstudiante(DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerEstudiantePorId(usuario.getIdUsuario()));
+		justificacion.setDetalle(getTxtDetalle().getText());
 		justificacion.setEvento(getCmbEvento());
 		justificacion.setFechahora(new java.sql.Timestamp(System.currentTimeMillis()));
 		
-		DatabaseManager.getInstance().getJustificacionesBeanRemote().registro(justificacion);
+		DatabaseManager.getInstance().getJustificacionesBeanRemote().editar(justificacion);
 	}
 	
-	public static IngresoJustificacionEstudiante getVista() {
+	public static ModificarJustificacionEstudiante getVista() {
 		return vista;
 	}
 
@@ -159,6 +193,14 @@ public class IngresoJustificacionEstudiante extends JPanel {
 
 	public void setTxtInfoAdjunta(JTextArea txtInfoAdjunta) {
 		this.txtInfoAdjunta = txtInfoAdjunta;
+	}
+
+	public JTextArea getTxtDetalle() {
+		return txtDetalle;
+	}
+
+	public void setTxtDetalle(JTextArea txtDetalle) {
+		this.txtDetalle = txtDetalle;
 	}
 
 	public JButton getBtnIngresar() {

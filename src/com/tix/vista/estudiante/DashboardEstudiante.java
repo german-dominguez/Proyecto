@@ -11,13 +11,18 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
+import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Estudiante;
+import com.tix.modelo.entidades.Justificacion;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import java.awt.BorderLayout;
@@ -33,6 +38,7 @@ public class DashboardEstudiante extends JPanel {
 	private JLabel lblNombreUsuario;
 	private JLabel lblLogo;
 	private JLabel lblTipoUsuario;
+	private Justificacion justificacion;
 
 	private JSeparator spHorizontal;
 	private JSeparator spVertical;
@@ -40,6 +46,9 @@ public class DashboardEstudiante extends JPanel {
 	private Estudiante usuario;
 
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
+	private ListadoJustificacionesEstudiante listadoJustificaciones = new ListadoJustificacionesEstudiante();
+	private IngresoJustificacionEstudiante ingresoJustificacionEstudiante = new IngresoJustificacionEstudiante();
+	private ModificarJustificacionEstudiante modificarJustificacionEstudiante = new ModificarJustificacionEstudiante();
 
 	/**
 	 * Create the panel.
@@ -67,7 +76,7 @@ public class DashboardEstudiante extends JPanel {
 
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setIcon(new ImageIcon("img\\utec2.png"));
+		lblLogo.setIcon(new ImageIcon("resources\\utec2.png"));
 		lblLogo.setBounds(42, 10, 70, 70);
 		add(lblLogo);
 
@@ -111,7 +120,49 @@ public class DashboardEstudiante extends JPanel {
 		emptyPanel.setBounds(150, 0, 910, 700);
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
+		
+		listadoJustificaciones.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (listadoJustificaciones.getTable().getSelectedColumn() == 5) {
+					int fila = listadoJustificaciones.getTable().getSelectedRow();
+					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
+					
+					cambiarVista(modificarJustificacionEstudiante);
+					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id);
+					modificarJustificacionEstudiante.cargarDatos(justificacion);
+					
+				}
+			}
+		});
+
+		
+		ingresoJustificacionEstudiante.getBtnIngresar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ingresoJustificacionEstudiante.ingresarJustificacion();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		modificarJustificacionEstudiante.getBtnIngresar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					modificarJustificacionEstudiante.modificarJustificacion(justificacion);
+					JOptionPane.showMessageDialog(null, "Los datos de la Justificación se editaron con éxito");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos de la Justificación");
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
+	
+	
 
 	public JButton getBtnJustificaciones() {
 		return btnJustificaciones;
@@ -124,6 +175,12 @@ public class DashboardEstudiante extends JPanel {
 	public void cambiarVista(JPanel panel) {
 		emptyPanel.removeAll();
 		emptyPanel.add(panel);
+		emptyPanel.repaint();
+		emptyPanel.revalidate();
+	}
+
+	public void eliminarVista() {
+		emptyPanel.removeAll();
 		emptyPanel.repaint();
 		emptyPanel.revalidate();
 	}
@@ -167,5 +224,39 @@ public class DashboardEstudiante extends JPanel {
 	public void setLblNombreUsuario(String nombreUsuario) {
 		this.lblNombreUsuario.setText(nombreUsuario);
 	}
+
+	public ListadoJustificacionesEstudiante getListadoJustificaciones() {
+		return listadoJustificaciones;
+	}
+
+	public void setListadoJustificaciones(ListadoJustificacionesEstudiante listadoJustificaciones) {
+		this.listadoJustificaciones = listadoJustificaciones;
+	}
+
+	public IngresoJustificacionEstudiante getIngresoJustificacionEstudiante() {
+		return ingresoJustificacionEstudiante;
+	}
+
+	public void setIngresoJustificacionEstudiante(IngresoJustificacionEstudiante ingresoJustificacionEstudiante) {
+		this.ingresoJustificacionEstudiante = ingresoJustificacionEstudiante;
+	}
+
+	public JPanel getEmptyPanel() {
+		return emptyPanel;
+	}
+
+	public void setEmptyPanel(JPanel emptyPanel) {
+		this.emptyPanel = emptyPanel;
+	}
+
+	public ModificarJustificacionEstudiante getModificarJustificacionEstudiante() {
+		return modificarJustificacionEstudiante;
+	}
+
+	public void setModificarJustificacionEstudiante(ModificarJustificacionEstudiante modificarJustificacionEstudiante) {
+		this.modificarJustificacionEstudiante = modificarJustificacionEstudiante;
+	}
+	
+	
 
 }
