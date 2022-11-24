@@ -39,7 +39,7 @@ public class DashboardAnalista extends JPanel {
 
 	private ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
 	private ListadoJustificaciones listadoJustificaciones = new ListadoJustificaciones();
-	private ListadoReclamos listadoReclamos = new ListadoReclamos();
+	private ReportesAnalista listadoReclamos = new ReportesAnalista();
 	private ListadoItrs listadoItrs = new ListadoItrs();
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
 	private ModificarAnalista modificarAnalista = new ModificarAnalista();
@@ -50,7 +50,7 @@ public class DashboardAnalista extends JPanel {
 	private AccionJustificacionAnalista accionJustificacionAnalista = new AccionJustificacionAnalista();
 
 	private JButton btnUsuarios;
-	private JButton btnReclamos;
+	private JButton btnReportes;
 	private JButton btnJustificaciones;
 	private JButton btnItr;
 
@@ -92,23 +92,23 @@ public class DashboardAnalista extends JPanel {
 		btnUsuarios.setFocusable(false);
 		btnUsuarios.setBorder(null);
 		btnUsuarios.setBackground(UIManager.getColor("activeCaption"));
-		btnUsuarios.setBounds(10, 342, 127, 45);
+		btnUsuarios.setBounds(10, 292, 127, 45);
 		add(btnUsuarios);
 
-		btnReclamos = new JButton("Reclamos");
-		btnReclamos.addActionListener(new ActionListener() {
+		btnReportes = new JButton("Reportes");
+		btnReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setColoresBotones("Reclamos");
 			}
 		});
-		btnReclamos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnReclamos.setForeground(Color.WHITE);
-		btnReclamos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		btnReclamos.setFocusable(false);
-		btnReclamos.setBorder(null);
-		btnReclamos.setBackground(UIManager.getColor("activeCaption"));
-		btnReclamos.setBounds(10, 287, 127, 45);
-		add(btnReclamos);
+		btnReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReportes.setForeground(Color.WHITE);
+		btnReportes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		btnReportes.setFocusable(false);
+		btnReportes.setBorder(null);
+		btnReportes.setBackground(UIManager.getColor("activeCaption"));
+		btnReportes.setBounds(10, 412, 127, 45);
+		add(btnReportes);
 
 		btnJustificaciones = new JButton("Justificaciones");
 		btnJustificaciones.addActionListener(new ActionListener() {
@@ -194,7 +194,7 @@ public class DashboardAnalista extends JPanel {
 		btnItr.setFocusable(false);
 		btnItr.setBorder(null);
 		btnItr.setBackground(SystemColor.activeCaption);
-		btnItr.setBounds(10, 398, 127, 45);
+		btnItr.setBounds(10, 352, 127, 45);
 		add(btnItr);
 
 		listadoUsuarios.getTable().addMouseListener(new MouseAdapter() {
@@ -388,22 +388,22 @@ public class DashboardAnalista extends JPanel {
 		Color btnSeleccionado = new Color(0, 120, 215);
 
 		if (btnNombre == "Justificaciones") {
-			btnReclamos.setBackground(btnNoSeleccionado);
+			btnReportes.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnNoSeleccionado);
 			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnSeleccionado);
 		} else if (btnNombre == "Reclamos") {
-			btnReclamos.setBackground(btnSeleccionado);
+			btnReportes.setBackground(btnSeleccionado);
 			btnUsuarios.setBackground(btnNoSeleccionado);
 			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
 		} else if (btnNombre == "Usuarios") {
-			btnReclamos.setBackground(btnNoSeleccionado);
+			btnReportes.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnSeleccionado);
 			btnItr.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
 		} else if (btnNombre == "ITR") {
-			btnReclamos.setBackground(btnNoSeleccionado);
+			btnReportes.setBackground(btnNoSeleccionado);
 			btnUsuarios.setBackground(btnNoSeleccionado);
 			btnJustificaciones.setBackground(btnNoSeleccionado);
 			btnItr.setBackground(btnSeleccionado);
@@ -506,7 +506,7 @@ public class DashboardAnalista extends JPanel {
 	}
 
 	public JButton getBtnReclamos() {
-		return btnReclamos;
+		return btnReportes;
 	}
 
 	public ListadoItrs getListadoItrs() {
@@ -518,7 +518,7 @@ public class DashboardAnalista extends JPanel {
 	}
 
 	public void setBtnReclamos(JButton btnReclamos) {
-		this.btnReclamos = btnReclamos;
+		this.btnReportes = btnReclamos;
 	}
 
 	public JButton getBtnItr() {
@@ -569,11 +569,11 @@ public class DashboardAnalista extends JPanel {
 		this.listadoJustificaciones = listadoJustificaciones;
 	}
 
-	public ListadoReclamos getListadoReclamos() {
+	public ReportesAnalista getListadoReclamos() {
 		return listadoReclamos;
 	}
 
-	public void setListadoReclamos(ListadoReclamos listadoReclamos) {
+	public void setListadoReclamos(ReportesAnalista listadoReclamos) {
 		this.listadoReclamos = listadoReclamos;
 	}
 
