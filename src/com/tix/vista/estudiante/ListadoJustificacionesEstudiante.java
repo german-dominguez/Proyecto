@@ -81,7 +81,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		table = new JTable();
 		table.setModel(
 				new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null }, },
-						new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Detalle", " " }) {
+						new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Detalle", " ", " " }) {
 					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
 							false };
 
@@ -95,6 +95,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(6).setResizable(false);
 
 		table.getColumnModel().getColumn(0).setPreferredWidth(5);
 
@@ -105,7 +106,8 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		model = (DefaultTableModel) table.getModel();
 
 		table.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-
+		table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+		
 		sorter = new TableRowSorter<TableModel>(model);
 
 		JLabel lblEstado = new JLabel("Estado");
@@ -123,7 +125,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 				filtros();
 			}
 		});
-		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Ingresado", "En proceso", "Finalizado" }));
+		cmbEstado.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Ingresado", "En proceso", "Finalizado" }));
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setBounds(20, 83, 140, 20);
 		add(cmbEstado);
@@ -176,7 +178,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 
 			model.addRow(new Object[] { justificacion.getIdJustificacion(), justificacion.getEstadoRecConJus(),
 					justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getApellido1(),
-					fechaHoraFormateada, justificacion.getDetalle(), "Modificar" });
+					fechaHoraFormateada, justificacion.getDetalle(), "Modificar", "Eliminar" });
 		}
 
 	}

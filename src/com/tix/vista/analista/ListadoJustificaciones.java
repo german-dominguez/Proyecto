@@ -127,7 +127,7 @@ public class ListadoJustificaciones extends JPanel {
 			}
 		});
 		cmbEstado
-				.setModel(new DefaultComboBoxModel(new String[] { "Ingresado", "En proceso", "Finalizado" }));
+				.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Ingresado", "En proceso", "Finalizado" }));
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setBounds(20, 83, 140, 20);
 		add(cmbEstado);
@@ -203,11 +203,11 @@ public class ListadoJustificaciones extends JPanel {
 	public String getCmbEstado() {
 		switch (cmbEstado.getSelectedIndex()) {
 			case 1:
-				return "Sin Validar";
+				return "Ingresado";
 			case 2:
-				return "Validado";
+				return "En proceso";
 			case 3:
-				return "Eliminado";
+				return "Finalizado";
 		}
 		return "";
 	}

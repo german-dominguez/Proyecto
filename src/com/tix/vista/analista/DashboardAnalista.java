@@ -25,10 +25,14 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import org.hamcrest.core.IsNull;
+
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.AccionJustificacion;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
+import com.tix.modelo.entidades.Justificacion;
 import com.tix.modelo.entidades.Tutor;
 
 public class DashboardAnalista extends JPanel {
@@ -66,6 +70,7 @@ public class DashboardAnalista extends JPanel {
 	private Estudiante estudiante;
 	private Tutor tutor;
 	private Itr itr;
+	private AccionJustificacion accionJustificacion;
 
 	/**
 	 * Create the panel.
@@ -228,7 +233,10 @@ public class DashboardAnalista extends JPanel {
 				if (listadoJustificaciones.getTable().getSelectedColumn() == 6) {
 					int fila = listadoJustificaciones.getTable().getSelectedRow();
 					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
+					
 					cambiarVista(accionJustificacionAnalista);
+					accionJustificacionAnalista.setUsuario(usuario);
+					accionJustificacionAnalista.setJustificacion(DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
 					accionJustificacionAnalista.cargarDatos(
 							DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
 				}
@@ -317,10 +325,54 @@ public class DashboardAnalista extends JPanel {
 		accionJustificacionAnalista.getBtnConfirmar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				accionJustificacionAnalista.modificarAccionJustificacion(null);
+				try {
+					//System.out.println(accionJustificacionAnalista.getJustificacion());
+					System.out.println(accionJustificacionAnalista.getJustificacion().getIdJustificacion());
+					System.out.println(tieneAccion(accionJustificacionAnalista.getJustificacion()));
+					
+					if (tieneAccion(accionJustificacionAnalista.getJustificacion())) {
+						accionJustificacionAnalista.modificarAccionJustificacion(accionJustificacionAnalista.getJustificacion());
+						
+					} else {
+						System.out.println("A");
+						accionJustificacionAnalista.ingresarAccionJustificacion();
+					}
+					
+					JOptionPane.showMessageDialog(null, "Los datos de la Justificación se editaron con éxito");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos de la Justificación");
+					e1.printStackTrace();
+				}
+				
 			}
 		});
+		
+		/*
+		listadoJustificaciones.getTable().addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
 
+			if (listadoJustificaciones.getTable().getSelectedColumn() == 6) {
+				int fila = listadoJustificaciones.getTable().getSelectedRow();
+				long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
+				cambiarVista(accionJustificacionAnalista);
+				accionJustificacionAnalista.cargarDatos(
+						DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
+			}
+		}
+	});*/
+
+	}
+	
+	public boolean tieneAccion(Justificacion justificacion) {
+		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
+				.getAccionJustificacionesBeanRemote().obtenerTodos()) {
+			if (accionJustificacion.getJustificacion().getIdJustificacion() == justificacion.getIdJustificacion()) {
+				return true;
+			}
+			
+		}
+		return false;
 	}
 
 	public void cambiarVista(JPanel panel) {

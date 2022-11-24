@@ -17,6 +17,7 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.AccionJustificacion;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Justificacion;
 
@@ -134,9 +135,36 @@ public class DashboardEstudiante extends JPanel {
 					modificarJustificacionEstudiante.cargarDatos(justificacion);
 					
 				}
+				
+				if (listadoJustificaciones.getTable().getSelectedColumn() == 6) {
+					int fila = listadoJustificaciones.getTable().getSelectedRow();
+					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
+					
+					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id);
+					
+					try {
+						int resp = JOptionPane.showConfirmDialog(null, "Se eliminará la justificación del sistema. ¿Está seguro?", 
+								"Alerta!", JOptionPane.YES_NO_OPTION);
+
+						if (resp == 0) {
+							
+							if (!tieneAccion(justificacion)) {  
+								JOptionPane.showMessageDialog(null, "No se puede eliminar la justificación porque tiene una acción asociada.", 
+										"Información", JOptionPane.WARNING_MESSAGE);
+							} else {
+								DatabaseManager.getInstance().getJustificacionesBeanRemote().borrar(id);
+								
+								JOptionPane.showMessageDialog(null, "Se eliminó la justificación.", 
+										"Información", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
-
 		
 		ingresoJustificacionEstudiante.getBtnIngresar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,7 +190,16 @@ public class DashboardEstudiante extends JPanel {
 		});
 	}
 	
-	
+	public boolean tieneAccion(Justificacion justificacion) {
+		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
+				.getAccionJustificacionesBeanRemote().obtenerTodos()) {
+			if (accionJustificacion.getIdAccJustificacion() == justificacion.getIdJustificacion()) {
+				return false;
+			}
+			
+		}
+		return true;
+	}
 
 	public JButton getBtnJustificaciones() {
 		return btnJustificaciones;
