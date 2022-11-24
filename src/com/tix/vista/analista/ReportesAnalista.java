@@ -6,9 +6,12 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,11 @@ import com.tix.modelo.entidades.Justificacion;
 import com.tix.modelo.entidades.Reclamo;
 import com.tix.utilities.RenderTablas;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -39,6 +47,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ReportesAnalista extends JPanel {
 	private DefaultTableModel model;
@@ -49,12 +59,12 @@ public class ReportesAnalista extends JPanel {
 	private JComboBox<String> cmbGeneracion;
 	private JComboBox<String> cmbMes;
 	private JComboBox<String> cmbTipo;
-	
+
 	private JLabel lblCantReclamos;
 	private JLabel lblFiltreParaVisualizar;
 	private JLabel lblReclamos;
 	private JLabel lblSeEncontraron;
-	
+
 	private JButton btnLimpiarFiltros;
 	private JButton btnFiltrar;
 	private JButton btnImprimir;
@@ -130,6 +140,16 @@ public class ReportesAnalista extends JPanel {
 		add(lblTipo);
 
 		btnImprimir = new JButton("IMPRIMIR INFORME");
+		btnImprimir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					imprimir();
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Error al tratar de generar el archivo");
+				}
+			}
+		});
 		btnImprimir.setEnabled(false);
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -201,14 +221,14 @@ public class ReportesAnalista extends JPanel {
 		lblReclamos.setBounds(383, 238, 299, 33);
 		add(lblReclamos);
 		lblReclamos.setVisible(false);
-		
+
 		lblSeEncontraron = new JLabel("Se encontraron");
 		lblSeEncontraron.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeEncontraron.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblSeEncontraron.setBounds(383, 158, 299, 33);
 		add(lblSeEncontraron);
 		lblSeEncontraron.setVisible(false);
-		
+
 		btnLimpiarFiltros = new JButton("LIMPIAR FILTROS");
 		btnLimpiarFiltros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -222,7 +242,7 @@ public class ReportesAnalista extends JPanel {
 		btnLimpiarFiltros.setBackground(SystemColor.textHighlight);
 		btnLimpiarFiltros.setBounds(80, 350, 178, 33);
 		add(btnLimpiarFiltros);
-		
+
 		lblNoSeEncontraron = new JLabel("No se encontraron reclamos");
 		lblNoSeEncontraron.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNoSeEncontraron.setForeground(Color.BLACK);
@@ -231,6 +251,23 @@ public class ReportesAnalista extends JPanel {
 		add(lblNoSeEncontraron);
 		lblNoSeEncontraron.setVisible(false);
 
+	}
+
+	public void imprimir() throws IOException {
+		PDDocument document = new PDDocument();
+		PDPage page = new PDPage();
+		document.addPage(page);
+
+		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+		contentStream.setFont(PDType1Font.COURIER, 12);
+		contentStream.beginText();
+		contentStream.showText("Hello World");
+		contentStream.endText();
+		contentStream.close();
+
+		document.save("pdfBoxHelloWorld.pdf");
+		document.close();
 	}
 
 	private int contarReclamos() {
@@ -247,11 +284,11 @@ public class ReportesAnalista extends JPanel {
 				.filter(r -> r.getTipoRecl().contains(getCmbTipo())).collect(Collectors.toList());
 
 		return filteredReclamos.size();
-	} 
-	
+	}
+
 	private void setCampos(String accion) {
 		if (accion.equals("Filtrar")) {
-			
+
 			if (contarReclamos() == 0) {
 				lblFiltreParaVisualizar.setVisible(false);
 				lblNoSeEncontraron.setVisible(true);
@@ -273,12 +310,12 @@ public class ReportesAnalista extends JPanel {
 			cmbGeneracion.setSelectedIndex(0);
 			cmbMes.setSelectedIndex(0);
 			cmbTipo.setSelectedIndex(0);
-			
+
 			lblFiltreParaVisualizar.setVisible(true);
 			lblSeEncontraron.setVisible(false);
 			lblCantReclamos.setVisible(false);
 			lblReclamos.setVisible(false);
-			
+
 			btnImprimir.setEnabled(false);
 		}
 	}
