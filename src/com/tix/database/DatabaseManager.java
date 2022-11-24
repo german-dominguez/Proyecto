@@ -17,6 +17,7 @@ import com.tix.modelo.servicios.EventosBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.JustificacionesBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
+import com.tix.modelo.servicios.ReclamosBeanRemote;
 import com.tix.modelo.servicios.TutoresBeanRemote;
 
 public class DatabaseManager {
@@ -43,6 +44,7 @@ public class DatabaseManager {
 	private AsistEstEvtosBeanRemote asistEstEvtosBeanRemote;
 	private EstadosRecConJusBeanRemote estadosRecConJusBeanRemote;
 	private AccionJustificacionesBeanRemote accionJustificacionesBeanRemote;
+	private ReclamosBeanRemote reclamosBeanRemote;
 
 	public DatabaseManager() throws NamingException {
 
@@ -81,6 +83,9 @@ public class DatabaseManager {
 		
 		accionJustificacionesBeanRemote = (AccionJustificacionesBeanRemote) InitialContext
 				.doLookup("ProyectoEJB/AccionJustificacionesBean!com.tix.modelo.servicios.AccionJustificacionesBeanRemote");
+		
+		reclamosBeanRemote = (ReclamosBeanRemote) InitialContext
+				.doLookup("ProyectoEJB/ReclamosBean!com.tix.modelo.servicios.ReclamosBeanRemote");
 	}
 
 	public static DatabaseManager getInstance() {
@@ -186,6 +191,16 @@ public class DatabaseManager {
 	public void setAccionJustificacionesBeanRemote(AccionJustificacionesBeanRemote accionJustificacionesBeanRemote) {
 		this.accionJustificacionesBeanRemote = accionJustificacionesBeanRemote;
 	}
+
+	public ReclamosBeanRemote getReclamosBeanRemote() {
+		return reclamosBeanRemote;
+	}
+
+	public void setReclamosBeanRemote(ReclamosBeanRemote reclamosBeanRemote) {
+		this.reclamosBeanRemote = reclamosBeanRemote;
+	}
+	
+	
 
 	
 	

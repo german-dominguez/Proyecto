@@ -18,7 +18,7 @@ import com.tix.controlador.ModificarDatosPropiosControlador;
 import com.tix.controlador.RegistroControlador;
 import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificaciones;
-import com.tix.vista.analista.ListadoReclamos;
+import com.tix.vista.analista.ReportesAnalista;
 import com.tix.vista.analista.ListadoUsuarios;
 import com.tix.vista.analista.ModificarDatosPropios;
 import com.tix.vista.estudiante.DashboardEstudiante;
@@ -57,7 +57,7 @@ public class Principal extends JFrame {
 	// Paneles principales
 	private ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
 	private ListadoJustificaciones listadoJustificaciones = new ListadoJustificaciones();
-	private ListadoReclamos listadoReclamos = new ListadoReclamos();
+	private ReportesAnalista listadoReclamos = new ReportesAnalista();
 
 	public Principal() {
 		registroPanel = new RegistroControlador().getVista();
@@ -95,7 +95,7 @@ public class Principal extends JFrame {
 		return listadoJustificaciones;
 	}
 
-	public ListadoReclamos getListadoReclamos() {
+	public ReportesAnalista getListadoReclamos() {
 		return listadoReclamos;
 	}
 
