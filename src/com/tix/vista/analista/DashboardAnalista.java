@@ -1,24 +1,28 @@
 package com.tix.vista.analista;
 
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-
-import java.awt.SystemColor;
-import java.awt.Font;
-import java.awt.Image;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import com.tix.database.DatabaseManager;
@@ -26,14 +30,6 @@ import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Tutor;
-import com.tix.modelo.entidades.Usuario;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.Cursor;
-import java.awt.BorderLayout;
 
 public class DashboardAnalista extends JPanel {
 
@@ -224,7 +220,7 @@ public class DashboardAnalista extends JPanel {
 				}
 			}
 		});
-		
+
 		listadoJustificaciones.getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -233,7 +229,8 @@ public class DashboardAnalista extends JPanel {
 					int fila = listadoJustificaciones.getTable().getSelectedRow();
 					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
 					cambiarVista(accionJustificacionAnalista);
-					accionJustificacionAnalista.cargarDatos(DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
+					accionJustificacionAnalista.cargarDatos(
+							DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id));
 				}
 			}
 		});
@@ -313,8 +310,14 @@ public class DashboardAnalista extends JPanel {
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, "Error al tratar de registrar el ITR");
 					}
-
 				}
+			}
+		});
+		
+		accionJustificacionAnalista.getBtnConfirmar().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				accionJustificacionAnalista.modificarAccionJustificacion(null);
 			}
 		});
 

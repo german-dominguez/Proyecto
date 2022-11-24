@@ -1,6 +1,9 @@
 package com.tix.controlador;
 
+import javax.swing.JOptionPane;
+
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
 import com.tix.vista.Login;
 
@@ -14,11 +17,13 @@ public class LoginControlador {
 
 	}
 
-	public boolean login(int tipoUsuarioLogin) throws Exception {
+	public boolean login(int tipoUsuarioLogin) throws IndexOutOfBoundsException {
+
 		String nombreUsuario = vista.getTxtUsuario();
 
 		switch (tipoUsuarioLogin) {
 			case 0:
+
 				usuario = DatabaseManager.getInstance().getAnalistasBeanRemote()
 						.obtenerAnalistaPorNombreUsuario(nombreUsuario).get(0);
 				break;
@@ -33,13 +38,16 @@ public class LoginControlador {
 		}
 
 		if (usuario.getEstado() == "Sin Validar" || usuario.getEstado() == "Eliminado") {
+			JOptionPane.showMessageDialog(null,
+					"El usuario ha sido dado de baja o no se encuentra habilitado. Contacte con la analista correspondiente");
 			return false;
 		}
 
-		if (usuario.getContrasenia().equals(vista.getTxtContrasenia())) {
-			return true;
-		} else {
+		if (!(usuario.getContrasenia().equals(vista.getTxtContrasenia()))) {
+			JOptionPane.showMessageDialog(null, "La contraseña ingresada no es correcta");
 			return false;
+		} else {
+			return true;
 		}
 	}
 

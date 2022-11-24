@@ -53,38 +53,38 @@ public class PrincipalControlador {
 						vista.setLocationRelativeTo(null);
 
 						switch (a) {
-						case 0: {
-							vista.getDashboardAnalista()
-									.setUsuario((Analista) vista.getLoginControlador().getUsuario());
-							vista.getDashboardAnalista()
-									.setLblNombreUsuario(vista.getDashboardAnalista().getUsuario().getNombre1());
-							vista.getDashboardAnalista().getListadoUsuarios().cargarTabla();
-							vista.setContentPane(vista.getDashboardAnalista());
-							break;
-						}
-						case 1: {
-							vista.setContentPane(vista.getDashboardEstudiante());
-							vista.getDashboardEstudiante()
-									.setUsuario((Estudiante) vista.getLoginControlador().getUsuario());
-							vista.getDashboardEstudiante()
-									.setLblNombreUsuario(vista.getDashboardEstudiante().getUsuario().getNombre1());
-							break;
-						}
-						case 2:
-							vista.setContentPane(vista.getDashboardTutor());
-							vista.getDashboardTutor().setUsuario((Tutor) vista.getLoginControlador().getUsuario());
-							vista.getDashboardTutor()
-									.setLblNombreUsuario(vista.getDashboardTutor().getUsuario().getNombre1());
-							break;
+							case 0: {
+								vista.getDashboardAnalista()
+										.setUsuario((Analista) vista.getLoginControlador().getUsuario());
+								vista.getDashboardAnalista()
+										.setLblNombreUsuario(vista.getDashboardAnalista().getUsuario().getNombre1());
+								vista.getDashboardAnalista().getListadoUsuarios().cargarTabla();
+								vista.setContentPane(vista.getDashboardAnalista());
+								break;
+							}
+							case 1: {
+								vista.setContentPane(vista.getDashboardEstudiante());
+								vista.getDashboardEstudiante()
+										.setUsuario((Estudiante) vista.getLoginControlador().getUsuario());
+								vista.getDashboardEstudiante()
+										.setLblNombreUsuario(vista.getDashboardEstudiante().getUsuario().getNombre1());
+								break;
+							}
+							case 2:
+								vista.setContentPane(vista.getDashboardTutor());
+								vista.getDashboardTutor().setUsuario((Tutor) vista.getLoginControlador().getUsuario());
+								vista.getDashboardTutor()
+										.setLblNombreUsuario(vista.getDashboardTutor().getUsuario().getNombre1());
+								break;
 						}
 
 						vista.getLoginPanel().vaciarCampos();
-					} else {
-						JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña son incorrectos.");
 					}
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña son incorrectos.");
+				} catch (IndexOutOfBoundsException e2) {
+					JOptionPane.showMessageDialog(null,
+							"El usuario ingresado no está registrado. Revise los datos ingresados");
 				}
+
 			}
 		});
 

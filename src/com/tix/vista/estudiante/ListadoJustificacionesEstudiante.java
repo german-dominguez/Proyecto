@@ -27,6 +27,7 @@ import javax.swing.table.TableRowSorter;
 
 import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Analista;
+import com.tix.modelo.entidades.EstadoRecConJus;
 import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Itr;
 import com.tix.modelo.entidades.Justificacion;
@@ -49,10 +50,10 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 
 	private TableRowSorter<TableModel> sorter;
 
-	JComboBox<String> cmbEstado;
-	
+	JComboBox<EstadoRecConJus> cmbEstado;
+
 	JButton btnModificar;
-	
+
 	private Usuario usuario;
 
 	/**
@@ -78,25 +79,25 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null, null, null }, },
-				new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Detalle", " " }) {
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false };
+		table.setModel(
+				new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null }, },
+						new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Detalle", " " }) {
+					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
+							false };
 
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(5).setResizable(false);
-		
+
 		table.getColumnModel().getColumn(0).setPreferredWidth(5);
-		
-		
+
 		table.setGridColor(Color.LIGHT_GRAY);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
@@ -112,7 +113,11 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		lblEstado.setBounds(20, 63, 111, 13);
 		add(lblEstado);
 
-		cmbEstado = new JComboBox<String>();
+		cmbEstado = new JComboBox<EstadoRecConJus>();
+		for (EstadoRecConJus estadoRecConJus : DatabaseManager.getInstance().getEstadosRecConJusBeanRemote()
+				.obtenerTodos()) {
+			cmbEstado.addItem(estadoRecConJus);
+		}
 		cmbEstado.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				filtros();
@@ -122,7 +127,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		cmbEstado.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbEstado.setBounds(20, 83, 140, 20);
 		add(cmbEstado);
-		
+
 		btnModificar = new JButton("NUEVA JUSTIFICACIÓN");
 		btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnModificar.setForeground(Color.WHITE);
@@ -160,16 +165,15 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 	public void cargarTabla() {
 
 		actualizarListas();
-		
-		
 
 		for (int i = table.getRowCount() - 1; i >= 0; i--) {
 			model.removeRow(i);
 		}
 
 		for (Justificacion justificacion : justificaciones) {
-			String fechaHoraFormateada = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss").format(justificacion.getFechahora());
-			
+			String fechaHoraFormateada = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss")
+					.format(justificacion.getFechahora());
+
 			model.addRow(new Object[] { justificacion.getIdJustificacion(), justificacion.getEstadoRecConJus(),
 					justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getApellido1(),
 					fechaHoraFormateada, justificacion.getDetalle(), "Modificar" });
@@ -180,7 +184,8 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 	public void actualizarListas() {
 
 		justificaciones.clear();
-		for (Justificacion justificacion : DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerTodos()) {
+		for (Justificacion justificacion : DatabaseManager.getInstance().getJustificacionesBeanRemote()
+				.obtenerTodos()) {
 			if (justificacion.getEstudiante().getIdUsuario() == usuario.getIdUsuario()) {
 				justificaciones.add(justificacion);
 			}
@@ -206,18 +211,14 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 
 	public String getCmbEstado() {
 		switch (cmbEstado.getSelectedIndex()) {
-		case 1:
-			return "Sin Validar";
-		case 2:
-			return "Validado";
-		case 3:
-			return "Eliminado";
+			case 1:
+				return "Sin Validar";
+			case 2:
+				return "Validado";
+			case 3:
+				return "Eliminado";
 		}
 		return "";
-	}
-
-	public void setCmbEstado(JComboBox<String> cmbEstado) {
-		this.cmbEstado = cmbEstado;
 	}
 
 	public JTable getTable() {
