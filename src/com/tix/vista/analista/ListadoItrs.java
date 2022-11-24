@@ -1,6 +1,7 @@
 package com.tix.vista.analista;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -15,13 +16,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Itr;
 import com.tix.vista.analista.DashboardAnalista.ItrsButtonEditor;
+import com.tix.vista.analista.ListadoUsuarios.ButtonRenderer;
+
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
@@ -64,6 +69,8 @@ public class ListadoItrs extends JPanel {
 
 		cargarTabla();
 
+		table.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+
 		sorter = new TableRowSorter<TableModel>(model);
 
 		JLabel lblItr = new JLabel("ITRS");
@@ -101,6 +108,11 @@ public class ListadoItrs extends JPanel {
 	}
 
 	public void cargarTabla() {
+
+		itrs.clear();
+
+		itrs = DatabaseManager.getInstance().getItrsBeanRemote().obtenerTodos();
+
 		for (int i = table.getRowCount() - 1; i >= 0; i--) {
 			model.removeRow(i);
 		}
@@ -138,6 +150,28 @@ public class ListadoItrs extends JPanel {
 				return "Eliminado";
 		}
 		return "";
+	}
+
+	class ButtonRenderer extends JButton implements TableCellRenderer {
+
+		public ButtonRenderer() {
+			setOpaque(true);
+			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (isSelected) {
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else {
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "" : value.toString());
+			return this;
+		}
 	}
 
 	public JButton getBtnNuevoItr() {

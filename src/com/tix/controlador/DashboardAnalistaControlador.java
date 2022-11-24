@@ -26,6 +26,7 @@ public class DashboardAnalistaControlador {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				vista.cambiarVista(vista.getListadoJustificaciones());
+				vista.getListadoJustificaciones().cargarTabla();
 			}
 		});
 
@@ -35,6 +36,7 @@ public class DashboardAnalistaControlador {
 			public void mouseClicked(MouseEvent e) {
 				vista.getListadoUsuarios().limpiarFiltros();
 				vista.cambiarVista(vista.getListadoUsuarios());
+				vista.getListadoUsuarios().cargarTabla();
 			}
 		});
 
@@ -53,6 +55,7 @@ public class DashboardAnalistaControlador {
 				vista.getListadoItrs().limpiarFiltros();
 				vista.cambiarVista(vista.getListadoItrs());
 				vista.getListadoItrs().setButtonEditor(vista.new ItrsButtonEditor(new JCheckBox()));
+				vista.getListadoItrs().cargarTabla();
 			}
 		});
 
