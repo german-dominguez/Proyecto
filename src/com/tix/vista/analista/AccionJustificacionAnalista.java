@@ -42,11 +42,13 @@ import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
 import com.tix.database.DatabaseManager;
+import com.tix.modelo.daos.AsistEstEvtoDAO;
 import com.tix.modelo.entidades.AccionJustificacion;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.AsistEstEvto;
 import com.tix.modelo.entidades.Departamento;
 import com.tix.modelo.entidades.EstadoRecConJus;
+import com.tix.modelo.entidades.Estudiante;
 import com.tix.modelo.entidades.Evento;
 import com.tix.modelo.entidades.Justificacion;
 import com.tix.modelo.entidades.Usuario;
@@ -81,6 +83,10 @@ public class AccionJustificacionAnalista extends JPanel {
 	private JSeparator spDatosAcademicos;
 	private JSeparator spVertical;
 	private JTextField txtAnalista;
+	
+	private Justificacion justificacion;
+	private AccionJustificacion accionJustificacion;
+	
 
 	/**
 	 * Create the panel.
@@ -263,6 +269,14 @@ public class AccionJustificacionAnalista extends JPanel {
 	}
 
 	public void cargarDatos(Justificacion justificacion) {
+		txtEstudiante.setText(null);
+		txtEvento.setText(null);
+		txtInfoAdjunta.setText(null);
+		txtFechaHora.setText(null);
+		txtAnalista.setText(null);
+		txtInfoAdjunta_1.setText(null);
+		cmbEstado.setSelectedIndex(0);
+		
 		txtEstudiante
 				.setText(justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getNombre1());
 		txtEvento.setText(justificacion.getEvento().getTitulo());
@@ -276,35 +290,70 @@ public class AccionJustificacionAnalista extends JPanel {
 
 		for (EstadoRecConJus estado : estados) {
 			if (estado.getIdEstadosRecConJus() == (justificacion.getEstadoRecConJus()).getIdEstadosRecConJus()) {
-				cmbEstado.setSelectedItem(estado.toString());
+				cmbEstado.setSelectedItem(estado);
 			}
 		}
+		
+		try {
+			for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
+					.getAccionJustificacionesBeanRemote().obtenerTodos()) {
+				if (accionJustificacion.getJustificacion().getIdJustificacion() == justificacion.getIdJustificacion()) {
+					String fechaHora = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss")
+							.format(accionJustificacion.getFechahora());
+					txtFechaHora.setText(fechaHora);
+					txtAnalista.setText(accionJustificacion.getAnalista().getNombre1() + " "
+							+ accionJustificacion.getAnalista().getApellido1());
+					txtInfoAdjunta_1.setText(accionJustificacion.getDetalle());
+				}
+			}
+		} catch (Exception e) {
+		}
+		
+	}
+	
+	public void ingresarAccionJustificacion () {
+		accionJustificacion = new AccionJustificacion();
+		accionJustificacion.setAnalista(getUsuario());
+		accionJustificacion.setDetalle(getTxtInfoAdjunta_1());
+		accionJustificacion.setFechahora(new java.sql.Timestamp(System.currentTimeMillis()));
+		accionJustificacion.setJustificacion(justificacion);
+		
+		DatabaseManager.getInstance().getAccionJustificacionesBeanRemote().registro(accionJustificacion);
+			
+	}
+	
+	public void modificarAccionJustificacion(Justificacion justificacion) {
 
 		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
 				.getAccionJustificacionesBeanRemote().obtenerTodos()) {
-			if (accionJustificacion.getIdAccJustificacion() == justificacion.getIdJustificacion()) {
-				String fechaHora = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss")
-						.format(accionJustificacion.getFechahora());
-				txtFechaHora.setText(fechaHora);
-				txtAnalista.setText(accionJustificacion.getAnalista().getNombre1() + " "
-						+ accionJustificacion.getAnalista().getApellido1());
+			if (accionJustificacion.getJustificacion().getIdJustificacion() == justificacion.getIdJustificacion()) {
+				accionJustificacion.setAnalista(getUsuario());
+				accionJustificacion.setFechahora(new java.sql.Timestamp(System.currentTimeMillis()));
+				accionJustificacion.getJustificacion().setEstadoRecConJus(getCmbEstado());
+				accionJustificacion.setDetalle(getTxtInfoAdjunta_1());
+				justificacion.setEstadoRecConJus(getCmbEstado());
+
+				DatabaseManager.getInstance().getAccionJustificacionesBeanRemote().editar(accionJustificacion);
+				DatabaseManager.getInstance().getJustificacionesBeanRemote().editar(justificacion);
+								
+				if (cmbEstado.getSelectedIndex() == 2) {
+					System.out.println("Entré");
+					for (AsistEstEvto asistEstEvto : DatabaseManager.getInstance()
+							.getAsistEstEvtosBeanRemote().obtenerTodos()) {
+						
+						if (asistEstEvto.getEstudiante().getIdUsuario() == justificacion.getEstudiante().getIdUsuario() 
+								&& asistEstEvto.getEvento().getIdEvento() == justificacion.getEvento().getIdEvento()) {
+							
+							asistEstEvto.setAsistencia("Ausencia Justificada");
+	
+							DatabaseManager.getInstance().getAsistEstEvtosBeanRemote().editar(asistEstEvto);
+						}					
+					}
+				}
 			}
-		}
+		}	
 	}
 
-	public void modificarAccionJustificacion(AccionJustificacion accionJustificacion) {
-		accionJustificacion.setAnalista(getUsuario());
-		accionJustificacion.setFechahora(new java.sql.Timestamp(System.currentTimeMillis()));
-		accionJustificacion.getJustificacion().setEstadoRecConJus(getCmbEstado());
-		accionJustificacion.setDetalle(getTxtInfoAdjunta_1());
-
-		DatabaseManager.getInstance().getAccionJustificacionesBeanRemote().editar(accionJustificacion);
-	}
-
-	public void justificarAsistencia(AsistEstEvto asistEstEvto) {
-		asistEstEvto.setAsistencia("Ausencia Justificada");
-
-	}
 
 	public Analista getUsuario() {
 		return usuario;
@@ -345,5 +394,15 @@ public class AccionJustificacionAnalista extends JPanel {
 	public void setCmbEstado(JComboBox<EstadoRecConJus> cmbEstado) {
 		this.cmbEstado = cmbEstado;
 	}
+
+	public Justificacion getJustificacion() {
+		return justificacion;
+	}
+
+	public void setJustificacion(Justificacion justificacion) {
+		this.justificacion = justificacion;
+	}
+	
+	
 
 }
