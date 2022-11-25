@@ -121,7 +121,7 @@ public class DashboardEstudiante extends JPanel {
 		emptyPanel.setBounds(150, 0, 910, 700);
 		add(emptyPanel);
 		emptyPanel.setLayout(new BorderLayout(0, 0));
-		
+
 		listadoJustificaciones.getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -129,74 +129,81 @@ public class DashboardEstudiante extends JPanel {
 				if (listadoJustificaciones.getTable().getSelectedColumn() == 5) {
 					int fila = listadoJustificaciones.getTable().getSelectedRow();
 					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
-					
+
 					cambiarVista(modificarJustificacionEstudiante);
-					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id);
+					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote()
+							.obtenerJustificacionPorId(id);
 					modificarJustificacionEstudiante.cargarDatos(justificacion);
-					
+
 				}
-				
+
 				if (listadoJustificaciones.getTable().getSelectedColumn() == 6) {
 					int fila = listadoJustificaciones.getTable().getSelectedRow();
 					long id = (long) listadoJustificaciones.getTable().getValueAt(fila, 0);
-					
-					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote().obtenerJustificacionPorId(id);
-					
+
+					justificacion = DatabaseManager.getInstance().getJustificacionesBeanRemote()
+							.obtenerJustificacionPorId(id);
+
 					try {
-						int resp = JOptionPane.showConfirmDialog(null, "Se eliminará la justificación del sistema. ¿Está seguro?", 
-								"Alerta!", JOptionPane.YES_NO_OPTION);
+						int resp = JOptionPane.showConfirmDialog(null,
+								"Se eliminará la justificación del sistema. ¿Está seguro?", "Alerta!",
+								JOptionPane.YES_NO_OPTION);
 
 						if (resp == 0) {
-							
-							if (!tieneAccion(justificacion)) {  
-								JOptionPane.showMessageDialog(null, "No se puede eliminar la justificación porque tiene una acción asociada.", 
+
+							if (!tieneAccion(justificacion)) {
+								JOptionPane.showMessageDialog(null,
+										"No se puede eliminar la justificación porque tiene una acción asociada.",
 										"Información", JOptionPane.WARNING_MESSAGE);
 							} else {
 								DatabaseManager.getInstance().getJustificacionesBeanRemote().borrar(id);
-								
-								JOptionPane.showMessageDialog(null, "Se eliminó la justificación.", 
-										"Información", JOptionPane.INFORMATION_MESSAGE);
+
+								JOptionPane.showMessageDialog(null, "Se eliminó la justificación.", "Información",
+										JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
-						
+
+						listadoJustificaciones.cargarTabla();
+
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				}
 			}
 		});
-		
+
 		ingresoJustificacionEstudiante.getBtnIngresar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ingresoJustificacionEstudiante.ingresarJustificacion();
+					JOptionPane.showMessageDialog(null, "La justificación se ingresó correctamente.");
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error al tratar de ingresar la justificación.");
 				}
 			}
 		});
-		
+
 		modificarJustificacionEstudiante.getBtnIngresar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					modificarJustificacionEstudiante.modificarJustificacion(justificacion);
-					JOptionPane.showMessageDialog(null, "Los datos de la Justificación se editaron con éxito");
+					listadoJustificaciones.cargarTabla();
+					JOptionPane.showMessageDialog(null, "Los datos de la justificación se editaron con éxito.");
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos de la Justificación");
+					JOptionPane.showMessageDialog(null, "Error al tratar de editar los datos de la justificación.");
 					e1.printStackTrace();
 				}
 			}
 		});
 	}
-	
+
 	public boolean tieneAccion(Justificacion justificacion) {
 		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
 				.getAccionJustificacionesBeanRemote().obtenerTodos()) {
 			if (accionJustificacion.getIdAccJustificacion() == justificacion.getIdJustificacion()) {
 				return false;
 			}
-			
+
 		}
 		return true;
 	}
@@ -293,7 +300,5 @@ public class DashboardEstudiante extends JPanel {
 	public void setModificarJustificacionEstudiante(ModificarJustificacionEstudiante modificarJustificacionEstudiante) {
 		this.modificarJustificacionEstudiante = modificarJustificacionEstudiante;
 	}
-	
-	
 
 }

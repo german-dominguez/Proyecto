@@ -7,11 +7,12 @@ import javax.naming.NamingException;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
+import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.Usuario;
+import com.tix.vista.Reportes;
 import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificaciones;
-import com.tix.vista.analista.ReportesAnalista;
 import com.tix.vista.analista.ListadoUsuarios;
 import com.tix.vista.analista.ModificarDatosPropios;
 
@@ -62,7 +63,8 @@ public class DashboardAnalistaControlador {
 		vista.getLblEditarUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.getModificarDatosPropios().setAnalista(vista.getUsuario());
+				vista.getModificarDatosPropios().setAnalista(DatabaseManager.getInstance().getAnalistasBeanRemote()
+						.obtenerAnalistaPorId(vista.getUsuario().getIdUsuario()));
 				vista.getModificarDatosPropios().cargarDatos();
 				vista.cambiarVista(vista.getModificarDatosPropios());
 			}

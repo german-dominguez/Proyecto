@@ -5,16 +5,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
+import com.tix.database.DatabaseManager;
+import com.tix.vista.Reportes;
 import com.tix.vista.analista.DashboardAnalista;
 import com.tix.vista.analista.ListadoJustificaciones;
-import com.tix.vista.analista.ReportesAnalista;
 import com.tix.vista.analista.ListadoUsuarios;
 import com.tix.vista.estudiante.DashboardEstudiante;
 import com.tix.vista.estudiante.ListadoJustificacionesEstudiante;
 
 public class DashboardEstudianteControlador {
 	private DashboardEstudiante vista = new DashboardEstudiante();
-	
+
 	// private ListadoReclamosAnalista listadoReclamos = new
 	// ListadoReclamosAnalista();
 
@@ -33,7 +34,8 @@ public class DashboardEstudianteControlador {
 		vista.getLblEditarUsuario().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				vista.getModificarDatosPropios().setEstudiante((vista.getUsuario()));
+				vista.getModificarDatosPropios().setEstudiante((DatabaseManager.getInstance().getEstudiantesBeanRemote()
+						.obtenerEstudiantePorId(vista.getUsuario().getIdUsuario())));
 				vista.getModificarDatosPropios().cargarDatos();
 				vista.cambiarVista(vista.getModificarDatosPropios());
 			}
@@ -50,7 +52,7 @@ public class DashboardEstudianteControlador {
 				}
 			}
 		});
-		
+
 		vista.getListadoJustificaciones().getBtnModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

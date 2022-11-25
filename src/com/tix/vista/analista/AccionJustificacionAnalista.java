@@ -1,60 +1,36 @@
 package com.tix.vista.analista;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.SystemColor;
-import java.awt.event.KeyEvent;
-import java.security.Timestamp;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JSeparator;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.UIManager;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import javax.swing.JTabbedPane;
-import java.awt.event.ActionListener;
-import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
 import com.tix.database.DatabaseManager;
-import com.tix.modelo.daos.AsistEstEvtoDAO;
 import com.tix.modelo.entidades.AccionJustificacion;
 import com.tix.modelo.entidades.Analista;
 import com.tix.modelo.entidades.AsistEstEvto;
-import com.tix.modelo.entidades.Departamento;
 import com.tix.modelo.entidades.EstadoRecConJus;
-import com.tix.modelo.entidades.Estudiante;
-import com.tix.modelo.entidades.Evento;
 import com.tix.modelo.entidades.Justificacion;
-import com.tix.modelo.entidades.Usuario;
-import com.tix.modelo.entidades.Itr;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class AccionJustificacionAnalista extends JPanel {
 	private static AccionJustificacionAnalista vista = new AccionJustificacionAnalista();
@@ -83,10 +59,9 @@ public class AccionJustificacionAnalista extends JPanel {
 	private JSeparator spDatosAcademicos;
 	private JSeparator spVertical;
 	private JTextField txtAnalista;
-	
+
 	private Justificacion justificacion;
 	private AccionJustificacion accionJustificacion;
-	
 
 	/**
 	 * Create the panel.
@@ -276,7 +251,7 @@ public class AccionJustificacionAnalista extends JPanel {
 		txtAnalista.setText(null);
 		txtInfoAdjunta_1.setText(null);
 		cmbEstado.setSelectedIndex(0);
-		
+
 		txtEstudiante
 				.setText(justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getNombre1());
 		txtEvento.setText(justificacion.getEvento().getTitulo());
@@ -293,7 +268,7 @@ public class AccionJustificacionAnalista extends JPanel {
 				cmbEstado.setSelectedItem(estado);
 			}
 		}
-		
+
 		try {
 			for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
 					.getAccionJustificacionesBeanRemote().obtenerTodos()) {
@@ -308,20 +283,20 @@ public class AccionJustificacionAnalista extends JPanel {
 			}
 		} catch (Exception e) {
 		}
-		
+
 	}
-	
-	public void ingresarAccionJustificacion () {
+
+	public void ingresarAccionJustificacion() {
 		accionJustificacion = new AccionJustificacion();
 		accionJustificacion.setAnalista(getUsuario());
 		accionJustificacion.setDetalle(getTxtInfoAdjunta_1());
 		accionJustificacion.setFechahora(new java.sql.Timestamp(System.currentTimeMillis()));
 		accionJustificacion.setJustificacion(justificacion);
-		
+
 		DatabaseManager.getInstance().getAccionJustificacionesBeanRemote().registro(accionJustificacion);
-			
+
 	}
-	
+
 	public void modificarAccionJustificacion(Justificacion justificacion) {
 
 		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
@@ -335,25 +310,25 @@ public class AccionJustificacionAnalista extends JPanel {
 
 				DatabaseManager.getInstance().getAccionJustificacionesBeanRemote().editar(accionJustificacion);
 				DatabaseManager.getInstance().getJustificacionesBeanRemote().editar(justificacion);
-								
+
 				if (cmbEstado.getSelectedIndex() == 2) {
 					System.out.println("Entré");
-					for (AsistEstEvto asistEstEvto : DatabaseManager.getInstance()
-							.getAsistEstEvtosBeanRemote().obtenerTodos()) {
-						
-						if (asistEstEvto.getEstudiante().getIdUsuario() == justificacion.getEstudiante().getIdUsuario() 
+					for (AsistEstEvto asistEstEvto : DatabaseManager.getInstance().getAsistEstEvtosBeanRemote()
+							.obtenerTodos()) {
+
+						if (asistEstEvto.getEstudiante().getIdUsuario() == justificacion.getEstudiante().getIdUsuario()
 								&& asistEstEvto.getEvento().getIdEvento() == justificacion.getEvento().getIdEvento()) {
-							
+
 							asistEstEvto.setAsistencia("Ausencia Justificada");
-	
+
 							DatabaseManager.getInstance().getAsistEstEvtosBeanRemote().editar(asistEstEvto);
-						}					
+						}
 					}
 				}
 			}
-		}	
-	}
+		}
 
+	}
 
 	public Analista getUsuario() {
 		return usuario;
@@ -402,7 +377,5 @@ public class AccionJustificacionAnalista extends JPanel {
 	public void setJustificacion(Justificacion justificacion) {
 		this.justificacion = justificacion;
 	}
-	
-	
 
 }
