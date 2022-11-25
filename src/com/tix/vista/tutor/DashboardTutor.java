@@ -17,11 +17,12 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import com.tix.modelo.entidades.Tutor;
+import com.tix.vista.Reportes;
 import com.tix.vista.tutor.ModificarDatosPropios;
 
 public class DashboardTutor extends JPanel {
 
-	private JButton btnJustificaciones;
+	private JButton btnReportes;
 
 	private JPanel emptyPanel;
 
@@ -37,6 +38,7 @@ public class DashboardTutor extends JPanel {
 	private Tutor usuario;
 
 	private ModificarDatosPropios modificarDatosPropios = new ModificarDatosPropios();
+	private Reportes reportes = new Reportes();
 
 	/**
 	 * Create the panel.
@@ -46,15 +48,15 @@ public class DashboardTutor extends JPanel {
 		setLayout(null);
 		setSize(new Dimension(1060, 700));
 
-		btnJustificaciones = new JButton("Asistencias");
-		btnJustificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnJustificaciones.setForeground(Color.WHITE);
-		btnJustificaciones.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		btnJustificaciones.setFocusable(false);
-		btnJustificaciones.setBorder(null);
-		btnJustificaciones.setBackground(UIManager.getColor("Tree.selectionBackground"));
-		btnJustificaciones.setBounds(10, 232, 127, 45);
-		add(btnJustificaciones);
+		btnReportes = new JButton("Reportes");
+		btnReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReportes.setForeground(Color.WHITE);
+		btnReportes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		btnReportes.setFocusable(false);
+		btnReportes.setBorder(null);
+		btnReportes.setBackground(UIManager.getColor("Tree.selectionBackground"));
+		btnReportes.setBounds(10, 232, 127, 45);
+		add(btnReportes);
 
 		lblNombreUsuario = new JLabel("Anita González");
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -150,12 +152,20 @@ public class DashboardTutor extends JPanel {
 		this.lblNombreUsuario.setText(nombreUsuario);
 	}
 
-	public JButton getBtnJustificaciones() {
-		return btnJustificaciones;
+	public JButton getBtnReportes() {
+		return btnReportes;
 	}
 
-	public void setBtnJustificaciones(JButton btnJustificaciones) {
-		this.btnJustificaciones = btnJustificaciones;
+	public void setBtnReportes(JButton btnReportes) {
+		this.btnReportes = btnReportes;
+	}
+
+	public Reportes getReportes() {
+		return reportes;
+	}
+
+	public void setReportes(Reportes reportes) {
+		this.reportes = reportes;
 	}
 
 	public void cambiarVista(JPanel panel) {

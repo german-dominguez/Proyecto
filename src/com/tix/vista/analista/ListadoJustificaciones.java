@@ -110,7 +110,6 @@ public class ListadoJustificaciones extends JPanel {
 		for (Estudiante estudiante : DatabaseManager.getInstance().getEstudiantesBeanRemote().obtenerTodos()) {
 			cmbUsuario.addItem(estudiante.getNombreUsuario());
 		}
-
 		cmbUsuario.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbUsuario.setBounds(180, 83, 140, 20);
 		add(cmbUsuario);

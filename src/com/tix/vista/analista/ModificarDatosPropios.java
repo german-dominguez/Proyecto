@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +37,8 @@ import com.tix.modelo.servicios.DepartamentosBeanRemote;
 import com.tix.modelo.servicios.ItrsBeanRemote;
 import com.tix.modelo.servicios.LocalidadesBeanRemote;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ModificarDatosPropios extends JPanel {
 	private JTextField txtDocumento;
@@ -384,6 +388,11 @@ public class ModificarDatosPropios extends JPanel {
 		for (Departamento departamento : DatabaseManager.getInstance().getDepartamentosBeanRemote().obtenerTodos()) {
 			cmbDepartamento.addItem(departamento);
 		}
+		cmbDepartamento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				cargarLocalidades();
+			}
+		});
 		cmbDepartamento.setForeground(Color.DARK_GRAY);
 		cmbDepartamento.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbDepartamento.setFocusable(false);
@@ -443,9 +452,46 @@ public class ModificarDatosPropios extends JPanel {
 		txtSegundoApellido.setText(analista.getApellido2());
 		txtSegundoNombre.setText(analista.getNombre2());
 		txtTelefono.setText(analista.getTelefono());
-		cmbLocalidad.setSelectedItem(analista.getLocalidad());
-		cmbDepartamento.setSelectedItem(analista.getLocalidad().getDepartamento());
 		dateChooser.setDate(analista.getFechaNacimiento());
+
+		List<Departamento> departamentos = new ArrayList<>();
+
+		for (int i = 0; i < cmbDepartamento.getItemCount(); i++) {
+			departamentos.add(cmbDepartamento.getItemAt(i));
+		}
+
+		for (Departamento departamento : departamentos) {
+			if (departamento.getIdDepartamento() == analista.getLocalidad().getDepartamento().getIdDepartamento()) {
+				cmbDepartamento.setSelectedItem(departamento);
+			}
+		}
+
+		cargarLocalidades();
+
+		List<Localidad> localidades = new ArrayList<>();
+
+		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
+			localidades.add(cmbLocalidad.getItemAt(i));
+		}
+
+		for (Localidad localidad : localidades) {
+			if (localidad.getIdLocalidad() == analista.getLocalidad().getIdLocalidad()) {
+				cmbLocalidad.setSelectedItem(localidad);
+			}
+		}
+
+		List<Itr> itrs = new ArrayList<>();
+
+		for (int i = 0; i < cmbITR.getItemCount(); i++) {
+			itrs.add(cmbITR.getItemAt(i));
+		}
+
+		for (Itr itr : itrs) {
+			if (itr.getIdItr() == analista.getItr().getIdItr()) {
+				cmbITR.setSelectedItem(itr);
+			}
+		}
+
 	}
 
 	public void editarAnalista() throws Exception {
@@ -607,6 +653,16 @@ public class ModificarDatosPropios extends JPanel {
 		}
 
 		return true;
+	}
+
+	public void cargarLocalidades() {
+		cmbLocalidad.removeAllItems();
+		for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
+			if (localidad.getDepartamento().getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
+					.getIdDepartamento()) {
+				cmbLocalidad.addItem(localidad);
+			}
+		}
 	}
 
 	public String getTxtDocumento() {

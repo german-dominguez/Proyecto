@@ -360,14 +360,7 @@ public class ModificarTutor extends JPanel {
 		cmbDepartamento = new JComboBox<Departamento>();
 		cmbDepartamento.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				cmbLocalidad.removeAllItems();
-				for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
-					if (localidad.getDepartamento()
-							.getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
-									.getIdDepartamento()) {
-						cmbLocalidad.addItem(localidad);
-					}
-				}
+				cargarLocalidades();
 			}
 		});
 
@@ -440,17 +433,17 @@ public class ModificarTutor extends JPanel {
 		spEstado.setBackground(SystemColor.textHighlight);
 		spEstado.setBounds(383, 268, 140, 14);
 		add(spEstado);
-		
+
 		JLabel lblArea = new JLabel("Área *");
 		lblArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblArea.setBounds(383, 173, 135, 21);
 		add(lblArea);
-		
+
 		JSeparator spGenero_1 = new JSeparator();
 		spGenero_1.setBackground(SystemColor.textHighlight);
 		spGenero_1.setBounds(383, 213, 140, 14);
 		add(spGenero_1);
-		
+
 		cmbArea = new JComboBox<Area>();
 		cmbArea.setForeground(Color.DARK_GRAY);
 		cmbArea.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
@@ -462,19 +455,19 @@ public class ModificarTutor extends JPanel {
 		for (Area area : DatabaseManager.getInstance().getAreasBeanRemote().obtenerTodos()) {
 			cmbArea.addItem(area);
 		}
-		
+
 		JLabel lblRol = new JLabel("Rol *");
 		lblRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblRol.setBounds(546, 173, 135, 21);
 		add(lblRol);
-		
+
 		JSeparator spGenero_2 = new JSeparator();
 		spGenero_2.setBackground(SystemColor.textHighlight);
 		spGenero_2.setBounds(546, 213, 140, 14);
 		add(spGenero_2);
-		
+
 		cmbRol = new JComboBox<String>();
-		cmbRol.setModel(new DefaultComboBoxModel(new String[] {"Encargado", "Tutor"}));
+		cmbRol.setModel(new DefaultComboBoxModel(new String[] { "Encargado", "Tutor" }));
 		cmbRol.setForeground(Color.DARK_GRAY);
 		cmbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
 		cmbRol.setFocusable(false);
@@ -606,18 +599,6 @@ public class ModificarTutor extends JPanel {
 		txtSegundoNombre.setText(tutor.getNombre2());
 		txtTelefono.setText(tutor.getTelefono());
 
-		List<Localidad> localidades = new ArrayList<>();
-
-		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
-			localidades.add(cmbLocalidad.getItemAt(i));
-		}
-
-		for (Localidad localidad : localidades) {
-			if (localidad.getIdLocalidad() == tutor.getLocalidad().getIdLocalidad()) {
-				cmbLocalidad.setSelectedItem(localidad);
-			}
-		}
-
 		List<Departamento> departamentos = new ArrayList<>();
 
 		for (int i = 0; i < cmbDepartamento.getItemCount(); i++) {
@@ -627,6 +608,20 @@ public class ModificarTutor extends JPanel {
 		for (Departamento departamento : departamentos) {
 			if (departamento.getIdDepartamento() == tutor.getLocalidad().getDepartamento().getIdDepartamento()) {
 				cmbDepartamento.setSelectedItem(departamento);
+			}
+		}
+
+		cargarLocalidades();
+
+		List<Localidad> localidades = new ArrayList<>();
+
+		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
+			localidades.add(cmbLocalidad.getItemAt(i));
+		}
+
+		for (Localidad localidad : localidades) {
+			if (localidad.getIdLocalidad() == tutor.getLocalidad().getIdLocalidad()) {
+				cmbLocalidad.setSelectedItem(localidad);
 			}
 		}
 
@@ -645,7 +640,7 @@ public class ModificarTutor extends JPanel {
 		cmbGenero.setSelectedItem(tutor.getGenero());
 		cmbEstado.setSelectedItem(tutor.getEstado());
 		dateChooser.setDate(tutor.getFechaNacimiento());
-		
+
 		List<Area> areas = new ArrayList<>();
 
 		for (int i = 0; i < cmbArea.getItemCount(); i++) {
@@ -657,7 +652,7 @@ public class ModificarTutor extends JPanel {
 				cmbArea.setSelectedItem(area);
 			}
 		}
-		
+
 		cmbRol.setSelectedItem(tutor.getTipo());
 	}
 
@@ -679,6 +674,16 @@ public class ModificarTutor extends JPanel {
 		DatabaseManager.getInstance().getTutoresBeanRemote().editar(tutor);
 	}
 
+	public void cargarLocalidades() {
+		cmbLocalidad.removeAllItems();
+		for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
+			if (localidad.getDepartamento().getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
+					.getIdDepartamento()) {
+				cmbLocalidad.addItem(localidad);
+			}
+		}
+	}
+
 	public JButton getBtnModificar() {
 		return btnModificar;
 	}
@@ -690,11 +695,11 @@ public class ModificarTutor extends JPanel {
 	public String getTxtDocumento() {
 		return txtDocumento.getText();
 	}
-	
+
 	public String getTxtRol() {
 		return (String) cmbRol.getSelectedItem();
 	}
-	
+
 	public Area getCmbArea() {
 		return (Area) cmbArea.getSelectedItem();
 	}
@@ -726,8 +731,6 @@ public class ModificarTutor extends JPanel {
 	public String getTxtEmailPersonal() {
 		return txtEmailPersonal.getText();
 	}
-	
-
 
 	public Localidad getCmbLocalidad() {
 		return (Localidad) cmbLocalidad.getSelectedItem();

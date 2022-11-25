@@ -359,14 +359,7 @@ public class ModificarDatosPropios extends JPanel {
 		cmbDepartamento = new JComboBox<Departamento>();
 		cmbDepartamento.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				cmbLocalidad.removeAllItems();
-				for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
-					if (localidad.getDepartamento()
-							.getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
-									.getIdDepartamento()) {
-						cmbLocalidad.addItem(localidad);
-					}
-				}
+				cargarLocalidades();
 			}
 		});
 
@@ -585,18 +578,6 @@ public class ModificarDatosPropios extends JPanel {
 		txtSegundoNombre.setText(tutor.getNombre2());
 		txtTelefono.setText(tutor.getTelefono());
 
-		List<Localidad> localidades = new ArrayList<>();
-
-		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
-			localidades.add(cmbLocalidad.getItemAt(i));
-		}
-
-		for (Localidad localidad : localidades) {
-			if (localidad.getIdLocalidad() == tutor.getLocalidad().getIdLocalidad()) {
-				cmbLocalidad.setSelectedItem(localidad);
-			}
-		}
-
 		List<Departamento> departamentos = new ArrayList<>();
 
 		for (int i = 0; i < cmbDepartamento.getItemCount(); i++) {
@@ -606,6 +587,20 @@ public class ModificarDatosPropios extends JPanel {
 		for (Departamento departamento : departamentos) {
 			if (departamento.getIdDepartamento() == tutor.getLocalidad().getDepartamento().getIdDepartamento()) {
 				cmbDepartamento.setSelectedItem(departamento);
+			}
+		}
+
+		cargarLocalidades();
+
+		List<Localidad> localidades = new ArrayList<>();
+
+		for (int i = 0; i < cmbLocalidad.getItemCount(); i++) {
+			localidades.add(cmbLocalidad.getItemAt(i));
+		}
+
+		for (Localidad localidad : localidades) {
+			if (localidad.getIdLocalidad() == tutor.getLocalidad().getIdLocalidad()) {
+				cmbLocalidad.setSelectedItem(localidad);
 			}
 		}
 
@@ -654,6 +649,16 @@ public class ModificarDatosPropios extends JPanel {
 		tutor.setArea(getCmbArea());
 
 		DatabaseManager.getInstance().getTutoresBeanRemote().editar(tutor);
+	}
+
+	public void cargarLocalidades() {
+		cmbLocalidad.removeAllItems();
+		for (Localidad localidad : DatabaseManager.getInstance().getLocalidadesBeanRemote().obtenerTodos()) {
+			if (localidad.getDepartamento().getIdDepartamento() == ((Departamento) cmbDepartamento.getSelectedItem())
+					.getIdDepartamento()) {
+				cmbLocalidad.addItem(localidad);
+			}
+		}
 	}
 
 	public Tutor getTutor() {

@@ -1,4 +1,4 @@
-package com.tix.vista.analista;
+package com.tix.vista;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,6 +27,13 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.tix.database.DatabaseManager;
 import com.tix.modelo.entidades.AccionJustificacion;
 import com.tix.modelo.entidades.Itr;
@@ -40,6 +48,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.SystemColor;
@@ -50,7 +59,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ReportesAnalista extends JPanel {
+public class Reportes extends JPanel {
 	private DefaultTableModel model;
 
 	private TableRowSorter<TableModel> sorter;
@@ -70,10 +79,12 @@ public class ReportesAnalista extends JPanel {
 	private JButton btnImprimir;
 	private JLabel lblNoSeEncontraron;
 
+	private List<Reclamo> filteredReclamos;
+
 	/**
 	 * Create the panel.
 	 */
-	public ReportesAnalista() {
+	public Reportes() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(910, 700));
@@ -145,7 +156,7 @@ public class ReportesAnalista extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					imprimir();
-				} catch (IOException e1) {
+				} catch (IOException | DocumentException e1) {
 					JOptionPane.showMessageDialog(null, "Error al tratar de generar el archivo");
 				}
 			}
@@ -253,20 +264,33 @@ public class ReportesAnalista extends JPanel {
 
 	}
 
-	public void imprimir() throws IOException {
-		PDDocument document = new PDDocument();
-		PDPage page = new PDPage();
-		document.addPage(page);
+	public void imprimir() throws IOException, DocumentException {
 
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+		Document document = new Document();
 
-		contentStream.setFont(PDType1Font.COURIER, 12);
-		contentStream.beginText();
-		contentStream.showText("Hello World");
-		contentStream.endText();
-		contentStream.close();
+		JFileChooser fileChooser = new JFileChooser();
 
-		document.save("pdfBoxHelloWorld.pdf");
+		int response = fileChooser.showOpenDialog(null); // select file to open
+		// int response = fileChooser.showSaveDialog(null); //select file to save
+
+		if (response == JFileChooser.APPROVE_OPTION) {
+
+			PdfWriter.getInstance(document, new FileOutputStream(fileChooser.getSelectedFile().getAbsolutePath()));
+		}
+
+		document.open();
+		com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+		Paragraph paragraph1 = new Paragraph("Se encontraron " + contarReclamos() + " reclamos.", font);
+
+		document.add(paragraph1);
+
+		document.add(new Paragraph("\n"));
+
+		for (Reclamo reclamo : filteredReclamos) {
+			document.add(new Paragraph(reclamo.toString(), font));
+			document.add(new Paragraph("\n"));
+		}
+
 		document.close();
 	}
 
@@ -276,8 +300,7 @@ public class ReportesAnalista extends JPanel {
 
 		reclamos = DatabaseManager.getInstance().getReclamosBeanRemote().obtenerTodos();
 
-		List<Reclamo> filteredReclamos = reclamos.stream()
-				.filter(r -> r.getEstudiante().getItr().getNombre().contains(getCmbItr()))
+		filteredReclamos = reclamos.stream().filter(r -> r.getEstudiante().getItr().getNombre().contains(getCmbItr()))
 				.filter(r -> String.valueOf(r.getEstudiante().getGeneracion()).contains(getCmbGeneracion()))
 				.filter(r -> String.valueOf(LocalDate.parse(r.getFecha().toString()).getMonthValue())
 						.contains(getCmbMes()))
