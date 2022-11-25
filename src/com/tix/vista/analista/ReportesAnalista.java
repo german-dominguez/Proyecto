@@ -43,8 +43,6 @@ import java.awt.event.ActionEvent;
 public class ReportesAnalista extends JPanel {
 	private DefaultTableModel model;
 
-	private TableRowSorter<TableModel> sorter;
-
 	private JComboBox<String> cmbItr;
 	private JComboBox<String> cmbGeneracion;
 	private JComboBox<String> cmbMes;
@@ -67,8 +65,6 @@ public class ReportesAnalista extends JPanel {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setSize(new Dimension(910, 700));
-
-		sorter = new TableRowSorter<TableModel>(model);
 
 		JLabel lblJustificacionesDeInasistencias = new JLabel("LISTADO ANALÍTICO DE RECLAMOS");
 		lblJustificacionesDeInasistencias.setForeground(Color.BLACK);
