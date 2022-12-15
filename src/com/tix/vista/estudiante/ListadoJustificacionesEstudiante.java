@@ -81,7 +81,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 		table = new JTable();
 		table.setModel(
 				new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null }, },
-						new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Detalle", " ", " " }) {
+						new String[] { "ID", "Estado", "Nombres y Apellidos", "Fecha Ingreso", "Información adjunta", " ", " " }) {
 					boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false,
 							false };
 
@@ -178,7 +178,7 @@ public class ListadoJustificacionesEstudiante extends JPanel {
 
 			model.addRow(new Object[] { justificacion.getIdJustificacion(), justificacion.getEstadoRecConJus(),
 					justificacion.getEstudiante().getNombre1() + " " + justificacion.getEstudiante().getApellido1(),
-					fechaHoraFormateada, justificacion.getDetalle(), "Modificar", "Eliminar" });
+					fechaHoraFormateada, justificacion.getInfoAdjunta(), "Modificar", "Eliminar" });
 		}
 
 	}

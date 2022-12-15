@@ -292,6 +292,8 @@ public class Reportes extends JPanel {
 		}
 
 		document.close();
+		
+		JOptionPane.showMessageDialog(null, "Se descargó el documento.");
 	}
 
 	private int contarReclamos() {
@@ -311,7 +313,6 @@ public class Reportes extends JPanel {
 
 	private void setCampos(String accion) {
 		if (accion.equals("Filtrar")) {
-
 			if (contarReclamos() == 0) {
 				lblFiltreParaVisualizar.setVisible(false);
 				lblNoSeEncontraron.setVisible(true);
@@ -333,12 +334,12 @@ public class Reportes extends JPanel {
 			cmbGeneracion.setSelectedIndex(0);
 			cmbMes.setSelectedIndex(0);
 			cmbTipo.setSelectedIndex(0);
-
+			
 			lblFiltreParaVisualizar.setVisible(true);
+			lblNoSeEncontraron.setVisible(false);
 			lblSeEncontraron.setVisible(false);
 			lblCantReclamos.setVisible(false);
 			lblReclamos.setVisible(false);
-
 			btnImprimir.setEnabled(false);
 		}
 	}
