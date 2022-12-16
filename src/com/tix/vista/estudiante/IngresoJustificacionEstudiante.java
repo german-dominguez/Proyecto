@@ -114,6 +114,7 @@ public class IngresoJustificacionEstudiante extends JPanel {
 	}
 	
 	public void cargarEventos() {
+		cmbEvento.removeAllItems();
 		for (AsistEstEvto asistEstEvto : DatabaseManager.getInstance().getAsistEstEvtosBeanRemote().obtenerPorAsistencia("Ausencia")) {
 			if (asistEstEvto.getEstudiante().getIdUsuario() == usuario.getIdUsuario()) {
 				cmbEvento.addItem(DatabaseManager.getInstance().getEventosBeanRemote().obtenerEventoPorId(asistEstEvto.getEvento().getIdEvento()));
