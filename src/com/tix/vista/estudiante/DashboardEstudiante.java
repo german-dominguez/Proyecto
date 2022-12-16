@@ -200,7 +200,7 @@ public class DashboardEstudiante extends JPanel {
 	public boolean tieneAccion(Justificacion justificacion) {
 		for (AccionJustificacion accionJustificacion : DatabaseManager.getInstance()
 				.getAccionJustificacionesBeanRemote().obtenerTodos()) {
-			if (accionJustificacion.getIdAccJustificacion() == justificacion.getIdJustificacion()) {
+			if (accionJustificacion.getJustificacion().getIdJustificacion() == justificacion.getIdJustificacion()) {
 				return false;
 			}
 
